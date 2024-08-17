@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/global.css */
+
+/* Customize the scrollbar width and height */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Customize the scrollbar track (background) */
+  ::-webkit-scrollbar-track {
+    background-color: #f5f5f5; /* Change to your desired color */
+  }
+  
+  /* Customize the scrollbar thumb (the draggable part) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* Change to your desired color */
+    border-radius: 6px; /* Rounded corners */
+  }
+  
+
+  /* For Webkit-based browsers (Chrome, Safari, and Opera) */
+.scrollbar-hide ::-webkit-scrollbar {
+  display: none;
+}
+/* For IE, Edge, and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
