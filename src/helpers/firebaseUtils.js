@@ -2,12 +2,15 @@
 
 import { getStorage, ref, uploadBytes, getDownloadURL } from '@firebase/storage';
 import { db, storage} from '@/firebase'
+import { data } from 'autoprefixer';
+
 
 
 export const uploadFileAndGetUrl = async (file) => {
   try {
   
-    const storageRef = ref(storage, 'uploads'); 
+    
+    const storageRef = ref(storage, `uploads/${Date.now()}`); 
 
     // Upload the file
     await uploadBytes(storageRef, file);

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Video from "@/model/video-model"
 
 const courceSchema = new mongoose.Schema({
     title: {

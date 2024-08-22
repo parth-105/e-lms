@@ -37,6 +37,10 @@ const videoSchema = new mongoose.Schema({
     },
     videourl: {
         type: String
+    },
+    isFree:{
+        type: Boolean,
+        default: true
     }
 });
 

@@ -11,17 +11,22 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@material-tailwind/react": "^2.1.9",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.3.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "cookies": "^0.9.1",
     "firebase": "^10.12.4",
     "jose": "^5.6.3",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
     "next": "^14.2.3",
     "next-auth": "^5.0.0-beta.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.25.1"
+    "react-router-dom": "^6.25.1",
+    "stripe": "^16.8.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
