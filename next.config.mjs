@@ -1,3 +1,5 @@
+import withPlugins from 'next-compose-plugins';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -12,27 +14,14 @@ const nextConfig = {
       },
     ],
   },
-
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/admin',
-  //       destination: '/middleware',
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/instructor',
-  //       destination: '/middleware',
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/student',
-  //       destination: '/middleware',
-  //       permanent: false,
-  //     },
-  //   ];
-  // },
 };
 
-export default nextConfig;
+const additionalConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+};
 
+export default withPlugins([], {
+  ...nextConfig,
+  ...additionalConfig,
+});

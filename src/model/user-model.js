@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,6 +25,8 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:'/default.png'
     },
+
+   
    
 })
 

@@ -9,7 +9,7 @@ import Exam from "@/model/quiz/exam-model";
 connect()
 
 
-export async function GET(request) {
+export async function POST(request) {
     try {
   
         const exams = await Exam.find({});

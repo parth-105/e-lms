@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const instructorSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -44,8 +45,9 @@ const instructorSchema = new mongoose.Schema({
      isAdmin:{
         type: Boolean,
         default: false,
-     }
+     },
 
+  
 })
 
 const Instructor = mongoose.models.Instructor || mongoose.model("Instructor", instructorSchema);

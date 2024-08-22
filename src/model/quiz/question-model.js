@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 const questionSchema = new mongoose.Schema({
   name: {
     type: String,
-   // required: true,
+    required: true,
   },
   correctOption: {
     type: String,
-   // required: true,
+    required: true,
   },
   options: {
     type: Object,
- //   required: true,
+    required: true,
   },
   exam: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,8 +21,10 @@ const questionSchema = new mongoose.Schema({
     timestamps: true,
 });
 
+const Question = mongoose.models.Question || mongoose.model('Question', questionSchema);
 
-const Question = mongoose.models.Question || mongoose.model("Question", questionSchema);
+
+//const Question = mongoose.models.Question || mongoose.model("Question", questionSchema);
 
 export default Question;
 

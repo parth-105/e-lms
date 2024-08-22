@@ -12,7 +12,7 @@ export async function middleware(request) {
   const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
 
  //
-  console.log('pay', payload);
+  //console.log('pay', payload);
 
   if (pathname.startsWith('/admin') && !payload.isAdmin) {
     return NextResponse.redirect(new URL('/login', request.url));

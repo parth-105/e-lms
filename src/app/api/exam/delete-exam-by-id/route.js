@@ -1,24 +1,30 @@
-
 import { NextRequest, NextResponse } from "next/server";
-import { connect } from "@/lib/mongo";
+import {connect} from "@/lib/mongo";
 import Exam from "@/model/quiz/exam-model";
 
+export async function DELETE(req) {
+  try {
+    await connect();
+    
+    const reqBody = await req.json(); // Parse the request body
+    const examId = reqBody.examId;
 
-
-
-connect()
-
-
-export async function POST(req) {
-    try {
-        
-        await Exam.findByIdAndDelete(req.body.examId);
-        return NextResponse.json({
-            message: "exam deleted successfully",
-            success: true,
-        })
-      } catch (error) {
-        console.log("ree",error.message)
-        return NextResponse.json({ error: error.message }, { status: 500 })
-      }
+    if (!examId) {
+      return NextResponse.json({ error: "Exam ID is required" }, { status: 400 });
     }
+
+    const deletedExam = await Exam.findByIdAndDelete(examId);
+
+    if (!deletedExam) {
+      return NextResponse.json({ error: "Exam not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      message: "Exam deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Question from '@/model/quiz/question-model'
 
 const examSchema = new mongoose.Schema(
   {
@@ -22,9 +23,9 @@ const examSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    questions: {
+    questions:{
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "Question",
+      ref: 'Question',
       required: true,
     },
   },
