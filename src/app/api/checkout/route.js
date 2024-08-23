@@ -4,11 +4,14 @@ import { NextResponse } from 'next/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(req) {
+
+  const reqBody = await req.json()
+  const { price } = reqBody;
+
   if (req.method === 'POST') {
-    const reqBody = await req.json()
-     const { amount } = reqBody;
-    console.log("amount :::::::", amount);
-   // let newam = amount*100;
+
+    console.log("amount :::::::", price);
+
     console.log("Checkout 11111");
 
     try {
@@ -21,7 +24,7 @@ export async function POST(req) {
               product_data: {
                 name: 'Custom Payment',
               },
-              unit_amount: amount  , // Use the dynamic amount
+              unit_amount: price, // Use the dynamic amount
             },
             quantity: 1,
           },
@@ -30,9 +33,9 @@ export async function POST(req) {
         success_url: `http://localhost:3000/course`,
         cancel_url: `http://localhost:3000/course`,
       });
-      console.log(session);
+      //console.log(session);
 
-      return NextResponse.json({ sessionId: session });
+      return NextResponse.json({ sessionId: session.id });
     } catch (err) {
       return NextResponse.json({ message: err.message });
     }

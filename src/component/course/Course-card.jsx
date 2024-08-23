@@ -14,7 +14,8 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
   // const userId = Cookies.get('userId');
   // console.log("+++++++++++++++",userId);
 
-
+ 
+  
   const handleCourseClick = async (courseId) => {
 
     
@@ -32,7 +33,8 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
         const stripe = await stripePromise;
         console.log("this is stripe2");
 
-  
+          console.log(price);
+          
         const response = await fetch("/api/checkout", {
           method: 'POST',
           headers: {
@@ -42,14 +44,14 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
         });
 
         //const response = await axios.post('/api/create-checkout-session',{price:price})
-        console.log(response.sessionId);
+        console.log("??????????????????????????????????????????/",response);
 
 
         const session = await response.json();
         console.log("}}}}}}}}}}}}}}}}]",session);
         
         const result = await stripe.redirectToCheckout({
-          sessionId: session,
+          sessionId: session.sessionId,
         });
 
         console.log("this is stripe3");
