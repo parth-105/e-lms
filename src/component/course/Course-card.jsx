@@ -19,9 +19,19 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
 
     
     console.log("****************", courseId);
-    route.push(`/course/videos/${courseId}`);
+    //route.push(`/course/videos/${courseId}`);
 
-  
+   const res = await axios.post("/api/course/checkpurchase", { userId: "22338866755", courseId: courseId });
+
+
+   console.log(res.data.purchased);
+
+    if (res.data.purchased === false) {
+      console.log("this is stripe1");
+      
+        const check = async () => {
+        const stripe = await stripePromise;
+        console.log("this is stripe2");
 
   
         const response = await fetch("/api/checkout", {
@@ -37,27 +47,30 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
 
 
         const session = await response.json();
-        console.log("}}}}}}}}}}}}}}}}]",session);
+        const sessionId = session.sessionId.id; // Access the id here
         
         const result = await stripe.redirectToCheckout({
-          sessionId: session,
+          sessionId: sessionId,
         });
 
-    //     console.log("this is stripe3");
 
-        // //update database 
-        // if(session){
-        //   const update = await axios.post('/api/update',{user:"from local",course:courseId,purchased:true})
-        // }
+     
 
-    //     if (result.error) {
-    //       console.error(result.error.message);
-    //     }
-    //   };
-    //   check()
-    // } else {
-    //   route.push(`/course/videos/${courseId}`);
-    // }
+        console.log("this is stripe3");
+
+        //update database 
+        if(session){
+          const update = await axios.post('/api/update',{user:"from local",course:courseId,purchased:true})
+        }
+
+        if (result.error) {
+          console.error(result.error.message);
+        }
+      };
+      check()
+    } else {
+      route.push(`/course/videos/${courseId}`);
+    }
   };
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-sm">
