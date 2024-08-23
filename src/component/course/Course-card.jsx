@@ -17,6 +17,7 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
 
   const handleCourseClick = async (courseId) => {
 
+    
     console.log("****************", courseId);
 
     const res = await axios.post("/api/course/checkpurchase", { userId: "22338866755", courseId: courseId });
@@ -32,30 +33,31 @@ const CourseCard = ({ title, thumbnail, price, courseId }) => {
         console.log("this is stripe2");
 
   
-        const response = await fetch('/api/create-checkout-session', {
+        const response = await fetch("/api/checkout", {
           method: 'POST',
-          // headers: {
-          //   'Content-Type': 'application/json',
-          // },
-          // body: JSON.stringify({ price }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({price}),
         });
 
         //const response = await axios.post('/api/create-checkout-session',{price:price})
-        console.log(response);
+        console.log(response.sessionId);
 
 
-       // const session = await response;
-
+        const session = await response.json();
+        console.log("}}}}}}}}}}}}}}}}]",session);
+        
         const result = await stripe.redirectToCheckout({
-          sessionId: response.data.id,
+          sessionId: session,
         });
 
         console.log("this is stripe3");
 
-        //update database 
-        if(session){
-          const update = await axios.post('/api/update',{user:"from local",course:courseId,purchased:true})
-        }
+        // //update database 
+        // if(session){
+        //   const update = await axios.post('/api/update',{user:"from local",course:courseId,purchased:true})
+        // }
 
         if (result.error) {
           console.error(result.error.message);
