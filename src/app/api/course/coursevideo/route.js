@@ -10,10 +10,10 @@ export async function POST(request) {
     //console.log("this is get req >>>>>><<<<<<<<<<<");
     const reqBody = await request.json()
     const {courseId} = reqBody;
-    console.log("courseId:KKKKKKKKKKKKKKKKKKK " , courseId);
+   // console.log("courseId:KKKKKKKKKKKKKKKKKKK " , courseId);
     
     const courses = await Cource.findById(courseId).populate('videos',{strictPopulate:false}).exec();
-    console.log("courseqqqqqqqqqqqqqqqqqqqqqqqqqq", courses);
+   // console.log("courseqqqqqqqqqqqqqqqqqqqqqqqqqq", courses);
     
 
    // console.log("this is courses <<<<<<<<<<>>>>>>>>>>",courses);
