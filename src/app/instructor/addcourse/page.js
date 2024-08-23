@@ -1,9 +1,9 @@
  import React from 'react'
- 
+ import AddCourse from "@/component/course/Create-cource"
  const page = () => {
    return (
      <div>
-       <h1>course</h1>
+      <AddCourse />
      </div>
    )
  }
