@@ -270,7 +270,7 @@ const MicBTN = () => {
                               </div>
                               <div className="flex flex-col">
                                 {mics.map(({ deviceId, label }, index) => (
-                                  <div
+                                  <div key={index}
                                     className={`px-3 py-1 my-1 pl-6 text-white text-left ${
                                       deviceId === selectedMic.id &&
                                       "bg-gray-150"
@@ -303,7 +303,7 @@ const MicBTN = () => {
                               </div>
                               <div className="flex flex-col ">
                                 {speakers.map(({ deviceId, label }, index) => (
-                                  <div
+                                  <div key={index}
                                     className={`px-3 py-1 my-1 pl-6 text-white ${
                                       deviceId === selectedSpeaker.id &&
                                       "bg-gray-150"
@@ -450,7 +450,7 @@ const WebCamBTN = () => {
                               </div>
                               <div className="flex flex-col">
                                 {webcams.map(({ deviceId, label }, index) => (
-                                  <div
+                                  <div key={index}
                                     className={`px-3 py-1 my-1 pl-6 text-white ${
                                       deviceId === selectedWebcam.id &&
                                       "bg-gray-150"
@@ -823,9 +823,9 @@ export function BottomBar({ bottomBarHeight, setIsMeetingLeft }) {
                 <Dialog.Panel className="w-screen transform overflow-hidden bg-gray-800 shadow-xl transition-all">
                   <div className="grid container bg-gray-800 py-6">
                     <div className="grid grid-cols-12 gap-2">
-                      {otherFeatures.map(({ icon }) => {
+                      {otherFeatures.map(({ icon },index) => {
                         return (
-                          <div
+                          <div key={index}
                             className={`grid items-center justify-center ${
                               icon === BottomBarButtonTypes.MEETING_ID_COPY
                                 ? "col-span-7 sm:col-span-5 md:col-span-3"

@@ -48,24 +48,24 @@ function videos({ params }) {
   return (
     <div>
       {/* <div>videos in courses{params.courseId}</div> */}
-      <div className="flex">
-        <div className="w-1/4 p-4 bg-gray-100 overflow-y-scroll h-screen" >
+      <div className="container flex flex-col md:flex-row bg-red-500 ">
+        <div className="video-list w-full md:w-1/3 overflow-y-scroll mb-4 h-screen order-2 md:order-1" >
           {Videos.length > 0 ? (
             Videos.map((videoData) => (
-              <div key={videoData._id}>
+              <div key={videoData._id} className='mb-4'  onClick={() => {currentvideo(videoData)}} >
               <VideoCard
                 key={videoData._id}
                 title={videoData.title}
                 description={videoData.description}
                 thumbnail={videoData.thambnail}
                 url={videoData.videourl}
+               
               />
-              <button
-              onClick={() => {currentvideo(videoData)}}
-              className="text-blue-500 hover:underline"
-            >
-              play
-            </button>
+          
+             
+             
+            
+           
             </div>
             ))
           ) : (
@@ -73,7 +73,7 @@ function videos({ params }) {
           )}
         </div>
         {Videos.length > 0 ? (
-        <div className="w-3/4 p-4">
+        <div className="video-player w-full md:w-2/3  order-1 md:order-2 z-30 bg-brown-50 sticky top-0 md:static ">
           <ReactPlayer url={currentUrl} controls width="100%" height="100%" />
           <h2 className="text-xl font-bold mb-2">{currentvideodata?.title}</h2>
         <p className="mb-4">{currentvideodata?.description}</p>

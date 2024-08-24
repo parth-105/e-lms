@@ -8,9 +8,12 @@ import { getAllReportsByUser } from "@/helpers/apicalls/reports";
 import { useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 function UserReports() {
   const [reportsData, setReportsData] = React.useState([]);
+  const [data, setData] = useLocalStorage('e-learning-user', '');
+
   //const dispatch = useDispatch();
   const columns = [
     {
@@ -50,7 +53,8 @@ function UserReports() {
   const getData = async () => {
     try {
      // dispatch(ShowLoading());
-     const response = await axios.post("/api/report/get-all-reports-by-user",{ user:"66bf6d68f1cc39527b8403f4"});
+     const response = await axios.post("/api/report/get-all-reports-by-user",{ user:data._id});
+     console.log('res',response)
      // const response = await getAllReportsByUser();
       if (response.data.success) {
         setReportsData(response.data.data);

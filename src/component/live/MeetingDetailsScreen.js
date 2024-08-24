@@ -1,4 +1,5 @@
 "use client"
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 import { CheckIcon, ClipboardIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ export function MeetingDetailsScreen({
   const [isCopied, setIsCopied] = useState(false);
   const [iscreateMeetingClicked, setIscreateMeetingClicked] = useState(false);
   const [isJoinMeetingClicked, setIsJoinMeetingClicked] = useState(false);
+  const [data, setData] = useLocalStorage('e-learning-user', '');
 
   return (
     <div
@@ -50,7 +52,7 @@ export function MeetingDetailsScreen({
               setMeetingId(e.target.value);
             }}
             placeholder={"Enter meeting Id"}
-            className="px-4 py-3 bg-gray-650 rounded-xl text-white w-full text-center"
+            className="px-4 py-3 bg-gray-650 rounded-xl text-black w-full text-center"
           />
           {meetingIdError && (
             <p className="text-xs text-red-600">{`Please enter valid meetingId`}</p>
@@ -64,7 +66,7 @@ export function MeetingDetailsScreen({
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
             placeholder="Enter your name"
-            className="px-4 py-3 mt-5 bg-gray-650 rounded-xl text-white w-full text-center"
+            className="px-4 py-3 mt-5 bg-gray-650 rounded-xl text-black w-full text-center"
           />
 
           {/* <p className="text-xs text-white mt-1 text-center">
@@ -84,19 +86,20 @@ export function MeetingDetailsScreen({
               }
             }}
           >
-            {iscreateMeetingClicked ? "Start a meeting" : "Join a meeting"}
+            {iscreateMeetingClicked ? "Start a meeting" : "Join  meeting"}
           </button>
         </>
       )}
 
-      {!iscreateMeetingClicked && !isJoinMeetingClicked && (
+   
         <div className="w-full md:mt-0 mt-4 flex flex-col">
           <div className="flex items-center justify-center flex-col w-full ">
+        { data.isInstructor ?
             <button
-              className="w-full bg-purple-350 text-white px-2 py-3 rounded-xl"
+              className="w-full bg-black text-white px-2 py-3 rounded-xl"
               onClick={async (e) => {
                 const { meetingId, err } = await _handleOnCreateMeeting();
-              
+
                 if (meetingId) {
                   setMeetingId(meetingId);
                   setIscreateMeetingClicked(true);
@@ -116,11 +119,12 @@ export function MeetingDetailsScreen({
                   );
                 }
               }}
-            >
-              Create a meeting
-            </button>
+            >      
+                Create a meeting
+            </button> :null
+}
             <button
-              className="w-full bg-gray-650 text-white px-2 py-3 rounded-xl mt-5"
+              className="w-full bg-black text-white px-2 py-3 rounded-xl mt-5"
               onClick={(e) => {
                 setIsJoinMeetingClicked(true);
               }}
@@ -129,7 +133,7 @@ export function MeetingDetailsScreen({
             </button>
           </div>
         </div>
-      )}
+     
     </div>
   );
 }

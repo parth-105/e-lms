@@ -5,10 +5,12 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 //import {getDataFromToken} from '@/helpers/getDataFromToken'
 import { decodeToken } from '@/helpers/utils/decodeToken';
+import useLocalStorage from '@/helpers/useLocalStorage.js';
 
 const Createsuggestion = () => {
     const [topic, setTopic] = useState('');
     const [subject, setSubject] = useState('');
+    const [data, setData] = useLocalStorage('e-learning-user', '');
    // const student = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
     const router = useRouter();
 
@@ -27,7 +29,7 @@ const Createsuggestion = () => {
             const response = await axios.post("/api/suggestion/addsuggestion", {
                 topic,
                 subject,
-                student:'66bf6d68f1cc39527b8403f4'
+                student:data._id
             });
             console.log(response);
           //  router.push('/student');

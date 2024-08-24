@@ -1,20 +1,23 @@
+// models/Purchase.js
 import mongoose from "mongoose";
 
-const purchesSchema = new mongoose.Schema({
-    user: {
-        type: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-    },
-    course: {
-        type: { type: mongoose.Schema.Types.ObjectId, ref: 'Cource' }
-    },
-    purchesd: {
-        type: Boolean,
-        default: false
-    },
+const purchaseSchema = new mongoose.Schema({
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cource',
+    required: true
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
+    required: true
+  },
+  isPurchased: {
+    type: Boolean,
+    default: false
+  }
+}, { timestamps: true });
 
-   
-})
+const purches= mongoose.models.purches|| mongoose.model("purches", purchaseSchema);
 
-const Purches = mongoose.models.Purches || mongoose.model("Purches", purchesSchema);
-
-export default Purches;
+export default purches;

@@ -7,6 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { uploadFileAndGetUrl } from '@/helpers/firebaseUtils';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 export default function AddCourse() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function AddCourse() {
   const [videoDescription, setVideoDescription] = useState('');
   const [loading, setloading] = useState(false)
   const [isFree, setIsFree] = useState(false);
-  // const [data, setData] = useLocalStorage('e-learning-user', '');
+   const [data, setData] = useLocalStorage('e-learning-user', '');
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
@@ -43,7 +44,7 @@ export default function AddCourse() {
       setloading(true)
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
-      const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: '66bf12d81ee660158e519a38', thambnail: thumbnailurl, videourl: videoFileurl, isFree: isFree });
+      const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: isFree });
       console.log("video success", response.data);
       console.log("video url >>>", response.data.video._id);
 
@@ -70,17 +71,12 @@ export default function AddCourse() {
       setLoading(true)
       const thumbnailurl = await uploadFileAndGetUrl(Cthumbnail);
       // const videoFileurl = await uploadFileAndGetUrl(videoFile);
-      const response = await axios.post("/api/course/addcourse", { title: coursetitle, price: Cprice, instructor: '66bf12d81ee660158e519a38', thambnail: thumbnailurl, videos: videos });
+      const response = await axios.post("/api/course/addcourse", { title: coursetitle, price: Cprice, instructor:data._id, thambnail: thumbnailurl, videos: videos ,subject });
       console.log("course success", response.data);
       if (response) {
         setloading(false)
-        // setCThumbnail(null)
-        // setcourseTitle("")
-        // setCPrice(0)
-        // setVideos([])
-
-
-        router.push("/course")
+         console.log('responce',response.cource)
+     //   router.push("/course")
       }
 
     } catch (error) {
@@ -122,6 +118,24 @@ export default function AddCourse() {
             className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
+        <div className="mb-4">
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+              Subject
+            </label>
+            <select
+              id="subject"
+              name="subject"
+              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              <option value="">Select Subject</option>
+              <option value="math">Math</option>
+              <option value="science">Science</option>
+              {/* Add more subject options as needed */}
+            </select>
+          </div>
 
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-semibold text-gray-600">Thumbnail</label>
@@ -174,7 +188,7 @@ export default function AddCourse() {
           </div>
 
           {/* Subject Dropdown */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
               Subject
             </label>
@@ -189,8 +203,8 @@ export default function AddCourse() {
               <option value="math">Math</option>
               <option value="science">Science</option>
               {/* Add more subject options as needed */}
-            </select>
-          </div>
+            {/* </select>
+          </div> */} 
 
           {/* Video Topic */}
           <div className="mb-4">

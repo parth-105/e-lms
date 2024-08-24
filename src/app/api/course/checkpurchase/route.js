@@ -5,15 +5,18 @@ import Purches from '@/model/purches-model';
 import { NextResponse } from 'next/server';
 
 connect();
-export  async function POST(req) {
+export  async function POST(request) {
 
 
+  const reqBody = await request.json();
+  const { courseId, userId } = reqBody;
 
-  const { user, course } = req.body;
+
+  //const { user, course } = req.body;
 
   
 
-  const purchase = await Purches.findOne({user,course})
+  const purchase = await Purches.findOne({ courseId, userId })
 
   if (purchase) {
   

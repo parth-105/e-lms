@@ -1,14 +1,19 @@
 // pages/api/create-checkout-session.js
 import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
+import Cource from '@/model/cource-model';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(req) {
+
+  const reqBody = await req.json()
+  const { price,courseId } = reqBody;
+  const C = '1234'
+
   if (req.method === 'POST') {
-    const reqBody = await req.json()
-     const { amount } = reqBody;
-    console.log("amount :::::::", amount);
-   // let newam = amount*100;
+
+    console.log("amount :::::::", courseId);
+
     console.log("Checkout 11111");
 
     try {
@@ -21,18 +26,18 @@ export async function POST(req) {
               product_data: {
                 name: 'Custom Payment',
               },
-              unit_amount: amount  , // Use the dynamic amount
+              unit_amount: price, // Use the dynamic amount
             },
             quantity: 1,
           },
         ],
         mode: 'payment',
-        success_url: `http://localhost:3000/course`,
+        success_url: `http://localhost:3000/success/${courseId}`,
         cancel_url: `http://localhost:3000/course`,
       });
-      console.log(session);
+      //console.log(session);
 
-      return NextResponse.json({ sessionId: session });
+      return NextResponse.json({ sessionId: session.id });
     } catch (err) {
       return NextResponse.json({ message: err.message });
     }

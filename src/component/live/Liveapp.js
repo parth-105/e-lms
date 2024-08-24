@@ -20,6 +20,7 @@ function Liveapp() {
   const [isMeetingStarted, setMeetingStarted] = useState(false);
   const [isMeetingLeft, setIsMeetingLeft] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  
 
 //   const isMobile = window.matchMedia(
 //     "only screen and (max-width: 768px)"
@@ -95,8 +96,8 @@ useEffect(() => {
 
         ) : isMeetingLeft ? (
           <LeaveScreen setIsMeetingLeft={setIsMeetingLeft} />
-        ) : (
-
+        ) :  (
+         
           <JoiningScreen
             participantName={participantName}
             setParticipantName={setParticipantName}

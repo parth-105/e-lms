@@ -10,6 +10,8 @@ import Instructions from "@/component/quiz/student/writeexam/Instructions";
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import axios from "axios";
+import { data } from "autoprefixer";
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 
 function WriteExam() {
@@ -29,6 +31,8 @@ function WriteExam() {
   const [secondsLeft = 0, setSecondsLeft] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [data, setData] = useLocalStorage('e-learning-user', '');
+
 //  const { user } = useSelector((state) => state.users);
   const getExamData = async () => {
     try {
@@ -84,7 +88,7 @@ function WriteExam() {
     const response = await axios.post("/api/report/add-report",
       { exam: params.id,
       result: tempResult,
-      user: '66bf6d68f1cc39527b8403f4'});
+      user: data._id});
 
       // const response = await addReport({
       //   exam: params.id,

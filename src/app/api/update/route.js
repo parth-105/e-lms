@@ -1,25 +1,24 @@
-import Purches from "@/model/purches-model";
+// routes/purchaseRoutes.js
+
 import { connect } from "@/lib/mongo";
+import purches from "@/model/purches-model";
+
 import { NextResponse } from "next/server";
+
 connect();
 
+export async function POST(request) {
+  const reqBody = await request.json();
+  const { courseId, userId, isPurchased } = reqBody;
 
-export async function POST(request){
-    const reqBody = await request.json()
-    const {user ,course ,purches} = reqBody
+  console.log('req', reqBody);
 
-    const newPurches = new Purches({
-        user,
-        course,
-        purches
-    })
+  const newPurchase = new purches({ courseId, userId, isPurchased });
+  await newPurchase.save();
 
-    const savePurchase = await newPurches.save();
-
-    
-    return NextResponse.json({
-        message: "purcgase update successduly",
-        success: true,
-        savePurchase
-    })
-} 
+  return NextResponse.json({
+    message: "Purchase done successfully",
+    success: true,
+    newPurchase
+  });
+}

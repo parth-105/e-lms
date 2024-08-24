@@ -31,7 +31,7 @@ const VideoUploadForm = () => {
       setloading(true)
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
-      const response = await axios.post("/api/videos/uploadvideo", {title:videoTopic, description:videoDescription, instructor:'66bf12d81ee660158e519a38',thambnail:thumbnailurl,videourl:videoFileurl});
+      const response = await axios.post("/api/videos/uploadvideo", {title:videoTopic, description:videoDescription, instructor:data._id,thambnail:thumbnailurl,videourl:videoFileurl});
       console.log("video success", response.data);
       if(response){
         setloading(false)

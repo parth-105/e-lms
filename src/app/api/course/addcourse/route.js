@@ -12,7 +12,7 @@ connect()
 export async function POST(request) {
     try {
         const reqBody = await request.json()
-        const { title, price , instructor, thambnail, videos} = reqBody
+        const { title, price , instructor, thambnail, videos,subject} = reqBody
 
         console.log("checking", reqBody)
 
@@ -22,7 +22,8 @@ export async function POST(request) {
             price,
             instructor,
             thambnail,
-            videos
+            videos,
+            subject
         })
 
         const cource = await newCource.save()
@@ -33,11 +34,7 @@ export async function POST(request) {
         console.log("newvideos", newCource);
 
 
-        // await Instructor.findByIdAndUpdate(
-        //     instructor,
-        //     { $push: { videos: video._id } },
-        //     { new: true }
-        // )
+
 
         return NextResponse.json({
             message: "video creted successfully",

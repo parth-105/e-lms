@@ -3,10 +3,12 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 export default function LoginComponent() {
 
     const router = useRouter();
+    const [data, setData] = useLocalStorage('e-learning-user', '');
     const [user, setUser] = React.useState({
         email: "",
         password: "",
@@ -31,7 +33,8 @@ export default function LoginComponent() {
             setLoading(true);
             console.log("user",user)
             const response = await axios.post("/api/login", user);
-           // localStorage.setItem('e-learning-user', JSON.stringify(user));
+            console.log('lr',response)
+           localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
             console.log("Login success", response.data);
 
             if(response.data.pending){
