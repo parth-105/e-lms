@@ -11,8 +11,12 @@ const courceSchema = new mongoose.Schema({
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Video' }]
 
     },
-    insructer: {
-        type: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' }
+    instructor: {
+         type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' 
+
+    },
+    subject:{
+        type:String
 
     },
 
