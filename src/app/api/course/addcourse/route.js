@@ -12,7 +12,7 @@ connect()
 export async function POST(request) {
     try {
         const reqBody = await request.json()
-        const { title, price , instructor, thambnail, videos,subject} = reqBody
+        const { title, price , instructor,subject, thambnail, videos} = reqBody
 
         console.log("checking", reqBody)
 
@@ -21,6 +21,7 @@ export async function POST(request) {
             title,
             price,
             instructor,
+            subject,
             thambnail,
             videos,
             subject

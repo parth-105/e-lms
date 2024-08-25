@@ -71,7 +71,7 @@ export default function AddCourse() {
       setLoading(true)
       const thumbnailurl = await uploadFileAndGetUrl(Cthumbnail);
       // const videoFileurl = await uploadFileAndGetUrl(videoFile);
-      const response = await axios.post("/api/course/addcourse", { title: coursetitle, price: Cprice, instructor:data._id, thambnail: thumbnailurl, videos: videos ,subject });
+      const response = await axios.post("/api/course/addcourse", { title: coursetitle, price: Cprice, instructor: '66bf12d81ee660158e519a38',subject:subject, thambnail: thumbnailurl, videos: videos });
       console.log("course success", response.data);
       if (response) {
         setloading(false)
@@ -118,8 +118,9 @@ export default function AddCourse() {
             className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
-        <div className="mb-4">
+        
+          {/* Subject Dropdown */}
+          <div className="mb-4">
             <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
               Subject
             </label>
@@ -129,13 +130,8 @@ export default function AddCourse() {
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-            >
-              <option value="">Select Subject</option>
-              <option value="math">Math</option>
-              <option value="science">Science</option>
-              {/* Add more subject options as needed */}
-            </select>
-          </div>
+            ></select>
+        </div>
 
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-semibold text-gray-600">Thumbnail</label>

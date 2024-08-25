@@ -12,7 +12,11 @@ const courceSchema = new mongoose.Schema({
 
     },
     instructor: {
-      type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' 
+         type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' 
+
+    },
+    subject:{
+        type:String
 
     },
 
