@@ -41,6 +41,9 @@ const videoSchema = new mongoose.Schema({
     isFree:{
         type: Boolean,
         default: true
+    },
+    subject:{
+        type:String
     }
 });
 

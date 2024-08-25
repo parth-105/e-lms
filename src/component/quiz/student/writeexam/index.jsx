@@ -311,7 +311,7 @@ function WriteExam() {
               <button
                 className="primary-outlined-btn"
                 onClick={() => {
-                    router.push("/");
+                    router.push("/student");
                 }}
               >
                 Close

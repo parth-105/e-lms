@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-//import {getDataFromToken} from '@/helpers/getDataFromToken'
-import { decodeToken } from '@/helpers/utils/decodeToken';
+
 import useLocalStorage from '@/helpers/useLocalStorage.js';
 
 const Createsuggestion = () => {
@@ -29,27 +28,17 @@ const Createsuggestion = () => {
             const response = await axios.post("/api/suggestion/addsuggestion", {
                 topic,
                 subject,
+                author:data.name,
                 student:data._id
             });
             console.log(response);
-          //  router.push('/student');
+        //    router.push('/student');
         } catch (error) {
             console.log(error);
         }
     };
 
-    useEffect(() => {
-        const fetchPayload = async () => {
-            try {
-                const decodedToken = decodeToken();
-                console.log('payload',JSON.stringify(decodedToken, null, 2))
-            } catch (error) {
-                console.log('Error fetching payload:', error.message);
-            }
-        };
 
-        fetchPayload();
-    }, []);
 
     return (
         <div className="flex items-center justify-center min-h-screen">

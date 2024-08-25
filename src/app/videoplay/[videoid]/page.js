@@ -1,9 +1,39 @@
-import React from 'react'
+"use client"
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import ReactPlayer from 'react-player';
 
 const page = ({params}) => {
+  const [currentUrl, setCurrentUrl] = useState();
+  const [videos, setVideos] = useState({});
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await axios.post('/api/videos/getvideosbyid',{id:params.videoid}); // Make a GET request
+        console.log("video responce", response.data)
+        setVideos(response.data.videos); 
+        setCurrentUrl(response.data.videos.videourl)// Update state with fetched videos
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    };
+
+    fetchVideos();
+
+    // Cleanup function (optional)
+    return () => {
+      // Perform any cleanup (e.g., close connections, unsubscribe, etc.)
+    };
+  }, []); // Empty dependency array means this effect runs once on component mount
+
   return (
     <div>
-      <h1>{params.videoid}</h1>
+      {/* <h1>{params.videoid}</h1> */}
+      <div className="video-player w-full md:w-full  z-30 bg-brown-50  top-0 md:static ">
+          <ReactPlayer url={currentUrl} controls width="100%" height="100%" />
+          <h2 className="text-xl font-bold mb-2">{videos?.title}</h2>
+        <p className="mb-4">{videos?.description}</p>
+        </div>
     </div>
   )
 }

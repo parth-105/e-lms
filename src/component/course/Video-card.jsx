@@ -46,7 +46,7 @@ const VideoCard = ({ title, description, thumbnail, videoUrl }) => {
 
     // </div>
   
-    <Card className="video-card p-4 border rounded-lg shadow-md cursor-pointer">
+    <Card className="video-card p-2 mb-4 border rounded-lg shadow-md cursor-pointer">
       <CardHeader floated={false} className="h-[100%]">
         <img className="h-full" src={thumbnail} alt={title}/>
       </CardHeader>

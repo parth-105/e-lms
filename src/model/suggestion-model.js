@@ -20,6 +20,11 @@ const suggestionSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref:'Instructor'
     },
+    author: {
+        type: String,
+        required: [true, "Please provide a author"],
+        
+    },
    
 })
 

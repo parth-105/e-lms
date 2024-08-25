@@ -48,11 +48,11 @@ function videos({ params }) {
   return (
     <div>
       {/* <div>videos in courses{params.courseId}</div> */}
-      <div className="container flex flex-col md:flex-row bg-red-500 ">
+      <div className="container flex flex-col md:flex-row ">
         <div className="video-list w-full md:w-1/3 overflow-y-scroll mb-4 h-screen order-2 md:order-1" >
           {Videos.length > 0 ? (
             Videos.map((videoData) => (
-              <div key={videoData._id} className='mb-4'  onClick={() => {currentvideo(videoData)}} >
+              <div key={videoData._id} className='mb-8'  onClick={() => {currentvideo(videoData)}} >
               <VideoCard
                 key={videoData._id}
                 title={videoData.title}
@@ -60,12 +60,7 @@ function videos({ params }) {
                 thumbnail={videoData.thambnail}
                 url={videoData.videourl}
                
-              />
-          
-             
-             
-            
-           
+              />    
             </div>
             ))
           ) : (

@@ -45,7 +45,8 @@ function Home() {
         <div className="divider"></div>
         <Row gutter={[16, 16]}>
           {exams.map((exam) => (
-            <Col span={6}>
+            
+            <Col key={exam._id} span={6}>
               <div className="card-lg flex flex-col gap-1 p-2">
                 <h1 className="text-2xl">{exam?.name}</h1>
 

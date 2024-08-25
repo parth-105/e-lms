@@ -11,12 +11,18 @@ import useLocalStorage from '@/helpers/useLocalStorage.js';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [coursedata,setCoursedata] = useState()
   const [data, setData] = useLocalStorage('e-learning-user', '');
+  const [isClient, setIsClient] = useState(false);
+
+
+
 
   useEffect(() => {
+    setIsClient(true);
     const fetchCourses = async () => {
       try {
-        const res = await axios.post('/api/course/get-course-by-id',{id:data._id});
+        const res = await axios.post('/api/course/studentcourse',{id:data._id});
         console.log('cd',res.data.courses);
         
        // const cdata = await res.json();
@@ -29,6 +35,11 @@ const Courses = () => {
     fetchCourses();
   }, []);
 
+  
+  if (!isClient) {
+    return null;
+}
+
 
   return (
     <div className="container mx-auto p-4">
@@ -39,11 +50,12 @@ const Courses = () => {
             <CourseCard
 
               key={course._id}
-              title={course.title}
-              thumbnail={course.thambnail}
-              price={course.price}
-              courseId={course._id}
+              title={course.courseId.title}
+              thumbnail={course.courseId.thambnail}
+              price={course.courseId.price}
+              courseId={course.courseId._id}
               instructor={course.instructor}
+              userId={course.userId}
             />
           ))
         ) : (

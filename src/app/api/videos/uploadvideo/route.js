@@ -12,7 +12,7 @@ connect()
 export async function POST(request) {
     try {
         const reqBody = await request.json()
-        const { title, description, instructor, thambnail, videourl ,comment ,isFree} = reqBody
+        const { title, description, instructor, thambnail, videourl ,comment ,isFree,subject} = reqBody
 
         console.log("checking", reqBody)
 
@@ -25,6 +25,7 @@ export async function POST(request) {
             videourl,
             comment,
             isFree,
+            subject
         })
 
         const video = await newVideo.save()
