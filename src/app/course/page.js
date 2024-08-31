@@ -61,7 +61,7 @@ const Courses = () => {
             <CourseCard
               key={course._id}
               title={course.title}
-              thumbnail={course.thumbnail}
+              thumbnail={course.thambnail}
               price={course.price}
               courseId={course._id}
             />

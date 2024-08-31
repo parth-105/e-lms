@@ -1,16 +1,24 @@
-"use client"
-import Image from 'next/image'
-import { useEffect, useState } from 'react';
+import React from 'react'
+import Navbar from '../component/Navbar/Navbar'
+import Banner from '../component/Banner/Banner'
+import Badges from '../component/Badges/Badges'
+import Cards from '../component/Cards/Cards'
+ import Courses from '../component/Courses/Courses'
+//import Testimonials from '../component/Testimonials/Testimonials'
+import Footer from '../component/Footer/Footer'
 
-
-export default function Home() {
-
-
-
-
+const Home = () => {
   return (
-   <>
-   <h1>hi</h1>
-   </>
+    <>
+      <Navbar />
+      <Banner />
+      <Badges />
+      <Cards />
+      <Courses />
+      {/* <Testimonials /> */}
+      <Footer />
+    </>
   )
 }
+
+export default Home
