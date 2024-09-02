@@ -28,6 +28,11 @@ const examSchema = new mongoose.Schema(
       ref: 'Question',
       required: true,
     },
+    instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "Please provide an instructor id"],
+      ref: 'Instructor'
+  },
     
   },
   {

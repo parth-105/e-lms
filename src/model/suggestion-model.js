@@ -22,9 +22,11 @@ const suggestionSchema = new mongoose.Schema({
     },
     author: {
         type: String,
-        required: [true, "Please provide a author"],
-        
+        required: [true, "Please provide a author"],    
     },
+    photoURL: {
+        type: String,
+      },
    
 })
 

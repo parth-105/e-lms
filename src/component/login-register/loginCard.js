@@ -41,7 +41,13 @@ export default function LoginComponent() {
               router.push("/pendingpage"); 
             }
             else{
-            router.push("/");
+              if(response.data.Login.isInstructor)
+              {
+                router.push("/instructor");
+              }
+              else{
+              router.push("/student");
+              }
             }
         } catch (error) {
             console.log(error.message);

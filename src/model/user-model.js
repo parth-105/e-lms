@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:'/default.png'
     },
+    photoURL: {
+        type: String,
+      },
 
    
    

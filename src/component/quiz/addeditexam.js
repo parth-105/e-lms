@@ -18,6 +18,7 @@ import AddEditQuestion from "@/component/quiz/addeditquestion";
 const { TabPane } = Tabs;
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 
 
@@ -28,6 +29,7 @@ function AddEditExam() {
   const [showAddEditQuestionModal, setShowAddEditQuestionModal] =
     React.useState(false);
   const [selectedQuestion, setSelectedQuestion] = React.useState(null);
+  const [data, setData] = useLocalStorage('e-learning-user', '');
  // const params = useParams();
  const params = useParams();
   const { id } = params;
@@ -46,7 +48,7 @@ function AddEditExam() {
         console.log("data",response)
       } else {
         // response = await addExam(values);
-        response = await axios.post("/api/exam/add-exam", values);
+        response = await axios.post("/api/exam/add-exam", {...values,instructor:data._id});
         console.log("data",response)
       }
       if (response.data.success) {

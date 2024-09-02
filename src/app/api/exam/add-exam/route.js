@@ -13,7 +13,7 @@ export async function POST(request) {
     try {
         // check if exam already exists
         const reqBody = await request.json()
-      //  const {name ,questions} =reqBody
+        const {values} =reqBody
         console.log("checking",reqBody)
         const examExists = await Exam.findOne({ name:reqBody.name });
         if (examExists) {
@@ -26,6 +26,7 @@ export async function POST(request) {
         return NextResponse.json({
             message: "exam creted successfully",
             success: true,
+            newExam
         })
       } catch (error) {
         console.log("ree",error.message)

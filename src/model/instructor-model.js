@@ -46,6 +46,9 @@ const instructorSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
      },
+     photoURL: {
+        type: String,
+      },
 
   
 })

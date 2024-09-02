@@ -10,6 +10,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import RegisterComponent from "@/component/login-register/registerCard";
+import MyComponent from "@/component/ui/register/Register";
 
 
 
@@ -92,7 +93,8 @@ export default function SignupPage() {
                 <button type="submit">Register</button>
             </form>
             <Link href="/admin">admin</Link> */}
-            <RegisterComponent/>
+            {/* <RegisterComponent/> */}
+            <MyComponent/>
         </>
 
     )

@@ -10,13 +10,34 @@ import useLocalStorage from '@/helpers/useLocalStorage.js';
 export default function Sidebar({ show, setter }) {
     const router = useRouter();
     const [data, setData] = useLocalStorage('e-learning-user', '');
+    const [userData, setUserData] = useState(null);
+   // const [ld,setld] =useState({})
 
-    // Define our base class
+    useEffect(() => {
+        // This code will only run on the client side
+        const storedData = localStorage.getItem('e-learning-user');
+       
+      //  setld(storedData);
+      if(storedData){
+        const parsedData = JSON.parse(storedData);
+      setUserData(parsedData);
+     // console.log('ld',userData)
+      }
+     
+      }, []);
+
+      useEffect(() => {
+        // This will run whenever userData changes
+        if (userData) {
+          console.log('ld', userData);
+        }
+      }, [userData]);
+
     const className = "bg-black w-[250px] h-full transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40";
-    // Append class based on state of sidebar visiblity
+
     const appendClass = show ? " ml-0" : " ml-[-250px] md:ml-0";
 
-    // Clickable menu items
+
     const MenuItem = ({ icon, name, route }) => {
         // Highlight menu item based on currently displayed route
         const colorClass = router.pathname === route ? "text-white" : "text-white/50 hover:text-white";
@@ -56,7 +77,7 @@ export default function Sidebar({ show, setter }) {
 
 
                 <div className="flex flex-col">
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="Home"
                             route="/instructor"
@@ -65,7 +86,7 @@ export default function Sidebar({ show, setter }) {
                     }
 
 
-                    {!data.isInstructor ?
+                    {!userData?.isInstructor ?
                         <MenuItem
                             name="Home"
                             route="/student"
@@ -79,7 +100,7 @@ export default function Sidebar({ show, setter }) {
                         route="/course"
                     />
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="My-Coureses"
                             route="/instructor/my-Coureses"
@@ -88,7 +109,7 @@ export default function Sidebar({ show, setter }) {
                     }
 
 
-                    {!data.isInstructor ?
+                    {!userData?.isInstructor ?
                         <MenuItem
                             name="My-Coureses"
                             route="/student/my-courses"
@@ -96,7 +117,7 @@ export default function Sidebar({ show, setter }) {
                         /> : null
                     }
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="Add-quiz"
                             route="/instructor/exams/add"
@@ -104,7 +125,7 @@ export default function Sidebar({ show, setter }) {
                         /> : null
                     }
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="All-quiz"
                             route="/instructor/exams"
@@ -112,7 +133,7 @@ export default function Sidebar({ show, setter }) {
                         /> : null
                     }
 
-                    {!data.isInstructor ?
+                    {!userData?.isInstructor ?
                         <MenuItem
                             name="Quiz-Report"
                             route="/student/reports"
@@ -121,7 +142,7 @@ export default function Sidebar({ show, setter }) {
                     }
 
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="All-Report"
                             route="/instructor/reports"
@@ -130,7 +151,7 @@ export default function Sidebar({ show, setter }) {
                     }
 
 
-                    {!data.isInstructor ?
+                    {!userData?.isInstructor ?
                         <MenuItem
                             name="All-Exams"
                             route="/student/all-exam"
@@ -138,7 +159,7 @@ export default function Sidebar({ show, setter }) {
                         /> : null
                     }
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="Create-cource"
                             route="/instructor/addcourse"
@@ -147,7 +168,7 @@ export default function Sidebar({ show, setter }) {
                     }
 
 
-                    {data.isInstructor ?
+                    {userData?.isInstructor ?
                         <MenuItem
                             name="Create-video"
                             route="/instructor/Create-video"

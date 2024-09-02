@@ -10,7 +10,7 @@ connect()
 export async function GET(request){
     try {
       
-        const videos = await Video.find({ isFree: true });
+        const videos = await Video.find({ isFree: true }).populate('instructor',{strictPopulate:false}).exec();;
 
             return NextResponse.json({
                 message: "video get successfully",

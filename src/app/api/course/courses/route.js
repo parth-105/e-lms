@@ -9,7 +9,7 @@ export async function GET(res) {
 
     //console.log("this is get req >>>>>><<<<<<<<<<<");
     
-    const courses = await Cource.find({});
+    const courses = await Cource.find().populate('instructor',{strictPopulate:false}).exec();
 
    // console.log("this is courses <<<<<<<<<<>>>>>>>>>>",courses);
     

@@ -46,7 +46,7 @@ export async function POST(request) {
           })
           response.cookies.set("e-learninigtoken", token, {
             httpOnly: true,
-
+            maxAge: 7 * 24 * 60 * 60,
           })
           return response;
         } else {
@@ -96,6 +96,7 @@ export async function POST(request) {
         })
         response.cookies.set("e-learninigtoken", token, {
           httpOnly: true,
+          maxAge: 7 * 24 * 60 * 60,
 
         })
         return response;

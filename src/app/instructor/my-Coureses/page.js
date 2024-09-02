@@ -13,6 +13,10 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [data, setData] = useLocalStorage('e-learning-user', '');
 
+  const handleCourseDelete = (deletedCourseId) => {
+    setCourses(courses.filter(course => course._id !== deletedCourseId));
+  };
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -43,7 +47,9 @@ const Courses = () => {
               thumbnail={course.thambnail}
               price={course.price}
               courseId={course._id}
-              instructor={course.instructor}
+              instructor={course.instructor._id}
+              insdetail={course.instructor}
+              onDelete={handleCourseDelete}
             />
           ))
         ) : (

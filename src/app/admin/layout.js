@@ -13,7 +13,8 @@ export default function Layout({  children }) {
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <>  
+        <>
+          
             <div className="min-h-screen">
                 <div className="flex">
                     <div className='gap-4'>

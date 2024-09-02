@@ -20,7 +20,7 @@ function videos({ params }) {
         const response = await axios.post("/api/course/coursevideo", { courseId: courseId });
 
         console.log('videodata', response.data.videos);
-        console.log('url', response.data.videos[0].videourl);
+      //  console.log('url', response.data.videos[0].videourl);
        
 
         // console.log("HHHHHHHHHHHHHHHHHHHHHHHH", response.data.videos);

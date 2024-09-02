@@ -4,6 +4,7 @@ import React, {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
 import LoginComponent from "@/component/login-register/loginCard";
+import MyComponent from "@/component/ui/login/Logincard";
 
 
 
@@ -74,7 +75,8 @@ export default function LoginPage() {
     //         <Link href="/signup">Visit Signup page</Link>
     //     </div>
 
-    <LoginComponent/>
+   // <LoginComponent/>
+   <MyComponent/>
     
     )
 

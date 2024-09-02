@@ -14,7 +14,7 @@ export async function POST(request) {
       //  await connect();
         // const { name, email, password } = await req.json();
         const reqBody = await request.json()
-        const { name, email, password, isInstructor } = reqBody
+        const { name, email, password, isInstructor ,photoURL } = reqBody
 
         if (isInstructor) {
             const instructor = await Instructor.findOne({ email })
@@ -32,6 +32,7 @@ export async function POST(request) {
                 email,
                 password: hashedPassword,
                 status: 'pending', 
+                photoURL,
             })
 
             const savedUser = await newUser.save()
@@ -65,6 +66,7 @@ export async function POST(request) {
                 email,
                 password: hashedPassword,
                 isInstructor:false,
+                photoURL,
             })
     
             const savedUser = await newUser.save()

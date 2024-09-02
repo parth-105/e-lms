@@ -11,7 +11,7 @@ connect()
 export async function POST(request){
     try {
         const reqBody = await request.json()
-        const {topic, subject, student,Instructor,author} = reqBody
+        const {topic, subject, student,Instructor,author,photoURL} = reqBody
 
         console.log("checking", reqBody)
     
@@ -22,7 +22,8 @@ export async function POST(request){
                 subject, 
                 author,
                 student,
-                Instructor
+                Instructor,
+                photoURL
             })
     
             const suggestions = await newsuggestion.save()

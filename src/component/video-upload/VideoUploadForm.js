@@ -98,8 +98,11 @@ const VideoUploadForm = () => {
             onChange={(e) => setSubject(e.target.value)}
           >
             <option value="">Select Subject</option>
-            <option value="math">Math</option>
-            <option value="science">Science</option>
+            <option value="DSA">DSA</option>
+            <option value="OS">Oprating system</option>
+            <option value="Language">Languages</option>
+            <option value="Ai">AI/ML</option>
+            <option value="Data">Data Science</option>
             {/* Add more subject options */}
           </select>
         </div>

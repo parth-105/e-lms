@@ -9,23 +9,21 @@ import Exam from "@/model/quiz/exam-model";
 connect()
 
 
-export async function POST(req) {
+export async function POST(request) {
     try {
+        const reqBody = await request.json()
+         const { instructor} = reqBody
 
-   //   console.log(req.body.examId)
-      const reqBody = await req.json()
-      const { examId,body } = reqBody
-
-      console.log("cg", reqBody)
-      
-       const eexam = await Exam.findByIdAndUpdate(examId, reqBody);
+        console.log("checking", reqBody)
+        const exams = await Exam.find({ instructor:instructor });
         return NextResponse.json({
-            message: "exam edit successfully",
+            message: "exam get successfully",
             success: true,
-            eexam
+            data:exams
         })
       } catch (error) {
         console.log("ree",error.message)
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
-}
+    }
+

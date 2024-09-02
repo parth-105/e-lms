@@ -34,7 +34,7 @@ function Instructions({ examData, setView, startTimer }) {
 
       <div className="flex gap-2">
         <button className="primary-outlined-btn"
-         onClick={()=>router.push('/')}
+         onClick={()=>router.push('/student')}
         >
               CLOSE
         </button>

@@ -14,11 +14,11 @@ const Createsuggestion = () => {
     const router = useRouter();
 
     const subjects = [
-        'Math',
-        'Science',
-        'History',
-        'Language Arts',
-        'Physical Education'
+      'DSA',
+       'Oprating system',
+       'Language',
+       'Ai',
+       'Data'
     ];
 
     const handleSubmit = async (event) => {
@@ -29,10 +29,17 @@ const Createsuggestion = () => {
                 topic,
                 subject,
                 author:data.name,
-                student:data._id
+                student:data._id,
+                photoURL:data.photoURL
+            
             });
             console.log(response);
-        //    router.push('/student');
+            if(data.isInstructor)
+            {
+             router.push('/instructor')
+            }else{
+            router.push('/student');
+            }
         } catch (error) {
             console.log(error);
         }

@@ -16,15 +16,17 @@ export async function POST(req) {
         const reqBody = await req.json()
         //const { name, correctOption, options, exam } = reqBody
 
-        console.log("checking",reqBody)
+        console.log("ggggg",reqBody)
   
             // edit question in Questions collection
-            await Question.findByIdAndUpdate(reqBody.questionId, reqBody);
+            const eq = await Question.findByIdAndUpdate(reqBody.questionId, reqBody);
                    
   
         return NextResponse.json({
             message: "question edit successfully",
             success: true,
+            eq,
+
         })
       }
        catch (error) {

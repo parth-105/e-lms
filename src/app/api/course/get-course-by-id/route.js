@@ -11,7 +11,7 @@ export async function POST(request) {
       await connect();
       const reqBody = await request.json()
       console.log("reqbody",reqBody)
-      const courses = await Cource.find({ instructor: reqBody.id })
+      const courses = await Cource.find({ instructor: reqBody.id }).populate('instructor',{strictPopulate:false}).exec();
         return NextResponse.json({
             message: "courses featch successfully",
             success: true,
