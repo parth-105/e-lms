@@ -146,10 +146,10 @@ const Navbar = () => {
               </Transition>
             </Menu>
 
-            <Link href="/signin" legacyBehavior>
-              <a className="rounded-full py-3 px-6 bg-cornflowerBlue text-white shadow-sm hover:shadow-md">
+            <Link href="/login" legacyBehavior>
+              <div className="rounded-full py-3 px-6 bg-cornflowerBlue text-white shadow-sm hover:shadow-md">
                 Login
-              </a>
+              </div>
             </Link>
           </div>
         </div>
@@ -249,7 +249,7 @@ const Navbar = () => {
             </Transition>
           </Menu> */}
 
-          <Link href="/signin" legacyBehavior>
+          <Link href="/login" legacyBehavior>
             <a className="rounded-full py-3 px-6 bg-blue-700 text-white shadow-sm hover:shadow-md">
               Login
             </a>
