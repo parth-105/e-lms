@@ -58,7 +58,7 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
 
     //route.push(`/course/videos/${courseId}`);courseId, userId
 
-    if (data._id === instructor || userId) {
+    if (data._id === instructor || userId || data.isAdmin ) {
       route.push(`/course/videos/${courseId}`);
     }
     else {
@@ -134,7 +134,7 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
         <p className="text-gray-600 mt-2">${price}</p>
         <div className=' flex justify-between'>
           <button onClick={() => handleCourseClick(courseId)} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"  >
-            {data._id === instructor || userId ? "Watch" : "Enroll Now"}
+            {data._id === instructor || userId || data.isAdmin ? "Watch" : "Enroll Now"}
           </button>
           {data._id === instructor || data.isAdmin ? <div onClick={() => setIsModalOpen(true)} disabled={isDeleting} className='hover:bg-red-400 hover:cursor-pointer flex justify-center items-center rounded-full w-10' >
 

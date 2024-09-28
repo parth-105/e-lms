@@ -33,9 +33,13 @@ const courceSchema = new mongoose.Schema({
     },
     subject:{
         type: String,
-    }
-  
+    },
 
+    assignment: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }]
+
+    },
+  
    
 })
 
