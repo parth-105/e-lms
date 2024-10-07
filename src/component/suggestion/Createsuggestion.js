@@ -5,26 +5,41 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 import useLocalStorage from '@/helpers/useLocalStorage.js';
+import { useToast } from "@/hooks/use-toast"
 
 const Createsuggestion = () => {
+    const { toast } = useToast()
     const [topic, setTopic] = useState('');
     const [subject, setSubject] = useState('');
     const [data, setData] = useLocalStorage('e-learning-user', '');
+    const [loading ,setloading]=useState(false)
    // const student = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
     const router = useRouter();
 
     const subjects = [
-      'DSA',
-       'Oprating system',
-       'Language',
-       'Ai',
-       'Data'
+       
+        "Javascript",
+        "React",
+        "Node",
+       "MongoDB",
+        "GK",
+       "ML",
+        "ebusiness",
     ];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         // Handle form submission
         try {
+            setloading(true)
+            if (!topic || !subject) {
+                toast({
+                  title: "Validation Error",
+                  description: "Please fill in all required fields.",
+                });
+                setloading(false)
+                return;
+              }
             const response = await axios.post("/api/suggestion/addsuggestion", {
                 topic,
                 subject,
@@ -40,8 +55,12 @@ const Createsuggestion = () => {
             }else{
             router.push('/student');
             }
+            setloading(false)
         } catch (error) {
             console.log(error);
+        }
+        finally{
+            setloading(false)
         }
     };
 
@@ -81,7 +100,7 @@ const Createsuggestion = () => {
                         type="submit"
                         className="w-full p-2 bg-green-500 text-white font-semibold rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200"
                     >
-                        Submit
+                        {loading ? "loding" : "Submit"}
                     </button>
                 </form>
             </div>

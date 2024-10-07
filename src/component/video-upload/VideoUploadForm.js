@@ -5,8 +5,10 @@ import useLocalStorage from '@/helpers/useLocalStorage.js'
 import { uploadFileAndGetUrl } from '@/helpers/firebaseUtils';
 import axios from 'axios';
 import {useRouter} from "next/navigation";
+import { useToast } from "@/hooks/use-toast"
 
 const VideoUploadForm = () => {
+  const { toast } = useToast()
   const router = useRouter();
   const [thumbnail, setThumbnail] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
@@ -29,6 +31,14 @@ const VideoUploadForm = () => {
     e.preventDefault();
     try{
       setloading(true)
+      if (!thumbnail || !videoFile) {
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
+        setloading(false)
+        return;
+      }
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
       const response = await axios.post("/api/videos/uploadvideo", {title:videoTopic, description:videoDescription, instructor:data._id,thambnail:thumbnailurl,videourl:videoFileurl,subject:subject});
@@ -97,12 +107,14 @@ const VideoUploadForm = () => {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           >
-            <option value="">Select Subject</option>
-            <option value="DSA">DSA</option>
-            <option value="OS">Oprating system</option>
-            <option value="Language">Languages</option>
-            <option value="Ai">AI/ML</option>
-            <option value="Data">Data Science</option>
+            <option value="">Select Category</option>
+                      <option value="Javascript">Javascript</option>
+                      <option value="React">React</option>
+                      <option value="Node">Node</option>
+                      <option value="MongoDB">MongoDB</option>
+                      <option value="GK">GK</option>
+                      <option value="ML">Machine Learning</option>
+                      <option value="ebusiness">E-business</option>
             {/* Add more subject options */}
           </select>
         </div>

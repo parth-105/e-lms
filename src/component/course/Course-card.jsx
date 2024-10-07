@@ -15,26 +15,31 @@ import {
 import { MdDelete } from "react-icons/md";
 import { useState } from 'react';
 import ConfirmationModal from '@/component/ui/delete/ConfirmationModal';
+import CourseEditorModalTabs from '../ui/editcourse/CourseEditorModal';
+
+
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, insdetail ,onDelete }) => {
+const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, insdetail, onDelete ,course}) => {
 
   const route = useRouter();
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isedting, setIsediting] = useState(false);
+
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await axios.post('/api/course/deletecourse',{id:courseId});
+      const response = await axios.post('/api/course/deletecourse', { id: courseId });
       console.log('ok', response.data.Success);
       if (response.data.Success) {
-       // alert('Video deleted successfully');
-        onDelete(courseId); 
+        // alert('Video deleted successfully');
+        onDelete(courseId);
         // Optionally, refresh the page or update the state to remove the deleted video from the UI
       } else {
         alert('Failed to delete the video');
@@ -58,7 +63,7 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
 
     //route.push(`/course/videos/${courseId}`);courseId, userId
 
-    if (data._id === instructor || userId || data.isAdmin ) {
+    if (data._id === instructor || userId || data.isAdmin) {
       route.push(`/course/videos/${courseId}`);
     }
     else {
@@ -137,20 +142,19 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
             {data._id === instructor || userId || data.isAdmin ? "Watch" : "Enroll Now"}
           </button>
           {data._id === instructor || data.isAdmin ? <div onClick={() => setIsModalOpen(true)} disabled={isDeleting} className='hover:bg-red-400 hover:cursor-pointer flex justify-center items-center rounded-full w-10' >
-
-
             {isDeleting ? 'Deleting...' : <MdDelete />}
-
-
-            {/* <MdDelete /> */}
           </div> : null}
 
           <ConfirmationModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={handleDelete}
-           
+
           />
+
+          {data._id === instructor || data.isAdmin ? <button   className='hover:bg-red-400 hover:cursor-pointer flex justify-center items-center rounded-full w-10' >
+           <CourseEditorModalTabs course={course} />
+          </button> : null}
 
         </div>
 

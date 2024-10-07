@@ -1,9 +1,10 @@
+import InstructorPendingApproval from '@/component/ui/pendingpage/InstructorPendingApproval'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <h1>pendingpage</h1>
+      <InstructorPendingApproval />
     </div>
   )
 }

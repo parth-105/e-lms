@@ -1,6 +1,7 @@
 import React from "react";
 //import { useNavigate } from "react-router-dom";
 import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
 
 
 function Instructions({ examData, setView, startTimer }) {
@@ -33,12 +34,14 @@ function Instructions({ examData, setView, startTimer }) {
       </ul>
 
       <div className="flex gap-2">
-        <button className="primary-outlined-btn"
+        <Button className="primary-outlined-btn"
          onClick={()=>router.push('/student')}
+          variant="outline"
         >
               CLOSE
-        </button>
-        <button
+        </Button>
+
+        <Button
           className="primary-contained-btn"
           onClick={() => {
             startTimer();
@@ -46,7 +49,7 @@ function Instructions({ examData, setView, startTimer }) {
           }}
         >
           Start Exam
-        </button>
+        </Button>
       </div>
     </div>
   );

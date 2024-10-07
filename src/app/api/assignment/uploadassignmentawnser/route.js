@@ -17,26 +17,21 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { student, answer ,id} = reqBody;
 
-        console.log("", reqBody)
+        console.log("ccc", reqBody)
 
         const assignment = await Assignment.findById(id);
         if (!assignment) {
             return NextResponse.json({ error: "Assignment not found" }, { status: 404 })
         }
 
-        // assignment.awnserfile.push({ awnser:answer});
-        // await assignment.save();
-
+        if(answer){
         assignment.awnserfile.push(answer);
         await assignment.save();
-
+        }
 
     
-
-        console.log("assignment", assignment);
+     //   console.log("assignment", assignment);
       
-
-
 
         return NextResponse.json({
             message: "awnser submited creted successfully",

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Video from "@/model/video-model"
 import Instructor from "@/model/instructor-model";
+import Assignment from '@/model/Assignment'
 
 const courceSchema = new mongoose.Schema({
     title: {

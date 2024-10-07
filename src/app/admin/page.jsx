@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import InstructorRequests from '@/component/ui/pendingrequest/InstructorRequests';
 
 export default function AdminDashboard() {
   const [instructors, setInstructors] = useState([]);
@@ -23,14 +24,7 @@ export default function AdminDashboard() {
   return (
     <div>
       <h1>Pending Instructors</h1>
-      <ul>
-        {instructors?.map(instructor => (
-          <li key={instructor._id}>
-            {instructor.name} - {instructor.email}
-            <button onClick={() => approveInstructor(instructor._id)}>Approve</button>
-          </li>
-        ))}
-      </ul>
+      <InstructorRequests/>
     </div>
   );
 };

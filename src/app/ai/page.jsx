@@ -23,60 +23,60 @@ export default function Home() {
         }
     }, [messages]);
 
-    async function runChat(prompt) {
-        setLoading(true); // Set loading to true while generating the response
+        async function runChat(prompt) {
+            setLoading(true); // Set loading to true while generating the response
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+            const genAI = new GoogleGenerativeAI(API_KEY);
+            const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
-        const generationConfig = {
-            temperature: 0.9,
-            topK: 1,
-            topP: 1,
-            maxOutputTokens: 2048,
-        };
+            const generationConfig = {
+                temperature: 0.9,
+                topK: 1,
+                topP: 1,
+                maxOutputTokens: 2048,
+            };
 
-        const safetySettings = [
-            {
-                category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-        ];
+            const safetySettings = [
+                {
+                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+            ];
 
-        // Prepare chat history to include previous messages
-        const chatHistory = messages.map(msg => ({
-            role: msg.sender === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.text }],
-        }));
+            // Prepare chat history to include previous messages
+            const chatHistory = messages.map(msg => ({
+                role: msg.sender === 'user' ? 'user' : 'model',
+                parts: [{ text: msg.text }],
+            }));
 
-        const chat = model.startChat({
-            generationConfig,
-            safetySettings,
-            history: chatHistory,
-        });
+            const chat = model.startChat({
+                generationConfig,
+                safetySettings,
+                history: chatHistory,
+            });
 
-        try {
-            const result = await chat.sendMessage(prompt);
-            const response = result.response;
-            setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: response.text() }]);
-        } catch (error) {
-            setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: 'Sorry, something went wrong.' }]);
-        } finally {
-            setLoading(false); // Set loading to false after the response is received
+            try {
+                const result = await chat.sendMessage(prompt);
+                const response = result.response;
+                setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: response.text() }]);
+            } catch (error) {
+                setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: 'Sorry, something went wrong.' }]);
+            } finally {
+                setLoading(false); // Set loading to false after the response is received
+            }
         }
-    }
 
     const handleSendMessage = async () => {
         if (prompt.trim() === '') return;
@@ -113,7 +113,7 @@ export default function Home() {
                         <p><strong>{msg.sender === 'user' ? 'You' : 'Bot'}:</strong> {msg.text}</p>
                     </div>
                 ))}
-                {loading && (
+                {loading && (~
                     <div style={styles.loadingContainer}>
                         <div className="spinner"></div>
                         <p style={styles.loadingText}>Generating response...</p>

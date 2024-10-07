@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import { Videocard } from './Videocard';
 import DotSpinner from '@/component/ui/loader/DotSpinner';
+import VideoCard from '../LmsVideoCard/LmsVideoCard';
+import CourseSkeleton, { SkeletonCard } from '../CourseSkeleton/CourseSkeleton';
 
 
 const VideoList = () => {
@@ -68,29 +70,31 @@ const VideoList = () => {
             onChange={handleSubjectChange}
             className="border border-gray-300 p-2 rounded"
           >
-            <option value="">All Subjects</option>
-            <option value="DSA">DSA</option>
-            <option value="OS">Oprating system</option>
-            <option value="Language">Languages</option>
-            <option value="Ai">AI/ML</option>
-            <option value="Data">Data Science</option>
+           <option value="">All subject</option>
+                      <option value="Javascript">Javascript</option>
+                      <option value="React">React</option>
+                      <option value="Node">Node</option>
+                      <option value="MongoDB">MongoDB</option>
+                      <option value="GK">GK</option>
+                      <option value="ML">Machine Learning</option>
+                      <option value="ebusiness">E-business</option>
             {/* Add more subjects as needed */}
           </select>
         </div>
       </div>
 
 
-      {loading ? <div className=' justify-center flex p-20 w-full h-screen ' > <DotSpinner /> </div> : filteredCourses.length > 0 ? (
+      {loading ? <div className='w-full h-full cursor-pointer' > <CourseSkeleton/> </div> : filteredCourses.length > 0 ? (
         <div className='flex flex-wrap justify-center'>
           {filteredCourses.map((video) => (
             <div key={video._id} className=' m-4  ' >
-              <Videocard video={video} />
-              {/* Display other video details */}
+              {/* <Videocard video={video} /> */}
+              <VideoCard  video={video}/>
             </div>
           ))
           }
         </div>) : (
-        <p>{search ? "Podcast Not Found" : "No Podcasts On The Platform"}</p>
+        <p>{search ? "Video Not Found" : "No Video On The Platform"}</p>
       )
       }
     </div>

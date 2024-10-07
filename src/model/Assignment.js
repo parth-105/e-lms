@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import Video from "@/model/video-model"
 import Instructor from "@/model/instructor-model";
+import Cource from '@/model/cource-model';
+import User from '@/model/user-model'
 
 const answerSchema = new mongoose.Schema({
-    student: {
+    studentid: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'users',
     },
-    awnser: {
+    awnserfileurl: {
       type: String,   
     }
   });
@@ -49,6 +51,12 @@ const assignmentSchema = new mongoose.Schema({
     instructor: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' 
    },
+
+   status: {
+    type: String,
+    enum: ['submitted', 'pending'], 
+    default: 'pending' 
+  }
 
 
 

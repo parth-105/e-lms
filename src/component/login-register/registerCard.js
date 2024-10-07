@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { uploadFileAndGetUrl } from "@/helpers/firebaseUtils";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 
 export default function RegisterComponent() {
   const router = useRouter();
@@ -94,11 +97,13 @@ export default function RegisterComponent() {
                 <div className="mb-4">
 
 
-                  <label className="block text-gray-700">Profile Picture</label>
+                <Label htmlFor="courseThumbnail">Profile Pic</Label>
                   {
+
                     !preview &&
-                    (<input
+                    (<Input
                       type="file"
+                       accept="image/*"
                       ref={fileInputRef}
                       style={{ display: 'block' }}
                       onClick={handleFileInputClick}

@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
 
+import { useToast } from "@/hooks/use-toast"
+
+
 const MyComponent = () => {
 
-
+    const { toast } = useToast()
     const router = useRouter();
     const [data, setData] = useLocalStorage('e-learning-user', '');
     const [user, setUser] = React.useState({
@@ -30,29 +33,54 @@ const MyComponent = () => {
 
 
     const onLogin = async () => {
+        if ( !user.email || !user.password  ) {
+            toast({
+                title: "Validation Error",
+                description: "Please fill in all required fields.",
+            });
+            return;
+        }
         try {
             setLoading(true);
             console.log("user", user)
             const response = await axios.post("/api/login", user);
             console.log('lr', response)
-            localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
+            // localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
             console.log("Login success", response.data);
 
             if (response.data.pending) {
                 router.push("/pendingpage");
+              //  localStorage.setItem('e-learning-user', '');
             }
             else {
                 if (response.data.Login.isInstructor) {
+                    localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
                     router.push("/instructor");
+                    toast({
+                        title: "Instructor Login Successfull!",
+                        description: "Keep Teaching !",
+                      })
                 }
                 else {
                     router.push("/student");
+                    localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
+                    toast({
+                        title: "Student Login Successfull!",
+                        description: "Enjoy Your Learning !",
+                      })
                 }
+                setLoading(false);
             }
         } catch (error) {
-            console.log(error.message);
 
-        } finally {
+            console.log(error.message);
+            toast({
+                title: "Login Faild",
+                description: "Something Went Wrong!!!!",
+              })
+
+        } 
+        finally{
             setLoading(false);
         }
     }
@@ -86,6 +114,7 @@ const MyComponent = () => {
                                 type="email"
                                 name="email"
                                 id="email"
+                                
                                 value={user.email}
                                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -113,6 +142,7 @@ const MyComponent = () => {
                                             checked={isChecked}
                                             onChange={handleOnChange}
                                             aria-describedby="remember"
+
                                             type="checkbox"
                                             className="bg-gray-50 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                                         />

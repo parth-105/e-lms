@@ -9,15 +9,18 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
 import DotSpinner from "../ui/loader/DotSpinner";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast"
 
 export default function AddCourse() {
+  const { toast } = useToast()
   const router = useRouter();
   const [coursetitle, setcourseTitle] = useState("");
   const [Cprice, setCPrice] = useState("");
   const [Cthumbnail, setCThumbnail] = useState(null);
   const [videos, setVideos] = useState([]);
   const [Loading, setLoading] = useState(false);
-  const [serch,setSerch] = useState('')
+  const [serch, setSerch] = useState('')
 
   //for video
 
@@ -33,20 +36,38 @@ export default function AddCourse() {
   const [data, setData] = useLocalStorage('e-learning-user', '');
 
   const handleThumbnailChange = (e) => {
+
     setThumbnail(e.target.files[0]);
 
   };
 
   const handleVideoFileChange = (e) => {
+
     setVideoFile(e.target.files[0]);
 
   }
   const videoUpload = async (e) => {
     e.preventDefault();
+    if (!videoTopic || !videoDescription) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields.",
+      });
+      return;
+    }
     try {
       setvloading(true)
+      if (!thumbnail || !videoFile) {
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
+        setvloading(false)
+        return;
+      }
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
+
       const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: isFree });
       console.log("video success", response.data);
       console.log("video url >>>", response.data.video._id);
@@ -58,11 +79,14 @@ export default function AddCourse() {
         setVideoDescription('')
         setVideoFile(null)
         setThumbnail(null)
-         //router.push("/instructor/course")
+        //router.push("/instructor/course")
       }
 
     } catch (error) {
       console.log("Login failed", error.message)
+    }
+    finally {
+      setvloading(false)
     }
   }
 
@@ -71,6 +95,14 @@ export default function AddCourse() {
     setloading(true)
     e.preventDefault();
     try {
+      if (!Cthumbnail ) {
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
+        setLoading(false)
+        return;
+      }
       setLoading(true)
       const thumbnailurl = await uploadFileAndGetUrl(Cthumbnail);
       // const videoFileurl = await uploadFileAndGetUrl(videoFile);
@@ -79,7 +111,7 @@ export default function AddCourse() {
       if (response) {
         setloading(false)
         console.log('responce', response.cource)
-           router.push("/course")
+        router.push("/course")
       }
 
     } catch (error) {
@@ -135,17 +167,19 @@ export default function AddCourse() {
             onChange={(e) => setSubject(e.target.value)}
           >
             <option value="">Select Subject</option>
-            <option value="DSA">DSA</option>
-            <option value="OS">Oprating system</option>
-            <option value="Language">Languages</option>
-            <option value="Ai">AI/ML</option>
-            <option value="Data">Data Science</option>
+            <option value="Javascript">Javascript</option>
+            <option value="React">React</option>
+            <option value="Node">Node</option>
+            <option value="MongoDB">MongoDB</option>
+            <option value="GK">GK</option>
+            <option value="ML">Machine Learning</option>
+            <option value="ebusiness">E-business</option>
             {/* Add more subject options as needed */}
           </select>
         </div>
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-semibold text-gray-600">Thumbnail</label>
-          <input
+          <Input
             type="file"
             onChange={(e) => setCThumbnail(e.target.files[0])}
             required
@@ -157,7 +191,7 @@ export default function AddCourse() {
           type="submit"
           className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-200 ease-in-out"
         >
-           {loading ? "LOADING....": "Add course"}
+          {loading ? "LOADING...." : "Add course"}
         </button>
       </form>
 
@@ -170,7 +204,7 @@ export default function AddCourse() {
             <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700">
               Video Thumbnail
             </label>
-            <input
+            <Input
               type="file"
               id="thumbnail"
               name="thumbnail"
@@ -184,7 +218,7 @@ export default function AddCourse() {
             <label htmlFor="videoFile" className="block text-sm font-medium text-gray-700">
               Video File
             </label>
-            <input
+            <Input
               type="file"
               id="videoFile"
               name="videoFile"
@@ -250,7 +284,7 @@ export default function AddCourse() {
             type="submit"
             className="w-full h-screen py-2 px-4 mt-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            {vloading ? "LOADING....": "Upload Video"}
+            {vloading ? "LOADING...." : "Upload Video"}
           </button>
         </form>
       </div>

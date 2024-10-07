@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import CourseCard from '@/component/course/Course-card';
 import DotSpinner from '@/component/ui/loader/DotSpinner';
+import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -68,19 +69,22 @@ const Courses = () => {
             className="border border-gray-300 p-2 rounded"
           >
             <option value="">All Subjects</option>
-            <option value="DSA">DSA</option>
-            <option value="OS">Oprating system</option>
-            <option value="Language">Languages</option>
-            <option value="Ai">AI/ML</option>
-            <option value="Data">Data Science</option>
+           
+                      <option value="Javascript">Javascript</option>
+                      <option value="React">React</option>
+                      <option value="Node">Node</option>
+                      <option value="MongoDB">MongoDB</option>
+                      <option value="GK">GK</option>
+                      <option value="ML">Machine Learning</option>
+                      <option value="ebusiness">E-business</option>
             {/* Add more subjects as needed */}
           </select>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8  ">
-        {loading ? <div className=' justify-center items-center flex w-full h-screen  ' > <DotSpinner /> </div> :filteredCourses.length > 0 ? (
-
+      {loading ? <div className='w-full h-full cursor-pointer' > <CourseSkeleton/> </div> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8  ">
+    
+    {  filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
             <CourseCard
               key={course._id}
@@ -88,14 +92,16 @@ const Courses = () => {
               thumbnail={course.thambnail}
               price={course.price}
               courseId={course._id}
+            //  instructor={course.instructor._id}
               insdetail={course.instructor}
-              onDelete={handleCourseDelete}
+              course={course}
+              onDelete={handleCourseDelete}   
             />
           ))
         ) : (
           <p>No courses available.</p>
         )}
-      </div>
+      </div>}
     </div>
   );
 };

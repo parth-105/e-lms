@@ -10,13 +10,14 @@ function AddEditQuestion({
   setShowAddEditQuestionModal,
   refreshData,
   examId,
-    selectedQuestion,
-    setSelectedQuestion
+  selectedQuestion,
+  setSelectedQuestion,
+  seteditquestion
 }) {
   //const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-    //  dispatch(ShowLoading());
+      //  dispatch(ShowLoading());
       const requiredPayload = {
         name: values.name,
         correctOption: values.correctOption,
@@ -30,30 +31,30 @@ function AddEditQuestion({
       };
 
       let response
-        if(selectedQuestion){
+      if (selectedQuestion) {
 
-           response = await axios.post(
-            "/api/exam/edit-question-in-exam",
-            {
-              ...requiredPayload,
-              questionId: selectedQuestion._id
-            }
-          );
+        response = await axios.post(
+          "/api/exam/edit-question-in-exam",
+          {
+            ...requiredPayload,
+            questionId: selectedQuestion._id
+          }
+        );
 
-            // response = await editQuestionById({
-            //     ...requiredPayload,
-            //     questionId: selectedQuestion._id
-            // })
-        }
-        else{
-          //  response = await addQuestionToExam(requiredPayload);
-          response = await axios.post(
-            "/api/exam/add-question-to-exam",
-            requiredPayload
-          );
-          console.log("que",response)
-          
-        }
+        // response = await editQuestionById({
+        //     ...requiredPayload,
+        //     questionId: selectedQuestion._id
+        // })
+      }
+      else {
+        //  response = await addQuestionToExam(requiredPayload);
+        response = await axios.post(
+          "/api/exam/add-question-to-exam",
+          requiredPayload
+        );
+        console.log("que", response)
+
+      }
       if (response.data.success) {
         message.success(response.data.message);
         refreshData();
@@ -62,9 +63,9 @@ function AddEditQuestion({
         message.error(response.data.message);
       }
       setSelectedQuestion(null)
-    //  dispatch(HideLoading());
+      //  dispatch(HideLoading());
     } catch (error) {
-    //  dispatch(HideLoading());
+      //  dispatch(HideLoading());
       message.error(error.data.message);
     }
   };
@@ -81,12 +82,12 @@ function AddEditQuestion({
     >
       <Form onFinish={onFinish} layout="vertical"
         initialValues={{
-            name: selectedQuestion?.name,
-            A: selectedQuestion?.options?.A,
-            B: selectedQuestion?.options?.B,
-            C: selectedQuestion?.options?.C,
-            D: selectedQuestion?.options?.D,
-            correctOption: selectedQuestion?.correctOption,
+          name: selectedQuestion?.name,
+          A: selectedQuestion?.options?.A,
+          B: selectedQuestion?.options?.B,
+          C: selectedQuestion?.options?.C,
+          D: selectedQuestion?.options?.D,
+          correctOption: selectedQuestion?.correctOption,
         }}
       >
         <Form.Item name="name" label="Question">
@@ -121,7 +122,7 @@ function AddEditQuestion({
           >
             Cancel
           </button>
-          <button className="primary-contained-btn">Save</button>
+          <button onClick={() =>seteditquestion(true)} className="primary-contained-btn">Save</button>
         </div>
       </Form>
     </Modal>

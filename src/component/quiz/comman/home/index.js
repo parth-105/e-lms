@@ -8,28 +8,29 @@ import { getAllExams } from "@/helpers/apicalls/exams";
 //import { useNavigate } from "react-router-dom";
 import { useRouter } from 'next/navigation';
 import axios from "axios";
+import ExamCard from "@/component/ui/exam/ExamCard";
 
 function Home() {
-    const router = useRouter();
+  const router = useRouter();
   const [exams, setExams] = React.useState([]);
- // const navigate = useNavigate();
- // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
   //const { user } = useSelector((state) => state.users);
   const getExams = async () => {
     try {
-   //   dispatch(ShowLoading());
+      //   dispatch(ShowLoading());
       const response = await axios.post("/api/exam/get-all-exam");
-      console.log("all-exam",response.data)
+      console.log("all-exam", response.data)
       if (response.data.success) {
         setExams(response.data.data);
       } else {
         console.error(response.data.message);
         message.error(response.message);
       }
-   //   dispatch(HideLoading());
+      //   dispatch(HideLoading());
     } catch (error) {
-     // dispatch(HideLoading());
-       console.log(error.data.message);
+      // dispatch(HideLoading());
+      console.log(error.data.message);
       message.error(error.data.message);
     }
   };
@@ -39,15 +40,14 @@ function Home() {
   }, []);
 
   return (
-     (
-      <div>
+    (
+      <div className="flex h-screen" >
 
-        <div className="divider"></div>
-        <Row gutter={[16, 16]}>
+        {/* <Row gutter={[3, 3]} className="" >
           {exams.map((exam) => (
             
-            <Col key={exam._id} span={6}>
-              <div className="card-lg flex flex-col gap-1 p-2">
+            <Col key={exam._id} span={8} className="container w-4/5 mx-auto p-4" >
+              <div className="card-lg flex flex-col gap-1 p-1">
                 <h1 className="text-2xl">{exam?.name}</h1>
 
                 <h1 className="text-md">Category : {exam.category}</h1>
@@ -65,7 +65,16 @@ function Home() {
               </div>
             </Col>
           ))}
-        </Row>
+        </Row> */}
+
+        <div className='flex flex-wrap justify-center'>
+          {exams.map((exam, index) =>
+          (
+            <div key={index} className='m-4' >
+              <ExamCard exam={exam} />
+            </div>
+          ))}
+        </div>
       </div>
     )
   );

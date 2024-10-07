@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { uploadFileAndGetUrl } from "@/helpers/firebaseUtils";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast"
 
 const MyComponent = () => {
 
 
     const router = useRouter();
     const [formData, setFormData] = useState({ name: '', email: '', password: '', isInstructor: false, photoURL: '' });
-
+    const { toast } = useToast()
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -43,6 +46,13 @@ const MyComponent = () => {
     }
 
     const onSignup = async () => {
+        if (!formData.name || !formData.email ||  !formData.password  ) {
+            toast({
+                title: "Validation Error",
+                description: "Please fill in all required fields.",
+            });
+            return;
+        }
         try {
             setLoading(true);
             const pic = await uploadFileAndGetUrl(profilePic);
@@ -55,11 +65,20 @@ const MyComponent = () => {
                 router.push("/pendingpage");
             }
             else {
+                toast({
+                    title: "Your Are Register Successfully",
+                    description: "Now Login !!",
+                  })
                 router.push("/login");
+              
             }
 
         } catch (error) {
             console.log(error.message);
+            toast({
+                title: "Some this went wrong",
+                description: "Plese keep passions",
+              })
         } finally {
             setLoading(false);
         }
@@ -75,7 +94,7 @@ const MyComponent = () => {
 
 
     return (
-        <section className="min-h-screen flex items-stretch text-white">
+        <form className="min-h-screen flex items-stretch text-white">
             <div className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80)' }}>
                 <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
                 <div className="w-full px-24 z-10">
@@ -91,8 +110,8 @@ const MyComponent = () => {
                     <div className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
 
                         <div className="pb-2 pt-4">
-                            <label className="block text-white">Profile Picture</label>
-                            {!preview && (<input type="file" onChange={handleProfilePicChange} className="w-full px-3 py-2 border rounded" />)}
+                        <Label htmlFor="courseThumbnail">Profile Picture</Label>
+                            {!preview && (<Input type="file"  required  accept="image/*" onChange={handleProfilePicChange} className="w-full px-3 py-2 border rounded" />)}
                             {preview && <img src={preview} alt="Profile Preview" className="mt-4 w-32 h-32 object-cover rounded-full" onClick={handelprevclick} />}
                         </div>
 
@@ -100,6 +119,7 @@ const MyComponent = () => {
                             <input
                                 type="text"
                                 name="name"
+                                required
                                 onChange={handleChange}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 placeholder="Name" />
@@ -108,6 +128,7 @@ const MyComponent = () => {
                             <input
                                 type="email"
                                 name="email"
+                                required
                                 onChange={handleChange}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 placeholder="Email" />
@@ -118,9 +139,11 @@ const MyComponent = () => {
                             <input
                                 type="password"
                                 name="password"
+                               
                                 onChange={handleChange}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                placeholder="Password" />
+                                placeholder="Password"
+                                required />
                         </div>
 
                         <div className="pb-2 pt-4">
@@ -130,6 +153,7 @@ const MyComponent = () => {
                                         <input
                                             id="customCheckLogin"
                                             checked={isChecked}
+                                            
                                             onChange={handleOnChange}
                                             type="checkbox"
                                             className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150" />
@@ -159,7 +183,7 @@ const MyComponent = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </form>
     );
 };
 

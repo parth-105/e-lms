@@ -28,6 +28,7 @@ function page() {
   const [showAddEditQuestionModal, setShowAddEditQuestionModal] =
     React.useState(false);
   const [selectedQuestion, setSelectedQuestion] = React.useState(null);
+  const [editquestion, seteditquestion] = React.useState(false);
  // const params = useParams();
  const params = useParams();
   const { id } = params;
@@ -37,30 +38,23 @@ function page() {
     
       let response;
 
-      if (params.id) {
+      if (params.id  && editquestion ) {
         response = await axios.post("/api/exam/edit-exam-by-id",{...values,examId: params.id});
-      //  response = await editExamById({
-        //   ...values,
-        //   examId: params.id,
-        // });
         console.log("data",response)
-      } else {
-        // response = await addExam(values);
-        response = await axios.post("/api/exam/add-exam", values);
-        console.log("data",response)
-      }
-      if (response.data.success) {
-        message.success(response.data.message);
-        router.push("/instructor/exams");
-      } else {
-        console.log("error",response.data.message)
-        message.error(response.data.message);
-      }
+        if (response?.data?.success) {
+          message.success(response.data.message);
+          router.push("/instructor/exams");
+        } else {
+          console.log("error",response.data.message)
+          message.error(response.data.message);
+        }
+      } 
+     
     
     } catch (error) {
     
-    console.log("error",error.data.message)
-      message.error(error.data.message);
+     console.log("error",error?.data?.message)
+      message.error(error?.data?.message);
     }
   };
 
@@ -267,6 +261,7 @@ function page() {
         <AddEditQuestion
           setShowAddEditQuestionModal={setShowAddEditQuestionModal}
           showAddEditQuestionModal={showAddEditQuestionModal}
+          seteditquestion={seteditquestion}
           examId={params.id}
           refreshData={getExamData}
           selectedQuestion={selectedQuestion}

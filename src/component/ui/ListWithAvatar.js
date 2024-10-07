@@ -68,11 +68,14 @@ export function ListWithAvatar() {
             className="border border-gray-300 p-2 rounded"
           >
             <option value="">All Subjects</option>
-            <option value="DSA">DSA</option>
-            <option value="OS">Oprating system</option>
-            <option value="Language">Languages</option>
-            <option value="Ai">AI/ML</option>
-            <option value="Data">Data Science</option>
+           
+                      <option value="Javascript">Javascript</option>
+                      <option value="React">React</option>
+                      <option value="Node">Node</option>
+                      <option value="MongoDB">MongoDB</option>
+                      <option value="GK">GK</option>
+                      <option value="ML">Machine Learning</option>
+                      <option value="ebusiness">E-business</option>
             {/* Add more subjects as needed */}
           </select>
         </div>

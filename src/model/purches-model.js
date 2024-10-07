@@ -1,5 +1,7 @@
 // models/Purchase.js
 import mongoose from "mongoose";
+import Cource from '@/model/cource-model';
+import User from '@/model/user-model';
 
 const purchaseSchema = new mongoose.Schema({
   courseId: {
