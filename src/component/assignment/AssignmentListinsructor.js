@@ -67,7 +67,7 @@ export default function AssignmentListinsructor() {
                  <DrawerContent>
                   <DrawerHeader className="h-96 overflow-y-auto">
                     
-                      <Answercard awnserfile={assignment?.awnserfile} />
+                      <Answercard  assignmentId={assignment._id} awnserfile={assignment?.awnserfile} />
                       {/* component */}
 
                   </DrawerHeader> 

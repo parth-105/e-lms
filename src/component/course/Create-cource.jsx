@@ -68,7 +68,7 @@ export default function AddCourse() {
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
 
-      const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: isFree });
+      const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: false });
       console.log("video success", response.data);
       console.log("video url >>>", response.data.video._id);
 

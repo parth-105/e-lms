@@ -3,6 +3,7 @@ import React from "react";
 //import { useDispatch } from "react-redux";
 import { addQuestionToExam, editQuestionById } from "@/helpers/apicalls/exams";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 //import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
 
 function AddEditQuestion({
@@ -115,14 +116,15 @@ function AddEditQuestion({
         </div>
 
         <div className="flex justify-end mt-2 gap-3">
-          <button
-            className="primary-outlined-btn"
+          <Button
+            className=" bg-gray-300 transition-transform hover:scale-105"
             type="button"
+            variant="outline"
             onClick={() => setShowAddEditQuestionModal(false)}
           >
             Cancel
-          </button>
-          <button onClick={() =>seteditquestion(true)} className="primary-contained-btn">Save</button>
+          </Button>
+          <Button onClick={() =>seteditquestion(true)} className="transition-transform hover:scale-105">Save</Button>
         </div>
       </Form>
     </Modal>

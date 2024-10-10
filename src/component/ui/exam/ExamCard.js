@@ -15,9 +15,9 @@ export default function ExamCard({exam})
     const router = useRouter();
 
     return (
-        <Card className="w-full max-w-md mx-auto">
+        <Card className="w-60 max-w-md mx-auto text-wrap ">
             <CardHeader>
-                <CardTitle className="text-2xl font-bold">{exam?.name}</CardTitle>
+                <CardTitle className=" text-wrap text-2xl font-bold">{exam?.name}</CardTitle>
                 <Badge variant="secondary" className="text-sm font-medium">
                     {exam?.category}
                 </Badge>
@@ -46,7 +46,7 @@ export default function ExamCard({exam})
                 </div>
             </CardContent>
             <CardFooter>
-                <Button className="w-full" onClick={() => router.push(`/student/write-exam/${exam._id}`)}>
+                <Button className="w-full transition-transform hover:scale-105" onClick={() => router.push(`/student/write-exam/${exam._id}`)}>
                     Start Exam
                 </Button>
             </CardFooter>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import CourseCard from '@/component/course/Course-card';
 import useLocalStorage from '@/helpers/useLocalStorage.js';
 import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
+import CourseComponent from '@/component/ui/course-card/CourseComponent';
 
 
 
@@ -24,6 +25,7 @@ const Courses = () => {
       setLoading(true);
       try {
         const res = await axios.post('/api/course/get-course-by-id', { id: data._id });
+        console.log('icd',res.data.courses)
         setCourses(res.data.courses);
       } catch (error) {
         console.log('Error fetching courses:', error);
@@ -42,7 +44,7 @@ const Courses = () => {
       {loading ? <div className='w-full h-full cursor-pointer' > <CourseSkeleton /> </div> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {courses.length > 0 ? (
           courses.map((course) => (
-            <CourseCard
+            <CourseComponent
               key={course._id}
               title={course.title}
               thumbnail={course.thambnail}

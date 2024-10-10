@@ -111,7 +111,7 @@ export default function AssignmentList() {
       try {
         const res = await axios.post('/api/assignment/listofassignment', { userId: data._id });
         //  const data = await res.json();
-        console.log('mcd', res.data)
+        console.log('mcccd', res.data)
         setpurchasecourseassignment(res.data.purchases);
         setloading(false)
       } catch (error) {
@@ -122,11 +122,22 @@ export default function AssignmentList() {
     fetchCourses();
   }, []);
 
+  useEffect(() => {
+    const fetchCourses = async () => {
+    // Fetch assignments for the student from the backend
+   const res =  await axios.post('/api/assignment/studentnotifyforstatusupdate',{studentId:data._id})
+   console.log('new res',res.data.assignments)
+  };
+
+  fetchCourses();
+   // setpurchasecourseassignment(res.data.assignments);
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">My Assignments</h1>
       <div className="  grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {purchasecourseassignment.map((assignment) => (
+        {purchasecourseassignment.filter((_, index) => index % 2 === 0).map((assignment) => (
           <Card key={assignment?._id} className="flex flex-col">
             <Drawer>
               <CardHeader>

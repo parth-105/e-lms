@@ -18,6 +18,8 @@ import AddEditQuestion from "@/component/quiz/addeditquestion";
 const { TabPane } = Tabs;
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
+import { Pencil, Trash2 } from "lucide-react";
 
 
 
@@ -157,20 +159,20 @@ function page() {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => (
-        <div className="flex gap-2 bg-blue-500">
-          <button
-            className="ri-pencil-line bg-blue-500"
+        <div className="flex gap-2 ">
+          <Button
+            className="transition-transform hover:scale-105"
             onClick={() => {
               setSelectedQuestion(record);
               setShowAddEditQuestionModal(true);
             }}
-          >edit</button>
-          <i
-            className="ri-delete-bin-line"
+          ><Pencil className="h-4 w-4 mr-2" /></Button>
+          <Button
+            className="transition-transform hover:scale-105"
             onClick={() => {
               deleteQuestion(record._id);
             }}
-          >delete</i>
+          ><Trash2 className="h-4 w-4 mr-2" /></Button>
         </div>
       ),
     },
@@ -223,28 +225,29 @@ function page() {
                 </Col>
               </Row>
               <div className="flex justify-end gap-2">
-                <button
-                  className="primary-outlined-btn"
+                <Button
+                variant="outline"
+                  className="transition-transform hover:scale-105"
                   type="button"
                   onClick={() => router.push("/instructor/exams")}
                 >
                   Cancel
-                </button>
-                <button className="primary-contained-btn" type="submit">
+                </Button>
+                <Button className="transition-transform hover:scale-105"  type="submit">
                   Save
-                </button>
+                </Button>
               </div>
             </TabPane>
             {params.id && (
               <TabPane tab="Questions" key="2">
                 <div className="flex justify-end">
-                  <button
-                    className="primary-outlined-btn"
+                  <Button
+                    className="transition-transform hover:scale-105"
                     type="button"
                     onClick={() => setShowAddEditQuestionModal(true)}
                   >
                     Add Question
-                  </button>
+                  </Button>
                 </div>
 
                 <Table

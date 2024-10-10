@@ -20,42 +20,120 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 
-const Coursewiseassignmentlist = ({Course}) => {
+
+const Coursewiseassignmentlist = ({ Course }) => {
+  const [data, setData] = useLocalStorage('e-learning-user', '');
+
+  const loggedInStudentId = data._id; // Assuming this is the logged-in student's ID
+
+  // const studentSubmission = Course.assignment?.awnserfile.find(ans => ans?.studentid === loggedInStudentId);
+  // const isSubmitted = studentSubmission?.status === 'submitted';
+  // const isPending = studentSubmission?.status === 'pending';
+  // const hasNotSubmitted = !studentSubmission;
+
   return (
     <div className="container mx-auto p-4 cursor-pointer">
-    <h1 className="text-2xl font-bold mb-6">{`${Course.title} Assignment`}</h1>
-    <div className="grid  gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {Course?.assignment.map((assignment) => (
-       
-        <Card key={assignment._id} className="flex flex-col">
-          <CardHeader>
-            <CardTitle>{assignment?.title}</CardTitle>
-            <CardDescription>{assignment?.description}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow">
-           
-          </CardContent>
-          <CardFooter className="flex justify-between items-center">
-            <Badge
-              variant={
-                assignment.status === 'submitted' ? 'secondary' :
-                assignment.status === 'pending' ? 'success' : 'default'
-              }
-            >
-              {assignment.status.charAt(0).toUpperCase() + assignment.status.slice(1)}
-            </Badge>
-            <Link href={`/student/assignments/submit-assignment/${assignment._id}`} passHref>
-              <Button variant="outline">
-                <FileTextIcon className="mr-2 h-4 w-4" />
-                {assignment.status === 'pending' ? 'View & Submit' : 'View Details'}
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
-       
-      ))}
+      <h1 className="text-2xl font-bold mb-6">{`${Course.title} Assignment`}</h1>
+      <div className="grid  gap-6 md:grid-cols-2 lg:grid-cols-3">
+        { Course?.assignment.length>0 ? (
+        Course?.assignment.map((assignment) => (
+
+          <Card key={assignment._id} className="flex flex-col">
+            <CardHeader>
+              <CardTitle>{assignment?.title}</CardTitle>
+              <CardDescription>{assignment?.description}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow">
+
+            </CardContent>
+            {<CardFooter className="flex justify-between items-center">
+              {/* <Badge
+                className={assignment?.awnserfile.length === 0 ? 'bg-yellow-300 ' : 'bg-green-300'}
+                variant={'secondary'}
+              > */}
+
+              {assignment?.awnserfile.length === 0 ? (
+                <div className="bg-yellow-200 p-1">
+                  <p>pending</p>
+                </div>
+              ) : (
+                assignment?.awnserfile.some(ans => ans?.studentid === data._id) ? (
+                  assignment?.awnserfile.map((ans) => (
+                    ans?.studentid === data._id && (
+                      <Badge
+                        key={ans.studentid}
+                        className={ans?.status === 'submitted' ? 'bg-green-300 text-black' : 'bg-yellow-300 text-black '}
+                      >
+
+                        {ans?.status === 'submitted' ? 'Submitted' : 'Pending'}
+                      </Badge>
+                    )
+                  ))
+                ) : (
+                  <Badge className="bg-yellow-300 text-black ">
+                    Pending
+                  </Badge>
+                )
+              )}
+
+              {/* </Badge> */}
+
+
+              <div>
+                {assignment?.awnserfile.length === 0 ? (
+                 
+                   
+                    <Button variant="outline">
+                    <Link href={`/student/assignments/submit-assignment/${assignment._id}`} passHref>
+                      Submit Assignment
+                      </Link>
+                    </Button>
+                  
+                ) : (
+                  assignment?.awnserfile.map((ans) => (
+                    ans?.studentid === loggedInStudentId ? (
+                      <div
+                        key={ans.studentid}
+                      >
+
+                        {ans?.status === 'submitted' ? (
+                          <Button variant="outline" disabled>
+                            Assignment Submitted
+                          </Button>
+                        ) : (
+                          <Button variant="outline">
+                            <Link href={`/student/assignments/submit-assignment/${assignment._id}`} passHref>
+                            Submit Assignment
+                            </Link>
+                          </Button>
+                        )}
+                      </div>
+                    ) : null
+                  ))
+                )}
+
+                {assignment?.awnserfile.every(ans => ans?.studentid !== loggedInStudentId) && (
+                  <Button variant="outline">
+                    <Link href={`/student/assignments/submit-assignment/${assignment._id}`} passHref>
+                      Submit Assignment
+                    </Link>
+                  </Button>
+                )}
+              </div>
+              {/* <Link href={`/student/assignments/submit-assignment/${assignment._id}`} passHref>
+                <Button variant="outline">
+                  <FileTextIcon className="mr-2 h-4 w-4" />
+                </Button>
+              </Link> */}
+            </CardFooter>}
+          </Card>
+
+        )) 
+      ):
+        <p>there are curruntly not any assignment</p>
+      }
+      </div>
     </div>
-  </div>
   )
 }
 

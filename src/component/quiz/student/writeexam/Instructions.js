@@ -34,7 +34,7 @@ function Instructions({ examData, setView, startTimer }) {
       </ul>
 
       <div className="flex gap-2">
-        <Button className="primary-outlined-btn"
+        <Button className="transition-transform hover:scale-105"
          onClick={()=>router.push('/student')}
           variant="outline"
         >
@@ -42,7 +42,7 @@ function Instructions({ examData, setView, startTimer }) {
         </Button>
 
         <Button
-          className="primary-contained-btn"
+          className="transition-transform hover:scale-105"
           onClick={() => {
             startTimer();
             setView("questions");

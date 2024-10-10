@@ -6,7 +6,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
-    <div className='modalOverlay'>
+    <div className='modalOverlay  z-50 '>
             <div className='modalContent'>
               <h2>Confirm Deletion</h2>
               <p>Are you sure you want to delete this video?</p>

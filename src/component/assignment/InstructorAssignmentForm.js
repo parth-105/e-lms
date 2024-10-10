@@ -14,15 +14,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast"
+import { Loader2 } from "lucide-react"
+
+
+
 
 import axios from "axios"
 import { uploadpdfFileAndGetUrl } from "@/helpers/FirebasepdfUpload"
 
 export default function InstructorAssignmentForm() {
+
+  const { toast } = useToast()
+  const router = useRouter();
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [courses, setCourses] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
   const [loading, setloading] = useState(false)
+  const [featcloading,setfeatchloding] = useState(false)
   const [assignment, setAssignment] = useState({
     title: "",
     description: "",
@@ -30,11 +40,12 @@ export default function InstructorAssignmentForm() {
   })
 
   const handleChange = (event) => {
-    console.log('aaaaaaaaaaaaa',event)
+    console.log('aaaaaaaaaaaaa', event)
     setSelectedValue(event);
   };
 
   useEffect(() => {
+    setfeatchloding(true)
     const fetchCourses = async () => {
       try {
         const res = await axios.post('/api/course/get-course-by-id', { id: data._id });
@@ -42,8 +53,19 @@ export default function InstructorAssignmentForm() {
 
         // const cdata = await res.json();
         setCourses(res.data.courses);
+        setfeatchloding(false)
       } catch (error) {
-        console.error('Error fetching courses:', error);
+
+        toast({
+          variant: "destructive",
+          title: "Internal server problem",
+          description: "Please wait we will try to solve these problem.",
+        });
+        console.log('Error fetching courses:', error);
+        setfeatchloding(false)
+      }
+      finally{
+        setfeatchloding(false)
       }
     };
 
@@ -51,27 +73,43 @@ export default function InstructorAssignmentForm() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (assignment.questionFile) {
-      setloading(true);
-      const questionurl = await uploadpdfFileAndGetUrl(assignment.questionFile);
-  
-      console.log('answerUrl', assignment);
-      console.log('answer', questionurl);
-  
-      const res = await axios.post('/api/assignment/uploadassignment', { title:assignment.title, description:assignment.description,questionfile:questionurl,couses:selectedValue,instructor:data._id});
-  
-      console.log("Assignment submitted:", res);
-  
-      if(res.data.success)
-      {
-     // setAnswerFile(null);
-      setloading(false);
-     // router.push("/student/assignments/AssignmentList")
+    try {
+      setloading(true)
+      e.preventDefault()
+      if (assignment.questionFile) {
+        setloading(true);
+        const questionurl = await uploadpdfFileAndGetUrl(assignment.questionFile);
+
+      
+
+        console.log('answerUrl', assignment);
+        console.log('answer', questionurl);
+
+        const res = await axios.post('/api/assignment/uploadassignment', { title: assignment.title, description: assignment.description, questionfile: questionurl, couses: selectedValue, instructor: data._id });
+
+        console.log("Assignment submitted:", res);
+
+        if (res.data.success) {
+          // setAnswerFile(null);
+          setloading(false);
+          router.push("/instructor");
+        }
+      } else {
+       
+       // alert("Please upload an answer file before submitting.");
+        setAnswerFile(null);
       }
-    } else {
-      alert("Please upload an answer file before submitting.");
-      setAnswerFile(null);
+    }
+    catch (error) {
+      toast({
+        variant: "destructive",
+        title: `please fill all field`,
+        description: "Please fill in all required fields.",
+      });
+      setloading(false)
+    }
+    finally {
+      setloading(false)
     }
   }
 
@@ -90,18 +128,18 @@ export default function InstructorAssignmentForm() {
               <Select onValueChange={handleChange} >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Courese title" />
-                  </SelectTrigger>
+                </SelectTrigger>
                 <SelectContent>
-                  
+
                   {courses.map((option) => (
                     <SelectItem key={option.value} value={option._id}>
                       {option.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
-              
+
               </Select>
-              <p>Selected Value: {selectedValue}</p>
+             
             </div>
 
             <div className="flex flex-col space-y-1.5">
@@ -138,7 +176,17 @@ export default function InstructorAssignmentForm() {
         </form>
       </CardContent>
       <CardFooter>
-        <Button type="submit" onClick={handleSubmit}>{ loading ? "loding" : "Create Assignment"}</Button>
+        {/* <Button type="submit" onClick={handleSubmit}>{ loading ? "loding" : "Create Assignment"}</Button> */}
+
+        <Button
+          type="submit"
+          onClick={handleSubmit}>
+          {loading ? (<Button className="w-full" disabled>
+            <Loader2 className=" text-white mr-2 h-4 w-4 animate-spin" />
+            Please wait
+          </Button>) : "Create Assignment"}
+        </Button>
+
       </CardFooter>
     </Card>
   )

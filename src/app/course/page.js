@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import CourseCard from '@/component/course/Course-card';
 import DotSpinner from '@/component/ui/loader/DotSpinner';
 import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
+import CourseComponent from '@/component/ui/course-card/CourseComponent';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -86,7 +87,7 @@ const Courses = () => {
     
     {  filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
-            <CourseCard
+            <CourseComponent
               key={course._id}
               title={course.title}
               thumbnail={course.thambnail}

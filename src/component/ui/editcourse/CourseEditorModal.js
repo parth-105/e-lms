@@ -18,10 +18,11 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Pencil, Trash2, Upload } from "lucide-react"
+import { Loader2, Pencil, Trash2, Upload } from "lucide-react"
 import axios from "axios"
 import { uploadFileAndGetUrl } from "@/helpers/firebaseUtils"
 import useLocalStorage from "@/helpers/useLocalStorage.js"
+import { useToast } from "@/hooks/use-toast"
 
 // Mock data for video list
 const initialVideos = [
@@ -31,6 +32,8 @@ const initialVideos = [
 ]
 
 export default function CourseEditorModalTabs({ course }) {
+
+  const { toast } = useToast()
 
   const [initialVideos, setinitialVideos] = useState([])
 
@@ -67,10 +70,10 @@ export default function CourseEditorModalTabs({ course }) {
   const [videoTopic, setVideoTopic] = useState('');
   const [videoDescription, setVideoDescription] = useState('');
   const [vloading, setvloading] = useState(false)
-      const [turl, setturl] = useState();
-      const [vurl, setvurl] = useState();
-      const [data, setData] = useLocalStorage('e-learning-user', '');
-
+  const [turl, setturl] = useState();
+  const [vurl, setvurl] = useState();
+  const [data, setData] = useLocalStorage('e-learning-user', '');
+  const [loading, setloading] = useState(false)
 
 
   const handleCourseChange = async (e) => {
@@ -140,26 +143,34 @@ export default function CourseEditorModalTabs({ course }) {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    try {
+      e.preventDefault()
+      setloading(true)
+      const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
+      const videoFileurl = await uploadFileAndGetUrl(videoFile);
+      //  const cthumbnailFileurl = await uploadFileAndGetUrl(cthumbnail);
 
-    const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
-    const videoFileurl = await uploadFileAndGetUrl(videoFile);
-    //  const cthumbnailFileurl = await uploadFileAndGetUrl(cthumbnail);
+      console.log('cd', courseDetails)
+      const cres = await axios.post("/api/course/editcousrse", { id: course._id, courseDetails });
 
-    console.log('cd', courseDetails)
-    const cres = await axios.post("/api/course/editcousrse", { id: course._id, courseDetails });
+      console.log('cv', videoDetails)
+      const vres = await axios.post("/api/course/editcoursevideo", { id: selectedVideo?._id, videoDetails });
 
-    console.log('cv', videoDetails)
-    const vres = await axios.post("/api/course/editcoursevideo", { id: selectedVideo?._id, videoDetails });
-
-    //console.log("Course Details:", courseDetails)
-    if (selectedVideo) {
-      console.log("Video Details:", videoDetails)
-      // Update the video in the list
-      setVideos(videos.map(v => v._id === selectedVideo._id ? { ...v, ...videoDetails } : v))
-      setSelectedVideo(null)
+      //console.log("Course Details:", courseDetails)
+      if (selectedVideo) {
+        console.log("Video Details:", videoDetails)
+        // Update the video in the list
+        setVideos(videos.map(v => v._id === selectedVideo._id ? { ...v, ...videoDetails } : v))
+        setSelectedVideo(null)
+      }
+      setIsOpen(false) // Close the modal after submission
     }
-    setIsOpen(false) // Close the modal after submission
+    catch (error) {
+      console.log('error')
+      setloading(false)
+    } finally {
+      setloading(false)
+    }
   }
 
 
@@ -176,25 +187,41 @@ export default function CourseEditorModalTabs({ course }) {
 
   const videoUpload = async (e) => {
     e.preventDefault();
+    if (!videoTopic || !videoDescription) {
+      toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+      });
+      alert('Validation Error:Please fill in all required fields.')
+      return;
+  }
     try {
       console.log('vcccc')
       setvloading(true)
       const thumbnailurl = await uploadFileAndGetUrl(nthumbnail);
       const videoFileurl = await uploadFileAndGetUrl(nvideoFile);
+      if (!thumbnailurl || !videoFileurl) {
+        toast({
+            title: "Validation Error",
+            description: "Please fill in all required fields.",
+        });
+        alert('Validation Error:Please fill in all required fields.')
+        return;
+    }
       setturl(thumbnailurl);
       setvurl(videoFileurl);
-      const response = await axios.post("/api/course/addvideoexistingcourse", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: false , courseid:course._id });
+      const response = await axios.post("/api/course/addvideoexistingcourse", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: false, courseid: course._id });
       console.log("video success", response.data);
       console.log("video url >>>", response.data.video._id);
 
-     // setVideos((e) => [...e, response.data.video._id])
+      // setVideos((e) => [...e, response.data.video._id])
       if (response) {
         setvloading(false)
         setVideoTopic('')
         setVideoDescription('')
         setVideoFile(null)
         setThumbnail(null)
-         //router.push("/instructor/course")
+        //router.push("/instructor/course")
       }
 
     } catch (error) {
@@ -221,7 +248,7 @@ export default function CourseEditorModalTabs({ course }) {
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button>Edit Course</Button>
+          <Button variant="outline" className="w-full" ><Pencil className="h-4 w-4" /></Button>
         </DialogTrigger>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -352,7 +379,7 @@ export default function CourseEditorModalTabs({ course }) {
                           id="videoThumbnail"
                           name="thambnail"
                           type="file"
-                           accept="image/*"
+                          accept="image/*"
                           onChange={handlecThumbnailChange}
                         />
                       </div>
@@ -362,7 +389,7 @@ export default function CourseEditorModalTabs({ course }) {
                           id="videoFile"
                           name="videourl"
                           type="file"
-                           accept="video/*"
+                          accept="video/*"
                           onChange={handlecvThumbnailChange}
                         />
                       </div>
@@ -441,14 +468,29 @@ export default function CourseEditorModalTabs({ course }) {
                         </div>
                       </div>
                     </div>
-                    <Button  onClick={videoUpload} className="w-full">
+                    {/* <Button onClick={videoUpload} className="w-full">
                       <Upload className="mr-2 h-4 w-4" />{vloading ? "loading" : "Add Video"}
+                    </Button> */}
+
+                    <Button type="submit" onClick={videoUpload} className="w-full">
+                    <Upload className="mr-2 h-4 w-4" />
+                      {vloading ? (<Button disabled>
+                        <Loader2 className=" text-white mr-2 w-full animate-spin" />
+                        Please wait
+                      </Button>) : "Add Video"}
                     </Button>
+
                   </DialogContent>
                 </Dialog>
 
               </TabsContent>
-              <Button type="submit" className="w-full">Save Changes</Button>
+              {/* <Button type="submit" className="w-full">Save Changes</Button> */}
+              <Button type="submit" className="w-full">
+                {loading ? (<Button disabled>
+                  <Loader2 className=" text-white mr-2 w-full animate-spin" />
+                  Please wait
+                </Button>) : "Save Changes"}
+              </Button>
             </form>
           </Tabs>
         </DialogContent>

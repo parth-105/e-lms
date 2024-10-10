@@ -17,10 +17,13 @@ import axios from "axios"
 import { uploadpdfFileAndGetUrl } from '@/helpers/FirebasepdfUpload'
 import useLocalStorage from "@/helpers/useLocalStorage.js"
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast"
+import { Loader2 } from "lucide-react"
 
 
 
-export default function StudentAssignmentView({ title, description, questionFileUrl, assignmentid }) {
+export default function StudentAssignmentView({ assignmentid }) {
+  const { toast } = useToast()
   const router = useRouter();
   const [answerFile, setAnswerFile] = useState(null)
   const [assignment, setassignment] = useState({})
@@ -54,26 +57,52 @@ export default function StudentAssignmentView({ title, description, questionFile
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (answerFile) {
-      setloading(true);
-      const awnserurl = await uploadpdfFileAndGetUrl(answerFile);
+    try {
 
-      console.log('answerUrl', awnserurl);
-      console.log('answer', answer);
+      e.preventDefault();
+      if (answerFile) {
+        setloading(true);
+        const awnserurl = await uploadpdfFileAndGetUrl(answerFile);
 
-      const res = await axios.post('/api/assignment/uploadassignmentawnser', { id: assignmentid, answer: { ...answer, awnserfileurl: awnserurl }, student: data._id });
+        if (!awnserurl) {
+          toast({
+            variant: "destructive",
+            title: "Validation Error",
+            description: "Please fill in all required fields.",
+          });
+          return;
+        }
 
-      console.log("Assignment submitted:", res);
+        console.log('answerUrl', awnserurl);
+        console.log('answer', answer);
 
-      if (res.data.success) {
+        const res = await axios.post('/api/assignment/uploadassignmentawnser', { id: assignmentid, answer: { ...answer, awnserfileurl: awnserurl }, student: data._id });
+
+        console.log("Assignment submitted:", res);
+
+        if (res.data.success) {
+          setAnswerFile(null);
+          setloading(false);
+          router.push("/student/assignments/AssignmentList")
+        }
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
         setAnswerFile(null);
-        setloading(false);
-        router.push("/student/assignments/AssignmentList")
       }
-    } else {
-      alert("Please upload an answer file before submitting.");
-      setAnswerFile(null);
+    }
+    catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Internal server problem",
+        description: "Please wait for we will solve this problem.",
+      });
+      setloading(false);
+    }finally{
+      setloading(false);
     }
   };
 
@@ -125,7 +154,17 @@ export default function StudentAssignmentView({ title, description, questionFile
         </div>
       </CardContent>
       <CardFooter>
-        <Button type="submit" onClick={handleSubmit}>{loading ? "loding" : 'Submit Assignment'}</Button>
+        {/* <Button type="submit" onClick={handleSubmit}>{loading ? "loding" : 'Submit Assignment'}</Button> */}
+
+        <Button
+          type="submit"
+          onClick={handleSubmit}>
+          {loading ? (<Button disabled>
+            <Loader2 className=" text-white mr-2 h-4 w-4 animate-spin" />
+            Please wait
+          </Button>) : 'Submit Assignment'}
+        </Button>
+
       </CardFooter>
     </Card>
   )

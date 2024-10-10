@@ -13,8 +13,12 @@ export async function POST(request) {
     try {
         // check if exam already exists
         const reqBody = await request.json()
-        const newReport = new Report(reqBody);
+        const {exam , result ,  user } = reqBody
+        console.log('rebbody',reqBody)
+        const newReport = new Report({exam , result ,  user });
+
         await newReport.save();
+        console.log('newreport',newReport)
         return NextResponse.json({
             message: "attempt added successfully",
             success: true,

@@ -45,13 +45,9 @@ export default function LMSsidebar({ children }) {
 
 
     const logout = () => {
-        // deleteLocalStorageItem('e-learning-user'); // Replace 'yourKey' with the key of the item you want to delete
-        // deleteCookie('e-learninigtoken'); // Replace 'yourCookieName' with the name of the cookie you want to delete
-        // Optionally, redirect to the login page or home page
-
         const res = axios.delete('/api/logout')
-
         localStorage.removeItem('e-learning-user');
+        window.location.reload();
 
     };
 
@@ -143,6 +139,13 @@ export default function LMSsidebar({ children }) {
                                     </Link>
                                 </li> : null}
 
+                                {!userData?.isInstructor ? <li>
+                                    <Link href="/student/all-exam" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
+                                        <LayoutDashboard className="w-5 h-5" />
+                                        <span>All-Exam</span>
+                                    </Link>
+                                </li> : null}
+
                                 {userData?.isInstructor ? <li>
                                     <Link href="/instructor/exams" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
                                         <FileQuestion className="w-5 h-5" />
@@ -166,12 +169,7 @@ export default function LMSsidebar({ children }) {
                                 </li> : null}
 
 
-                                {!userData?.isInstructor ? <li>
-                                    <Link href="/student/all-exam" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
-                                        <LayoutDashboard className="w-5 h-5" />
-                                        <span>All-Exam</span>
-                                    </Link>
-                                </li> : null}
+
 
                                 {userData?.isInstructor ? <li>
                                     <Link href="/instructor/addcourse" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">

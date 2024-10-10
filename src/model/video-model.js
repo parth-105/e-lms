@@ -1,5 +1,6 @@
 
 import mongoose from 'mongoose';
+import Instructor from '@/model/instructor-model'
 
 const commentSchema = new mongoose.Schema({
     user: {

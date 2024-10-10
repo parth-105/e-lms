@@ -11,7 +11,13 @@ const answerSchema = new mongoose.Schema({
     },
     awnserfileurl: {
       type: String,   
-    }
+    },
+
+    status: {
+    type: String,
+    enum: ['submitted', 'pending','rejected'], 
+    default: 'pending' 
+  }
   });
 
 const assignmentSchema = new mongoose.Schema({
@@ -31,16 +37,6 @@ const assignmentSchema = new mongoose.Schema({
         required: true
     },
 
-    // awnserfile:{
-    //     type: [{
-    //         student:{
-    //             type:{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }
-    //         },
-    //         awnser:{
-    //             type: String, 
-    //         }
-    //     }], 
-    // },
 
     awnserfile: [answerSchema],
 

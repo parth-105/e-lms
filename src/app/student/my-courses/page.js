@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CourseCard from '@/component/course/Course-card';
 import useLocalStorage from '@/helpers/useLocalStorage.js';
+import CourseComponent from '@/component/ui/course-card/CourseComponent';
+import Studentcoursecard from '@/component/ui/course-card/Studentcoursecard';
 
 
 
@@ -47,15 +49,16 @@ const Courses = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {courses.length > 0 ? (
           courses.map((course) => (
-            <CourseCard
-
+            <Studentcoursecard
+              
               key={course._id}
-              title={course.courseId.title}
-              thumbnail={course.courseId.thambnail}
-              price={course.courseId.price}
-              courseId={course.courseId._id}
-              instructor={course.instructor}
-              userId={course.userId}
+              title={course?.courseId?.title}
+              thumbnail={course?.courseId?.thambnail}
+              price={course?.courseId?.price}
+              courseId={course?.courseId?._id}
+              instructor={course?.instructor}
+              sinsdetail={course?.courseId?.instructor}
+              userId={course?.userId}
             />
           ))
         ) : (

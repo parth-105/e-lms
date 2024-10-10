@@ -5,6 +5,7 @@ import { Videocard } from './Videocard';
 import DotSpinner from '@/component/ui/loader/DotSpinner';
 import VideoCard from '../LmsVideoCard/LmsVideoCard';
 import CourseSkeleton, { SkeletonCard } from '../CourseSkeleton/CourseSkeleton';
+import VideoCardlms from '@/component/ui/video-card/VideoCardlms'
 
 
 const VideoList = () => {
@@ -89,7 +90,7 @@ const VideoList = () => {
           {filteredCourses.map((video) => (
             <div key={video._id} className=' m-4  ' >
               {/* <Videocard video={video} /> */}
-              <VideoCard  video={video}/>
+              <VideoCardlms video={video}/>
             </div>
           ))
           }

@@ -9,6 +9,8 @@ import { deleteExamById, getAllExams } from "@/helpers/apicalls/exams";
 import { useRouter } from 'next/navigation';
 import axios from "axios";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
+import { Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 
 function Exams() {
@@ -84,15 +86,15 @@ function Exams() {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => (
-        <div className="flex gap-2 bg-green-400">
+        <div className="flex gap-4">
           <i
-            className="ri-pencil-line"
+            className="ri-pencil-line cursor-pointer "
             onClick={() => router.push(`/instructor/exams/edit/${record._id}`)}
-          >edit</i>
+          > <Pencil className="h-4 w-4 mr-2" /></i>
           <i
-            className="ri-delete-bin-line"
+            className="ri-delete-bin-line cursor-pointer"
             onClick={() => deleteExam(record._id)}
-          >delete</i>
+          ><Trash2 className="h-4 w-4 mr-2" /></i>
         </div>
       ),
     },
@@ -105,13 +107,13 @@ function Exams() {
       <div className="flex justify-between mt-2 items-end">
         
 
-        <button
-          className="primary-outlined-btn flex items-center"
+        <Button
+          
           onClick={() => router.push("/instructor/exams/add")}
         >
           <i className="ri-add-line"></i>
           Add Exam
-        </button>
+        </Button>
       </div>
       <div className="divider"></div>
 

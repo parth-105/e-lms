@@ -292,7 +292,7 @@ function page() {
                 <div className="flex  justify-between">
                   {selectedQuestionIndex > 0 && (
                     <Button
-                      className="gap-4 m-4"
+                      className="gap-4 m-4 transition-transform hover:scale-105"
                       variant="outline"
                       onClick={() => {
                         setSelectedQuestionIndex(selectedQuestionIndex - 1);
@@ -304,7 +304,7 @@ function page() {
 
                   {selectedQuestionIndex < questions.length - 1 && (
                     <Button
-                      className="gap-4 m-4"
+                      className="gap-4 m-4 transition-transform hover:scale-105"
                       onClick={() => {
                         setSelectedQuestionIndex(selectedQuestionIndex + 1);
                       }}
@@ -315,7 +315,7 @@ function page() {
 
                   {selectedQuestionIndex === questions.length - 1 && (
                     <Button
-                      className="gap-4 m-4"
+                      className="gap-4 m-4 transition-transform hover:scale-105"
                       onClick={() => {
                         clearInterval(intervalId);
                         setTimeUp(true);
@@ -432,18 +432,19 @@ function page() {
                 </motion.div>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button variant="outline" onClick={() => {
-                  className = "gap-4 m-4"
-                  setView("instructions");
-                  setSelectedQuestionIndex(0);
-                  setSelectedOptions({});
-                  setSecondsLeft(examData.duration);
-                }}>
+                <Button variant="outline"
+                  className="gap-4 m-4"
+                  onClick={() => {
+                    setView("instructions");
+                    setSelectedQuestionIndex(0);
+                    setSelectedOptions({});
+                    setSecondsLeft(examData.duration);
+                  }}>
                   <RotateCcw className="mr-2 h-4 w-4" /> Retake Exam
                 </Button>
 
                 <Button
-                  className="gap-4 m-4"
+                  className="gap-4 m-4 transition-transform hover:scale-105"
                   onClick={() => {
                     setView("review");
                   }}>
@@ -561,9 +562,9 @@ function page() {
 
             <div className="flex gap-2" >
               <Button
-                className="gap-4 m-4"
+                className="gap-4 m-4 transition-transform hover:scale-105"
                 onClick={() => {
-                router.push("/student/all-exam");
+                  router.push("/student/all-exam");
                 }}
               >
                 Close
@@ -572,12 +573,12 @@ function page() {
 
               <Button
                 variant="outline"
+                className="gap-4 m-4 transition-transform hover:scale-105"
                 onClick={() => {
-                className = "gap-4 m-4"
-                setView("instructions");
-                setSelectedQuestionIndex(0);
-                setSelectedOptions({});
-                setSecondsLeft(examData.duration);
+                  setView("instructions");
+                  setSelectedQuestionIndex(0);
+                  setSelectedOptions({});
+                  setSecondsLeft(examData.duration);
                 }}
               >
                 Retake Exam

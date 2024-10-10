@@ -19,6 +19,7 @@ const { TabPane } = Tabs;
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import useLocalStorage from "@/helpers/useLocalStorage.js";
+import { Button } from "@/components/ui/button";
 
 
 
@@ -61,8 +62,8 @@ function AddEditExam() {
     
     } catch (error) {
     
-    console.log("error",error.data.message)
-      message.error(error.data.message);
+    console.log("error",error.message)
+      message.error("validate error ");
     }
   };
 
@@ -159,13 +160,13 @@ function AddEditExam() {
       dataIndex: "action",
       render: (text, record) => (
         <div className="flex gap-2 bg-red-500">
-          <button
-            className="ri-pencil-line bg-red-500"
+          <Button
+            className="ri-pencil-line bg-red-500 transition-transform hover:scale-105"
             onClick={() => {
               setSelectedQuestion(record);
               setShowAddEditQuestionModal(true);
             }}
-          >edit</button>
+          >edit</Button>
           <i
             className="ri-delete-bin-line"
             onClick={() => {
@@ -224,28 +225,28 @@ function AddEditExam() {
                 </Col>
               </Row>
               <div className="flex justify-end gap-2">
-                <button
-                  className="primary-outlined-btn"
-                  type="button"
+                <Button
+                 variant="outlone"
+                  className="bg-gray-300 transition-transform hover:scale-105  "
                   onClick={() => router.push("/instructor/exams")}
                 >
                   Cancel
-                </button>
-                <button className="primary-contained-btn" type="submit">
+                </Button>
+                <Button className="transition-transform hover:scale-105"  type="submit">
                   Save
-                </button>
+                </Button>
               </div>
             </TabPane>
             {params.id && (
               <TabPane tab="Questions" key="2">
                 <div className="flex justify-end">
-                  <button
-                    className="primary-outlined-btn"
+                  <Button
+                    className="transition-transform hover:scale-105"
                     type="button"
                     onClick={() => setShowAddEditQuestionModal(true)}
                   >
                     Add Question
-                  </button>
+                  </Button>
                 </div>
 
                 <Table

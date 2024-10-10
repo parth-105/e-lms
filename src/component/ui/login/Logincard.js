@@ -6,6 +6,11 @@ import axios from "axios";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 import { useToast } from "@/hooks/use-toast"
+import { EyeIcon, EyeOffIcon, Loader2 } from 'lucide-react'
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { RadioGroup } from "@/components/ui/radio-group";
 
 
 const MyComponent = () => {
@@ -20,10 +25,23 @@ const MyComponent = () => {
 
     })
 
+    const [showPassword, setShowPassword] = useState(false)
+
 
     const [isChecked, setIsChecked] = useState(false);
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [selectedValue, setSelectedValue] = useState(null);
+
+    const handleChangeradio = (event) => {
+        console.log('radio', event.target.value)
+        setSelectedValue(event.target.value === 'true');
+        setUser({ ...user, isInstructor: event.target.value })
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
+    }
 
     const handleOnChange = (e) => {
         setIsChecked(!isChecked);
@@ -33,7 +51,7 @@ const MyComponent = () => {
 
 
     const onLogin = async () => {
-        if ( !user.email || !user.password  ) {
+        if (!user.email || !user.password) {
             toast({
                 title: "Validation Error",
                 description: "Please fill in all required fields.",
@@ -50,7 +68,7 @@ const MyComponent = () => {
 
             if (response.data.pending) {
                 router.push("/pendingpage");
-              //  localStorage.setItem('e-learning-user', '');
+                //  localStorage.setItem('e-learning-user', '');
             }
             else {
                 if (response.data.Login.isInstructor) {
@@ -59,7 +77,7 @@ const MyComponent = () => {
                     toast({
                         title: "Instructor Login Successfull!",
                         description: "Keep Teaching !",
-                      })
+                    })
                 }
                 else {
                     router.push("/student");
@@ -67,7 +85,7 @@ const MyComponent = () => {
                     toast({
                         title: "Student Login Successfull!",
                         description: "Enjoy Your Learning !",
-                      })
+                    })
                 }
                 setLoading(false);
             }
@@ -77,10 +95,10 @@ const MyComponent = () => {
             toast({
                 title: "Login Faild",
                 description: "Something Went Wrong!!!!",
-              })
+            })
 
-        } 
-        finally{
+        }
+        finally {
             setLoading(false);
         }
     }
@@ -114,14 +132,43 @@ const MyComponent = () => {
                                 type="email"
                                 name="email"
                                 id="email"
-                                
+
                                 value={user.email}
                                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 placeholder="name@company.com"
                                 required />
                         </div>
-                        <div className="pb-2 pt-4">
+
+
+                        {/* <Label htmlFor="password">Password</Label> */}
+                        <div className="relative pb-2 pt-4">
+                            <Input
+                                id="password"
+                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Enter your password"
+                                value={user.password}
+                                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                required
+                            />
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                className="  absolute right-0 top-4 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={togglePasswordVisibility}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? (
+                                    <EyeOffIcon className="h-4 w-4 text-gray-500" />
+                                ) : (
+                                    <EyeIcon className="h-4 w-4 text-gray-500" />
+                                )}
+                            </Button>
+                        </div>
+
+
+                        {/* <div className="pb-2 pt-4">
                             <input
                                 type="password"
                                 name="password"
@@ -131,7 +178,7 @@ const MyComponent = () => {
                                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 required />
-                        </div>
+                        </div> */}
 
                         <div className="pb-2 pt-4">
                             <div className="flex items-start">
@@ -154,13 +201,43 @@ const MyComponent = () => {
                             </div>
                         </div>
 
+                        {/* <div className="space-y-2  gap-4 ">
+                            <Label className="text-gray-300">Role</Label>
+                            <RadioGroup className="flex flex-col items-center space-x-2 " defaultValue="false">
+                                <div className="flex gap-6 mt-2">
+                                <Label>
+                                    <Input
+                                        type="radio"
+                                        value="true"
+                                        checked={selectedValue === true}
+                                        onChange={handleChangeradio}
+                                    />
+                                    instructor
+                                </Label>
+                                <Label>
+                                    <Input
+                                        type="radio"
+                                        value="false"
+                                        checked={selectedValue === false}
+                                        onChange={handleChangeradio}
+                                    />
+                                    student
+                                </Label>
+                                </div>
+                                <p>Login as : {selectedValue ? 'instructor' : 'student'}</p>
+                            </RadioGroup>
+                        </div> */}
+
                         <div className="px-4 pb-2 pt-4">
-                            <button
+                            <Button
                                 type="submit"
                                 onClick={onLogin}
                                 className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                {loading ? "loding" : "Login"}
-                            </button>
+                                {loading ? (<Button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>
+                                    <Loader2 className=" text-white mr-2 h-4 w-4 animate-spin" />
+                                    Please wait
+                                </Button>) : "Login"}
+                            </Button>
                         </div>
 
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
