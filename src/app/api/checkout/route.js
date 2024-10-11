@@ -8,7 +8,6 @@ export async function POST(req) {
 
   const reqBody = await req.json()
   const { price,courseId } = reqBody;
-  const C = '1234'
 
   if (req.method === 'POST') {
 
@@ -22,11 +21,11 @@ export async function POST(req) {
         line_items: [
           {
             price_data: {
-              currency: 'usd',
+              currency: 'inr',
               product_data: {
                 name: 'Custom Payment',
               },
-              unit_amount: price, // Use the dynamic amount
+              unit_amount: price*100, // Use the dynamic amount
             },
             quantity: 1,
           },

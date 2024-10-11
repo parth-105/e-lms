@@ -32,8 +32,15 @@ const MyComponent = () => {
     };
 
 
+    const handleSwitchChange = () => {
+        setUser({
+            ...user,
+            isInstructor: !user.isInstructor,
+        });
+    };
+
     const onLogin = async () => {
-        if ( !user.email || !user.password  ) {
+        if (!user.email || !user.password) {
             toast({
                 title: "Validation Error",
                 description: "Please fill in all required fields.",
@@ -50,7 +57,7 @@ const MyComponent = () => {
 
             if (response.data.pending) {
                 router.push("/pendingpage");
-              //  localStorage.setItem('e-learning-user', '');
+                //  localStorage.setItem('e-learning-user', '');
             }
             else {
                 if (response.data.Login.isInstructor) {
@@ -59,7 +66,7 @@ const MyComponent = () => {
                     toast({
                         title: "Instructor Login Successfull!",
                         description: "Keep Teaching !",
-                      })
+                    })
                 }
                 else {
                     router.push("/student");
@@ -67,7 +74,7 @@ const MyComponent = () => {
                     toast({
                         title: "Student Login Successfull!",
                         description: "Enjoy Your Learning !",
-                      })
+                    })
                 }
                 setLoading(false);
             }
@@ -77,10 +84,10 @@ const MyComponent = () => {
             toast({
                 title: "Login Faild",
                 description: "Something Went Wrong!!!!",
-              })
+            })
 
-        } 
-        finally{
+        }
+        finally {
             setLoading(false);
         }
     }
@@ -114,7 +121,7 @@ const MyComponent = () => {
                                 type="email"
                                 name="email"
                                 id="email"
-                                
+
                                 value={user.email}
                                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -132,7 +139,7 @@ const MyComponent = () => {
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 required />
                         </div>
-
+                        {/* 
                         <div className="pb-2 pt-4">
                             <div className="flex items-start">
                                 <div className="flex items-start">
@@ -152,6 +159,26 @@ const MyComponent = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div> */}
+
+
+                        <div className="flex items-center justify-center space-x-4">
+                            <span className={`text-sm font-medium ${user.isInstructor ? 'text-purple-600' : 'text-gray-500'}`}>
+                                Instructor
+                            </span>
+                            <div
+                                className={`relative w-14 h-7 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${user.isInstructor ? 'bg-purple-600' : 'bg-green-500'
+                                    }`}
+                                onClick={handleSwitchChange}
+                            >
+                                <div
+                                    className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${user.isInstructor ? 'translate-x-7' : 'translate-x-0'
+                                        }`}
+                                />
+                            </div>
+                            <span className={`text-sm font-medium ${user.isInstructor ? 'text-gray-500' : 'text-green-600'}`}>
+                                Student
+                            </span>
                         </div>
 
                         <div className="px-4 pb-2 pt-4">

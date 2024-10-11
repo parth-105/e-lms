@@ -1,5 +1,6 @@
 // pages/add-course.js
 'use client'
+
 import { useState } from "react";
 //import { storage } from "../lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -11,6 +12,15 @@ import useLocalStorage from "@/helpers/useLocalStorage.js";
 import DotSpinner from "../ui/loader/DotSpinner";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast"
+
+
+import { Plus, Upload, X } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+//import { toast } from "@/components/ui/use-toast"
 
 export default function AddCourse() {
   const { toast } = useToast()
@@ -40,6 +50,10 @@ export default function AddCourse() {
     setThumbnail(e.target.files[0]);
 
   };
+
+  const handleAddVideo = () => {
+    setVideos(prev => [...prev, { thumbnail: null, videoFile: null, topic: '', description: '' }])
+  }
 
   const handleVideoFileChange = (e) => {
 
@@ -95,7 +109,7 @@ export default function AddCourse() {
     setloading(true)
     e.preventDefault();
     try {
-      if (!Cthumbnail ) {
+      if (!Cthumbnail) {
         toast({
           title: "Validation Error",
           description: "Please fill in all required fields.",
@@ -126,176 +140,276 @@ export default function AddCourse() {
 
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto p-6">
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 shadow-lg rounded-lg space-y-6 order-2 md:order-1">
-        <h2 className="text-2xl font-bold text-center text-gray-700">Add New Course</h2>
+    // <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto p-6">
+    //   <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 shadow-lg rounded-lg space-y-6 order-2 md:order-1">
+    //     <h2 className="text-2xl font-bold text-center text-gray-700">Add New Course</h2>
 
-        <div className="flex flex-col">
-          <label className="mb-2 text-sm font-semibold text-gray-600">Course Title</label>
-          <input
-            type="text"
-            placeholder="Title"
-            value={coursetitle}
-            onChange={(e) => setcourseTitle(e.target.value)}
-            required
-            className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+    //     <div className="flex flex-col">
+    //       <label className="mb-2 text-sm font-semibold text-gray-600">Course Title</label>
+    //       <input
+    //         type="text"
+    //         placeholder="Title"
+    //         value={coursetitle}
+    //         onChange={(e) => setcourseTitle(e.target.value)}
+    //         required
+    //         className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //       />
+    //     </div>
 
-        <div className="flex flex-col">
-          <label className="mb-2 text-sm font-semibold text-gray-600">Price</label>
-          <input
-            type="number"
-            placeholder="Price"
-            value={Cprice}
-            onChange={(e) => setCPrice(e.target.value)}
-            required
-            className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+    //     <div className="flex flex-col">
+    //       <label className="mb-2 text-sm font-semibold text-gray-600">Price</label>
+    //       <input
+    //         type="number"
+    //         placeholder="Price"
+    //         value={Cprice}
+    //         onChange={(e) => setCPrice(e.target.value)}
+    //         required
+    //         className="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //       />
+    //     </div>
 
-        {/* Subject Dropdown */}
-        <div className="mb-4">
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
-            Subject
-          </label>
-          <select
-            id="subject"
-            name="subject"
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          >
-            <option value="">Select Subject</option>
-            <option value="Javascript">Javascript</option>
-            <option value="React">React</option>
-            <option value="Node">Node</option>
-            <option value="MongoDB">MongoDB</option>
-            <option value="GK">GK</option>
-            <option value="ML">Machine Learning</option>
-            <option value="ebusiness">E-business</option>
-            {/* Add more subject options as needed */}
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label className="mb-2 text-sm font-semibold text-gray-600">Thumbnail</label>
-          <Input
-            type="file"
-            onChange={(e) => setCThumbnail(e.target.files[0])}
-            required
-            className="p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+    //     {/* Subject Dropdown */}
+    //     <div className="mb-4">
+    //       <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+    //         Subject
+    //       </label>
+    //       <select
+    //         id="subject"
+    //         name="subject"
+    //         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    //         value={subject}
+    //         onChange={(e) => setSubject(e.target.value)}
+    //       >
+    //         <option value="">Select Subject</option>
+    //         <option value="Javascript">Javascript</option>
+    //         <option value="React">React</option>
+    //         <option value="Node">Node</option>
+    //         <option value="MongoDB">MongoDB</option>
+    //         <option value="GK">GK</option>
+    //         <option value="ML">Machine Learning</option>
+    //         <option value="ebusiness">E-business</option>
+    //         {/* Add more subject options as needed */}
+    //       </select>
+    //     </div>
+    //     <div className="flex flex-col">
+    //       <label className="mb-2 text-sm font-semibold text-gray-600">Thumbnail</label>
+    //       <Input
+    //         type="file"
+    //         onChange={(e) => setCThumbnail(e.target.files[0])}
+    //         required
+    //         className="p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //       />
+    //     </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-200 ease-in-out"
-        >
-          {loading ? "LOADING...." : "Add course"}
-        </button>
-      </form>
+    //     <button
+    //       type="submit"
+    //       className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-200 ease-in-out"
+    //     >
+    //       {loading ? "LOADING...." : "Add course"}
+    //     </button>
+    //   </form>
 
-      <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md order-1 md:order-2">
-        <h2 className="text-xl font-semibold mb-4 text-center">Upload Teaching Video</h2>
-        <form onSubmit={videoUpload}>
+    //   <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md order-1 md:order-2">
+    //     <h2 className="text-xl font-semibold mb-4 text-center">Upload Teaching Video</h2>
+    //     <form onSubmit={videoUpload}>
 
-          {/* Thumbnail */}
-          <div className="mb-4">
-            <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700">
-              Video Thumbnail
-            </label>
-            <Input
-              type="file"
-              id="thumbnail"
-              name="thumbnail"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              onChange={handleThumbnailChange}
-            />
+    //       {/* Thumbnail */}
+    //       <div className="mb-4">
+    //         <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700">
+    //           Video Thumbnail
+    //         </label>
+    //         <Input
+    //           type="file"
+    //           id="thumbnail"
+    //           name="thumbnail"
+    //           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+    //           onChange={handleThumbnailChange}
+    //         />
+    //       </div>
+
+    //       {/* Video File */}
+    //       <div className="mb-4">
+    //         <label htmlFor="videoFile" className="block text-sm font-medium text-gray-700">
+    //           Video File
+    //         </label>
+    //         <Input
+    //           type="file"
+    //           id="videoFile"
+    //           name="videoFile"
+    //           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+    //           onChange={handleVideoFileChange}
+    //         />
+    //       </div>
+
+    //       {/* Subject Dropdown
+    //       <div className="mb-4">
+    //         <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+    //           Subject
+    //         </label>
+    //         <select
+    //           id="subject"
+    //           name="subject"
+    //           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    //           value={subject}
+    //           onChange={(e) => setSubject(e.target.value)}
+    //         >
+    //           <option value="">Select Subject</option>
+    //           <option value="DSA">DSA</option>
+    //           <option value="OS">Oprating system</option>
+    //           <option value="Language">Languages</option>
+    //           <option value="Ai">AI/ML</option>
+    //           <option value="Data">Data Science</option>
+    //           {/* Add more subject options as needed 
+    //         </select>
+    //       </div> */}
+
+    //       {/* Video Topic */}
+    //       <div className="mb-4">
+    //         <label htmlFor="videoTopic" className="block text-sm font-medium text-gray-700">
+    //           Video Topic
+    //         </label>
+    //         <input
+    //           type="text"
+    //           id="videoTopic"
+    //           name="videoTopic"
+    //           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+    //           value={videoTopic}
+    //           onChange={(e) => setVideoTopic(e.target.value)}
+    //         />
+    //       </div>
+
+    //       {/* Video Description */}
+    //       <div className="mb-4 border-black ">
+    //         <label htmlFor="videoDescription" className="block text-sm font-medium text-gray-700">
+    //           Video Description
+    //         </label>
+    //         <textarea
+    //           id="videoDescription"
+    //           name="videoDescription"
+    //           rows="3"
+    //           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-300 border-black rounded-md"
+    //           value={videoDescription}
+    //           onChange={(e) => setVideoDescription(e.target.value)}
+    //         />
+    //       </div>
+
+    //       {/* Submit Button */}
+    //       <button
+    //         type="submit"
+    //         className="w-full h-screen py-2 px-4 mt-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    //       >
+    //         {vloading ? "LOADING...." : "Upload Video"}
+    //       </button>
+    //     </form>
+    //   </div>
+
+
+    // </div>
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto p-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Course Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Course Title</Label>
+              <Input id="title" name="title" value={coursetitle} onChange={(e) => setcourseTitle(e.target.value)} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="price">Price</Label>
+              <Input id="price" name="price" type="number" value={Cprice} onChange={(e) => setCPrice(e.target.value)} required />
+            </div>
           </div>
-
-          {/* Video File */}
-          <div className="mb-4">
-            <label htmlFor="videoFile" className="block text-sm font-medium text-gray-700">
-              Video File
-            </label>
-            <Input
-              type="file"
-              id="videoFile"
-              name="videoFile"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              onChange={handleVideoFileChange}
-            />
-          </div>
-
-          {/* Subject Dropdown
-          <div className="mb-4">
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
-              Subject
-            </label>
-            <select
-              id="subject"
-              name="subject"
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            >
+          <div className="space-y-2">
+            <Label htmlFor="subject">Subject</Label>
+            <select id="subject" name="subject" value={subject} onChange={(e) => setSubject(e.target.value)} required >
               <option value="">Select Subject</option>
-              <option value="DSA">DSA</option>
-              <option value="OS">Oprating system</option>
-              <option value="Language">Languages</option>
-              <option value="Ai">AI/ML</option>
-              <option value="Data">Data Science</option>
-              {/* Add more subject options as needed 
-            </select>
-          </div> */}
-
-          {/* Video Topic */}
-          <div className="mb-4">
-            <label htmlFor="videoTopic" className="block text-sm font-medium text-gray-700">
-              Video Topic
-            </label>
-            <input
-              type="text"
-              id="videoTopic"
-              name="videoTopic"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              value={videoTopic}
-              onChange={(e) => setVideoTopic(e.target.value)}
-            />
+    //         <option value="Javascript">Javascript</option>
+    //         <option value="React">React</option>
+    //         <option value="Node">Node</option>
+    //         <option value="MongoDB">MongoDB</option>
+    //         <option value="GK">GK</option>
+    //         <option value="ML">Machine Learning</option>
+    //         <option value="ebusiness">E-business</option>
+    //         {/* Add more subject options as needed */}
+    //       </select>
           </div>
-
-          {/* Video Description */}
-          <div className="mb-4 border-black ">
-            <label htmlFor="videoDescription" className="block text-sm font-medium text-gray-700">
-              Video Description
-            </label>
-            <textarea
-              id="videoDescription"
-              name="videoDescription"
-              rows="3"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-300 border-black rounded-md"
-              value={videoDescription}
-              onChange={(e) => setVideoDescription(e.target.value)}
-            />
+          <div className="space-y-2">
+            <Label htmlFor="thumbnail">Course Thumbnail</Label>
+            <Input id="thumbnail" name="thumbnail" type="file" onChange={(e) => setCThumbnail(e.target.files[0])} accept="image/*" required />
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full h-screen py-2 px-4 mt-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            {vloading ? "LOADING...." : "Upload Video"}
-          </button>
-        </form>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Course Videos</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
 
+          <Card >
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Video </CardTitle>
+              {/* <Button variant="ghost" size="sm" onClick={() => handleRemoveVideo(index)}><X className="h-4 w-4" /></Button> */}
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor={`video-thumbnail-`}>Video Thumbnail</Label>
+                  <Input
+                    id={`video-thumbnail-`}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleThumbnailChange}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`video-file-`}>Video File</Label>
+                  <Input
+                    id={`video-file-`}
+                    type="file"
+                    accept="video/*"
+                    onChange={handleVideoFileChange}
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor={`video-topic-`}>Video Topic</Label>
+                <Input
+                  id={`video-topic-`}
+                  value={videoTopic}
+                  onChange={(e) => setVideoTopic(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor={`video-description`}>Video Description</Label>
+                <Textarea
+                  id={`video-description-`}
+                  value={videoDescription}
+                  onChange={(e) => setVideoDescription(e.target.value)}
+                  required
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-    </div>
+          <Button type="button" variant="outline" onClick={videoUpload} className="w-full">
+            {vloading ? "LOADING...." : "Add video"}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Button type="submit" className="w-full" onClick={handleSubmit}>
+        <Upload className="mr-2 h-4 w-4" /> Publish Course
+      </Button>
+    </form>
 
   );
 };
-
-
-
 
 
