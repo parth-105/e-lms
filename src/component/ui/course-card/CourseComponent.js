@@ -65,7 +65,7 @@ export default function CourseComponent({
         //route.push(`/course/Videos/${courseId}`);courseId, userId
 
         if (data._id === instructor || userId || data.isAdmin) {
-            route.push(`/course/Videos/${courseId}`);
+            route.push(`/course/videos/${courseId}`);
         }
         else {
             const res = await axios.post("/api/course/checkpurchase", { userId: data._id, courseId: courseId });
@@ -110,7 +110,7 @@ export default function CourseComponent({
                 };
                 check()
             } else {
-                route.push(`/course/Videos/${courseId}`);
+                route.push(`/course/videos/${courseId}`);
             }
         }
     };
