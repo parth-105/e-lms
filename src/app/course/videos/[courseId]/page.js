@@ -9,7 +9,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 function videos({ params }) {
 
-  const [Videos, setVideos] = useState([]);
+  //const [Videos, setVideos] = useState([]);
+
+   const [videoList, setVideoList] = useState([]);
   
   const [currentUrl, setCurrentUrl] = useState();
   const [currentvideodata, setCurrentvideodata] = useState();
@@ -24,7 +26,7 @@ function videos({ params }) {
 
        
 
-        setVideos(response.data.videos);
+        setVideoList(response.data.videos);
         setCurrentUrl(response?.data?.videos?.[0]?.videourl);
         setCurrentvideodata(response?.data?.videos?.[0])
        
@@ -47,7 +49,7 @@ function videos({ params }) {
     <div className="container mx-auto px-4 py-8">
       <Card className="w-full">
         <div className="space-y-4">
-          {Videos.length > 0 ? (
+          {videoList.length > 0 ? (
             <div className="relative aspect-video ">
               <ReactPlayer url={currentUrl} controls width="100%" height="100%" />
               <h2 className="text-xl font-bold mb-2">{currentvideodata?.title}</h2>
@@ -58,10 +60,10 @@ function videos({ params }) {
 
 
           <ScrollArea className="h-[300px] border rounded-md p-4">
-            {Videos.length > 0 ? (
+            {videoList.length > 0 ? (
 
-              Videos.map((videoData) => (
-                <div className="space-y-4">
+              videoList.map((videoData) => (
+                <div className="space-y-4" key={videoData._id} >
                   <div
                     key={videoData._id}
                     className={`flex bottom-8 items-center space-x-4 p-2 rounded-md cursor-pointer transition-colors ${videoData?.videourl === currentUrl ? 'bg-[#f1f5f9]' : 'hover:bg-[#f3f4f6]'
