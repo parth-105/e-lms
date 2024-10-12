@@ -93,4 +93,4 @@ function Videos({ params }) {
   )
 }
 
-export default videos
+export default Videos
