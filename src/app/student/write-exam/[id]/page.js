@@ -173,7 +173,7 @@ function Page() {
                   Object.keys(questions[selectedQuestionIndex]?.options ?? {}).map(
                     (option, index) => {
                       return (
-                        <RadioGroup value={selectedOptions[selectedQuestionIndex]} >
+                        <RadioGroup key={index} value={selectedOptions[selectedQuestionIndex]} >
                           <div key={index} className="flex items-center space-x-2 mb-2">
                             {/* <RadioGroupItem value={option} id={`option-${index}`} /> */}
                             <Label className={`p-2 rounded-md w-full cursor-pointer ${selectedOptions[selectedQuestionIndex] === option ? 'bg-black text-white' : 'bg-white'
