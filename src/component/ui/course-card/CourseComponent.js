@@ -111,6 +111,7 @@ export default function CourseComponent({
                 check()
             } else {
                 route.push(`/course/videos/${courseId}`);
+                //fgfg
             }
         }
     };
