@@ -20,13 +20,13 @@ import { Progress } from "@/components/ui/progress"
 import { CheckCircle, ChevronLeft, ChevronRight, Eye, RotateCcw, XCircle } from "lucide-react";
 
 
-function page() {
+function Page() {
   const router = useRouter();
-  const [examData, setExamData] = React.useState(null);
-  const [questions = [], setQuestions] = React.useState([]);
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = React.useState(0);
-  const [selectedOptions, setSelectedOptions] = React.useState({});
-  const [result = {}, setResult] = React.useState({});
+  const [examData, setExamData] = useState(null);
+  const [questions = [], setQuestions] = useState([]);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [result = {}, setResult] = useState({});
   const params = useParams();
   const { id } = params;
 
@@ -407,4 +407,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
