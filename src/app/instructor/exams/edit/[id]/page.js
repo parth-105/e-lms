@@ -115,9 +115,9 @@ function Page() {
           return null; // or handle the case when options is undefined
         }
       
-        return Object.keys(record.options?? {}).map((key) => {
+        return Object.keys(record.options?? {}).map((key , index) => {
           return (
-            <div>
+            <div key={index}>
               {key} : {record.options[key]}
             </div>
           );
