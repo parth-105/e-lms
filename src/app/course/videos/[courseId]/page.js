@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player';
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-function videos({ params }) {
+function Videos({ params }) {
 
   //const [Videos, setVideos] = useState([]);
 
