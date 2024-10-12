@@ -13,24 +13,7 @@ const Testimonials = () => {
     <div className="p-20" id="Testimonial">
       <Title title="Testimonials" desc1="What our users say..." desc2="" />
 
-      <Carousel breakPoints={breakPoints}>
-        {testimonials.map(({ imgUrl, testimonal }) => (
-          <div
-            style={{
-              width: '20rem',
-            }}
-            key={testimonal}
-          >
-            <Card
-              imgUrl={imgUrl}
-              text={testimonal}
-              color="zinc"
-              imgRadius="rounded-full"
-              quotes
-            />
-          </div>
-        ))}
-      </Carousel>
+      
     </div>
   )
 }
