@@ -29,8 +29,8 @@ export async function POST(req) {
           },
         ],
         mode: 'payment',
-        success_url: `http://localhost:3000/success/${courseId}`,
-        cancel_url: `http://localhost:3000/course`,
+        success_url: `https://e-lms-sigma.vercel.app/success/${courseId}`,
+        cancel_url: `https://e-lms-sigma.vercel.app/course`,
       });
      
 
