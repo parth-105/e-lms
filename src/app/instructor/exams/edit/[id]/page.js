@@ -1,6 +1,6 @@
 "use client"
 import { Col, Form, message, Row, Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 
 import { Tabs } from "antd";
 import AddEditQuestion from "@/component/quiz/addeditquestion";
@@ -12,14 +12,14 @@ import { Pencil, Trash2 } from "lucide-react";
 
 
 
-function page() {
+function Page() {
 
  const router = useRouter();
-  const [examData, setExamData] = React.useState(null);
+  const [examData, setExamData] = useState(null);
   const [showAddEditQuestionModal, setShowAddEditQuestionModal] =
-    React.useState(false);
-  const [selectedQuestion, setSelectedQuestion] = React.useState(null);
-  const [editquestion, seteditquestion] = React.useState(false);
+    useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [editquestion, seteditquestion] = useState(false);
  // const params = useParams();
  const params = useParams();
   const { id } = params;
@@ -256,4 +256,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
