@@ -14,13 +14,13 @@ export async function POST(request) {
         // check if exam already exists
         const reqBody = await request.json()
         const {values} =reqBody
-        console.log("checking",reqBody)
+    
         const examExists = await Exam.findOne({ name:reqBody.name });
         if (examExists) {
             return NextResponse.json({ message: 'Exam already exists', success: false });
           }
         request.body.questions = [];
-       // questions=[]
+ 
         const newExam = new Exam(reqBody);
         await newExam.save();
         return NextResponse.json({
@@ -29,7 +29,7 @@ export async function POST(request) {
             newExam
         })
       } catch (error) {
-        console.log("ree",error.message)
+        
         return NextResponse.json({ error: error.message,data: error }, { status: 500 })
       }
 }

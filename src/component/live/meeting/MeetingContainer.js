@@ -122,7 +122,7 @@ export function MeetingContainer({
   }
 
   function onMeetingJoined() {
-    console.log("onMeetingJoined");
+    
   }
 
   function onMeetingLeft() {
@@ -134,7 +134,7 @@ export function MeetingContainer({
 
   const _handleOnError = (data) => {
     const { code, message } = data;
-    console.log("meetingErr", code, message)
+    
 
     const joiningErrCodes = [
       4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010,
@@ -143,11 +143,7 @@ export function MeetingContainer({
     const isJoiningError = joiningErrCodes.findIndex((c) => c === code) !== -1;
     const isCriticalError = `${code}`.startsWith("500");
 
-    // new Audio(
-    //   isCriticalError
-    //     ? `https://static.videosdk.live/prebuilt/notification_critical_err.mp3`
-    //     : `https://static.videosdk.live/prebuilt/notification_err.mp3`
-    // ).play();
+   
 
     setMeetingErrorVisible(true);
     setMeetingError({
@@ -179,9 +175,7 @@ export function MeetingContainer({
 
       const isLocal = senderId === localParticipantId;
 
-      // new Audio(
-      //   `https://static.videosdk.live/prebuilt/notification.mp3`
-      // ).play();
+      
 
       toast(`${isLocal ? "You" : nameTructed(senderName, 15)} raised hand 🖐🏼`, {
         position: "bottom-left",
@@ -207,9 +201,7 @@ export function MeetingContainer({
       const isLocal = senderId === localParticipantId;
 
       if (!isLocal) {
-        // new Audio(
-        //   `https://static.videosdk.live/prebuilt/notification.mp3`
-        // ).play();
+     
 
         toast(
           `${trimSnackBarText(

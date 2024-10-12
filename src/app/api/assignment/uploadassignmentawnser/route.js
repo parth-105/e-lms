@@ -17,7 +17,7 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { student, answer ,id} = reqBody;
 
-        console.log("ccc", reqBody)
+        
 
         const assignment = await Assignment.findById(id);
         if (!assignment) {
@@ -30,7 +30,7 @@ export async function POST(request) {
         }
 
     
-     //   console.log("assignment", assignment);
+  
       
 
         return NextResponse.json({
@@ -40,7 +40,7 @@ export async function POST(request) {
         })
 
     } catch (error) {
-        console.log("ree",error.message)
+       
         return NextResponse.json({ error: error.message }, { status: 500 })
 
     }

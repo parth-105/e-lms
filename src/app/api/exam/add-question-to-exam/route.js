@@ -16,11 +16,11 @@ export async function POST(req) {
         const reqBody = await req.json()
         const { name, correctOption, options, exam } = reqBody
 
-        console.log("checking",reqBody)
+        
   
         // Validate the request body
         if (!name || !correctOption || !options || !exam) {
-            console.log("error")
+           
             return NextResponse.json({ error:"all field require"})
         }
   
@@ -38,7 +38,7 @@ export async function POST(req) {
             success: true,
         })
       } catch (error) {
-        console.log("error",error.message)
+       
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

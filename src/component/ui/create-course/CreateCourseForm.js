@@ -56,8 +56,7 @@ export default function CreateCourseForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Here you would typically send the form data to your backend
-        console.log({ courseName, courseDescription, courseImage, coursePrice, courseSubject, videos })
+       
     }
 
     return (

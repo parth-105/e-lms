@@ -23,7 +23,7 @@ const VideoUploadForm = () => {
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
-    //console.log("data",data)
+
   };
 
   const handleVideoFileChange = (e) => {
@@ -47,7 +47,7 @@ const VideoUploadForm = () => {
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
       const response = await axios.post("/api/videos/uploadvideo", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, subject: subject });
-      console.log("video success", response.data);
+      
 
       if (!thumbnailurl || !videoFileurl) {
         toast({
@@ -70,7 +70,14 @@ const VideoUploadForm = () => {
       }
 
     } catch (error) {
-      console.log("Login failed", error.message);
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: "Please fill in all required fields.",
+      });
+      setloading(false)
+    }finally{
+      setloading(false)
     }
 
 

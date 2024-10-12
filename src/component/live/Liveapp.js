@@ -22,17 +22,7 @@ function Liveapp() {
   const [isMobile, setIsMobile] = useState(false);
   
 
-//   const isMobile = window.matchMedia(
-//     "only screen and (max-width: 768px)"
-//   ).matches;
 
-//   useEffect(() => {
-//     if (isMobile) {
-//       window.onbeforeunload = () => {
-//         return "Are you sure you want to exit?";
-//       };
-//     }
-//   }, [isMobile]);
 
 useEffect(() => {
     if (typeof window !== 'undefined') {

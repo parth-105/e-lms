@@ -1,10 +1,9 @@
 import { Form, message, Modal } from "antd";
 import React from "react";
-//import { useDispatch } from "react-redux";
-import { addQuestionToExam, editQuestionById } from "@/helpers/apicalls/exams";
+
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-//import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
+
 
 function AddEditQuestion({
   showAddEditQuestionModal,
@@ -15,10 +14,10 @@ function AddEditQuestion({
   setSelectedQuestion,
   seteditquestion
 }) {
-  //const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     try {
-      //  dispatch(ShowLoading());
+     
       const requiredPayload = {
         name: values.name,
         correctOption: values.correctOption,
@@ -42,18 +41,15 @@ function AddEditQuestion({
           }
         );
 
-        // response = await editQuestionById({
-        //     ...requiredPayload,
-        //     questionId: selectedQuestion._id
-        // })
+    
       }
       else {
-        //  response = await addQuestionToExam(requiredPayload);
+       
         response = await axios.post(
           "/api/exam/add-question-to-exam",
           requiredPayload
         );
-        console.log("que", response)
+      
 
       }
       if (response.data.success) {
@@ -64,9 +60,9 @@ function AddEditQuestion({
         message.error(response.data.message);
       }
       setSelectedQuestion(null)
-      //  dispatch(HideLoading());
+     
     } catch (error) {
-      //  dispatch(HideLoading());
+      
       message.error(error.data.message);
     }
   };

@@ -8,13 +8,10 @@ export async function POST(req) {
 
   const reqBody = await req.json()
   const { price,courseId } = reqBody;
-  const C = '1234'
 
   if (req.method === 'POST') {
 
-    console.log("amount :::::::", courseId);
-
-    console.log("Checkout 11111");
+  
 
     try {
       const session = await stripe.checkout.sessions.create({
@@ -22,11 +19,11 @@ export async function POST(req) {
         line_items: [
           {
             price_data: {
-              currency: 'usd',
+              currency: 'inr',
               product_data: {
                 name: 'Custom Payment',
               },
-              unit_amount: price, // Use the dynamic amount
+              unit_amount: price*100, // Use the dynamic amount
             },
             quantity: 1,
           },
@@ -35,7 +32,7 @@ export async function POST(req) {
         success_url: `http://localhost:3000/success/${courseId}`,
         cancel_url: `http://localhost:3000/course`,
       });
-      //console.log(session);
+     
 
       return NextResponse.json({ sessionId: session.id });
     } catch (err) {

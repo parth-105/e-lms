@@ -4,20 +4,14 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
 import useLocalStorage from '@/helpers/useLocalStorage.js';
-
-import { MdDelete } from "react-icons/md";
 import { useState } from 'react';
-// import ConfirmationModal from '@/component/ui/delete/ConfirmationModal';
-// import CourseEditorModalTabs from '../ui/editcourse/CourseEditorModal';
-
-
-import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Pencil, Trash2 } from "lucide-react"
+import {  Trash2 } from "lucide-react"
 import ConfirmationModal from '../delete/ConfirmationModal';
 import CourseEditorModalTabs from '../editcourse/CourseEditorModal';
+import { useToast } from "@/hooks/use-toast"
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -28,6 +22,7 @@ export default function CourseComponent({
 
 
     const route = useRouter();
+    const { toast } = useToast()
     const [data, setData] = useLocalStorage('e-learning-user', '');
     const [isDeleting, setIsDeleting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,26 +34,29 @@ export default function CourseComponent({
         setIsDeleting(true);
         try {
             const response = await axios.post('/api/course/deletecourse', { id: courseId });
-            console.log('ok', response.data.Success);
+           
             if (response.data.Success) {
-                // alert('Video deleted successfully');
+                
                 onDelete(courseId);
                 // Optionally, refresh the page or update the state to remove the deleted video from the UI
             } else {
                 alert('Failed to delete the video');
             }
         } catch (error) {
-            console.error('Error deleting video:', error);
-            alert('An error occurred while deleting the video');
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+      
+              })
+            
         } finally {
             setIsDeleting(false);
             setIsModalOpen(false);
         }
     };
 
-    // when user id store
-    // const userId = Cookies.get('userId');
-    // console.log("+++++++++++++++",userId);
+   
 
 
 
@@ -73,16 +71,13 @@ export default function CourseComponent({
             const res = await axios.post("/api/course/checkpurchase", { userId: data._id, courseId: courseId });
 
 
-            console.log(res.data.purchased);
+         
 
             if (res.data.purchased === false) {
-                console.log("this is stripe1");
-
+               
                 const check = async () => {
                     const stripe = await stripePromise;
-                    console.log("this is stripe2");
-
-                    console.log(price);
+                 
 
                     const response = await fetch("/api/checkout", {
                         method: 'POST',
@@ -99,17 +94,18 @@ export default function CourseComponent({
                         sessionId: session.sessionId,
                     });
 
-                    //update database 
-                    // if(session){
-                    //   console.log('update',session)
-                    //   const update = await axios.post('/api/update',{user:"66bf6d68f1cc39527b8403f4",course:courseId,purchased:true})
-                    // }
+                
 
                     if (result.error) {
-                        console.error(result.error.message);
+                        toast({
+                            variant: "destructive",
+                            title: "Uh oh! Something went wrong.",
+                            description: "There was a problem with your request.",
+                           
+                          })
                     } else {
                         const update = await axios.post('/api/update', { user: data._id, course: courseId, purchased: true })
-                        console.log('payment')
+                        
                     }
                 };
                 check()
@@ -143,7 +139,7 @@ export default function CourseComponent({
                         <p className="text-xs text-muted-foreground">Instructor</p>
                     </div>
                 </div>
-                <p className="text-xl font-bold">${price?.toFixed(2)}</p>
+                <p className="text-xl font-bold">₹{price?.toFixed(2)}</p>
             </CardContent>
             <CardFooter className="p-4 pt-0 flex justify-between items-center">
 

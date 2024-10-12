@@ -16,7 +16,7 @@ export async function POST(req) {
         const reqBody = await req.json()
         //const { name, correctOption, options, exam } = reqBody
 
-        console.log("ggggg",reqBody)
+   
   
             // edit question in Questions collection
             const eq = await Question.findByIdAndUpdate(reqBody.questionId, reqBody);
@@ -30,7 +30,7 @@ export async function POST(req) {
         })
       }
        catch (error) {
-        console.log("error",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

@@ -15,7 +15,7 @@ export default function VideoCardlms({ video }) {
           alt= {video.title}
           className="w-full h-full object-cover transition-transform group-hover:scale-105"
         />
-        <div className="absolute h-full inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute h-full inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-80">
           <Play className="w-16 h-16 text-white" />
         </div>
         {/* <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">

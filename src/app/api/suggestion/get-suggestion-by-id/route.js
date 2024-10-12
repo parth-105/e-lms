@@ -12,7 +12,7 @@ export async function POST(request) {
       await connect();
       const reqBody = await request.json()
       const {isinstructor,id} = reqBody
-      console.log("reqbody",reqBody)
+
 
       if(isinstructor)
       {
@@ -33,7 +33,7 @@ export async function POST(request) {
       }
 
       } catch (error) {
-        console.log("error",error.message)
+   
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

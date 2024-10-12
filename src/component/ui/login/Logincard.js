@@ -7,10 +7,10 @@ import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 import { useToast } from "@/hooks/use-toast"
 import { EyeIcon, EyeOffIcon, Loader2 } from 'lucide-react'
-import { Label } from "@/components/ui/label";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { RadioGroup } from "@/components/ui/radio-group";
+
 
 
 const MyComponent = () => {
@@ -34,7 +34,7 @@ const MyComponent = () => {
     const [selectedValue, setSelectedValue] = useState(null);
 
     const handleChangeradio = (event) => {
-        console.log('radio', event.target.value)
+       
         setSelectedValue(event.target.value === 'true');
         setUser({ ...user, isInstructor: event.target.value })
     };
@@ -45,10 +45,17 @@ const MyComponent = () => {
 
     const handleOnChange = (e) => {
         setIsChecked(!isChecked);
-        console.log(" cheked value", e.target.checked);
+       
         setUser({ ...user, isInstructor: e.target.checked })
     };
 
+
+    const handleSwitchChange = () => {
+        setUser({
+            ...user,
+            isInstructor: !user.isInstructor,
+        });
+    };
 
     const onLogin = async () => {
         if (!user.email || !user.password) {
@@ -60,15 +67,14 @@ const MyComponent = () => {
         }
         try {
             setLoading(true);
-            console.log("user", user)
+          
             const response = await axios.post("/api/login", user);
-            console.log('lr', response)
-            // localStorage.setItem('e-learning-user', JSON.stringify(response.data.Login));
-            console.log("Login success", response.data);
+          
+        
 
             if (response.data.pending) {
                 router.push("/pendingpage");
-                //  localStorage.setItem('e-learning-user', '');
+              
             }
             else {
                 if (response.data.Login.isInstructor) {
@@ -91,9 +97,9 @@ const MyComponent = () => {
             }
         } catch (error) {
 
-            console.log(error.message);
+           
             toast({
-                title: "Login Faild",
+                title: `${error.message}`,
                 description: "Something Went Wrong!!!!",
             })
 
@@ -179,8 +185,8 @@ const MyComponent = () => {
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 required />
                         </div> */}
-
-                        <div className="pb-2 pt-4">
+                        
+                        {/* <div className="pb-2 pt-4">
                             <div className="flex items-start">
                                 <div className="flex items-start">
                                     <div className="flex items-center h-5">
@@ -199,6 +205,26 @@ const MyComponent = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div> */}
+
+
+                        <div className="flex items-center justify-center space-x-4">
+                            <span className={`text-sm font-medium ${user.isInstructor ? 'text-purple-600' : 'text-gray-500'}`}>
+                                Instructor
+                            </span>
+                            <div
+                                className={`relative w-14 h-7 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${user.isInstructor ? 'bg-purple-600' : 'bg-green-500'
+                                    }`}
+                                onClick={handleSwitchChange}
+                            >
+                                <div
+                                    className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${user.isInstructor ? 'translate-x-7' : 'translate-x-0'
+                                        }`}
+                                />
+                            </div>
+                            <span className={`text-sm font-medium ${user.isInstructor ? 'text-gray-500' : 'text-green-600'}`}>
+                                Student
+                            </span>
                         </div>
 
                         {/* <div className="space-y-2  gap-4 ">

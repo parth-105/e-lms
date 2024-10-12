@@ -11,19 +11,19 @@ export async function POST(request) {
     try {
       await connect();
       const reqBody = await request.json()
-      console.log("reqbody",reqBody)
+      
 
       const courses = await purches.find({ userId: reqBody.id })
       .populate({
         path: 'courseId',
         populate: {
           path: 'instructor',
-          model: 'Instructor' // Replace 'Assignment' with the actual model name if different
+          model: 'Instructor' 
         }
       })
       .exec();
 
-      // const courses = await purches.find({ userId: reqBody.id }).populate('courseId',{strictPopulate:false}).exec();
+
          return NextResponse.json({
             message: "courses featch successfully",
             success: true,
@@ -31,7 +31,7 @@ export async function POST(request) {
             
         })
       } catch (error) {
-        console.log("error",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

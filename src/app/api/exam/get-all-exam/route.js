@@ -19,7 +19,7 @@ export async function POST(request) {
             data:exams
         })
       } catch (error) {
-        console.log("ree",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
     }

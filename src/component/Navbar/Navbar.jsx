@@ -18,16 +18,15 @@ const Navbar = () => {
     'Home',
     'Services',
     'Courses',
-    'Testimonial',
     'About',
     'Contact Us',
   ];
   const router = useRouter();
-  // let token = sessionStorage.getItem('token');
+  
   
   const page = (item) => {
-    if (item === 'Contact Us') router.push('/contact');
-    else if (item === 'About') router.push('/about-us');
+    if (item === 'Contact Us') router.push('https://bluesky-gamma.vercel.app');
+    else if (item === 'About') router.push('https://bluesky-gamma.vercel.app');
   };
 
   const clickHandler = () => {

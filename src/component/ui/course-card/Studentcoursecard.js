@@ -143,7 +143,7 @@ export default function Studentcoursecard({
                         <p className="text-xs text-muted-foreground">Instructor</p>
                     </div>
                 </div>
-                <p className="text-xl font-bold">${price?.toFixed(2)}</p>
+                <p className="text-xl font-bold">₹{price?.toFixed(2)}</p>
             </CardContent>
             <CardFooter className="p-4 pt-0 flex justify-between items-center">
 

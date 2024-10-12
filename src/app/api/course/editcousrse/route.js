@@ -14,8 +14,7 @@ export async function POST(request) {
 
         const { id , courseDetails } = reqBody
         const { price,subject, thambnail , title  } = courseDetails
-        console.log('cid', id)
-       // console.log('update', updates)
+      
 
         const course = await Cource.findByIdAndUpdate(id, {title, price,subject , thambnail}, {
             new: true,
@@ -24,10 +23,10 @@ export async function POST(request) {
         if (!course) {
             return NextResponse.json({ message: 'course not found' });
         }
-        console.log('course', course)
+       
         return NextResponse.json({ message: 'course edit successfully', Success: true });
     } catch (error) {
-        console.error('Error in editing course:', error.message);
+       
         return NextResponse.json({ message: 'Internal server error' });
     }
 

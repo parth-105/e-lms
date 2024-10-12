@@ -20,7 +20,7 @@ export const uploadFileAndGetUrl = async (file) => {
 
     return downloadUrl;
   } catch (error) {
-    console.error('Error uploading file:', error);
+    
     return null; // Handle the error appropriately in your application
   }
 };

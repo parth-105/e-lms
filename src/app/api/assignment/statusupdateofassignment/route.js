@@ -13,7 +13,7 @@ export async function POST(request){
         const reqBody = await request.json();
         const { assignmentId, studentId, status }  = reqBody;
 
-        console.log("id",assignmentId, studentId, status );
+      
 
         
         const assignment = await Assignment.findOneAndUpdate(
@@ -22,7 +22,7 @@ export async function POST(request){
             { new: true }
           );
 
-          console.log('checking',assignment)
+       
       
           if (!assignment) {
             return NextResponse.json({ message: 'Assignment or student not found' });

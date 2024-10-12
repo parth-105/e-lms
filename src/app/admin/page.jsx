@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchInstructors = async () => {
       const response = await axios.get('/api/pending-instructors');
-      console.log("ins",response)
+     
       setInstructors(response.data.pendingInstructors);
     };
     fetchInstructors();

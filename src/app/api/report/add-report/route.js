@@ -14,18 +14,18 @@ export async function POST(request) {
         // check if exam already exists
         const reqBody = await request.json()
         const {exam , result ,  user } = reqBody
-        console.log('rebbody',reqBody)
+     
         const newReport = new Report({exam , result ,  user });
 
         await newReport.save();
-        console.log('newreport',newReport)
+      
         return NextResponse.json({
             message: "attempt added successfully",
             success: true,
         })
 
       } catch (error) {
-        console.log("error:",error.message)
+       
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

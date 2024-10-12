@@ -24,12 +24,7 @@ import { uploadFileAndGetUrl } from "@/helpers/firebaseUtils"
 import useLocalStorage from "@/helpers/useLocalStorage.js"
 import { useToast } from "@/hooks/use-toast"
 
-// Mock data for video list
-const initialVideos = [
-  { id: 1, title: "Introduction to React", description: "Learn the basics of React" },
-  { id: 2, title: "Advanced React Hooks", description: "Deep dive into React Hooks" },
-  { id: 3, title: "State Management in React", description: "Explore state management solutions" },
-]
+
 
 export default function CourseEditorModalTabs({ course }) {
 
@@ -80,10 +75,10 @@ export default function CourseEditorModalTabs({ course }) {
     const { name, value, files } = e.target
 
     if (files) {
-      console.log('rr');
+     
 
       const cthumbnailFileurl = await uploadFileAndGetUrl(e.target.files[0]);
-      console.log('ct', cthumbnailFileurl)
+      
       setCourseDetails({ ...courseDetails, thambnail: cthumbnailFileurl });
     }
 
@@ -91,20 +86,19 @@ export default function CourseEditorModalTabs({ course }) {
 
   const handlecThumbnailChange = async (e) => {
     if (e.target.files[0]) {
-      console.log('rr')
+ 
       setcThumbnail(e.target.files[0]);
       const cthumbnailFileurl = await uploadFileAndGetUrl(e.target.files[0]);
-      console.log('ct', cthumbnailFileurl)
+     
       setVideoDetails({ ...courseDetails, thambnail: cthumbnailFileurl });
     }
   };
 
   const handlecvThumbnailChange = async (e) => {
     if (e.target.files[0]) {
-      console.log('vv')
-      // setcThumbnail(e.target.files[0]);
+    
       const cvthumbnailFileurl = await uploadFileAndGetUrl(e.target.files[0]);
-      console.log('cv', cvthumbnailFileurl)
+     
       setVideoDetails({ ...courseDetails, videourl: cvthumbnailFileurl });
     }
   };
@@ -115,7 +109,7 @@ export default function CourseEditorModalTabs({ course }) {
 
 
   const handleEditVideo = (video) => {
-    console.log('ec', course)
+
     setSelectedVideo(video)
     setVideoDetails({
       id: video._id,
@@ -131,7 +125,7 @@ export default function CourseEditorModalTabs({ course }) {
   }
 
   const handleDeleteConfirm = async () => {
-    console.log('delete', deleteConfirmation)
+  
     const cres = await axios.post("/api/course/deletecoursevideo", { id: deleteConfirmation.videoId });
     setVideos(videos.filter(v => v._id !== deleteConfirmation.videoId))
     setDeleteConfirmation({ isOpen: false, videoId: null })
@@ -150,23 +144,28 @@ export default function CourseEditorModalTabs({ course }) {
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
       //  const cthumbnailFileurl = await uploadFileAndGetUrl(cthumbnail);
 
-      console.log('cd', courseDetails)
+      
       const cres = await axios.post("/api/course/editcousrse", { id: course._id, courseDetails });
 
-      console.log('cv', videoDetails)
+ 
       const vres = await axios.post("/api/course/editcoursevideo", { id: selectedVideo?._id, videoDetails });
 
-      //console.log("Course Details:", courseDetails)
+     
       if (selectedVideo) {
-        console.log("Video Details:", videoDetails)
-        // Update the video in the list
+      
+      
         setVideos(videos.map(v => v._id === selectedVideo._id ? { ...v, ...videoDetails } : v))
         setSelectedVideo(null)
       }
       setIsOpen(false) // Close the modal after submission
     }
     catch (error) {
-      console.log('error')
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+       
+      })
       setloading(false)
     } finally {
       setloading(false)
@@ -196,7 +195,7 @@ export default function CourseEditorModalTabs({ course }) {
       return;
   }
     try {
-      console.log('vcccc')
+    
       setvloading(true)
       const thumbnailurl = await uploadFileAndGetUrl(nthumbnail);
       const videoFileurl = await uploadFileAndGetUrl(nvideoFile);
@@ -211,10 +210,8 @@ export default function CourseEditorModalTabs({ course }) {
       setturl(thumbnailurl);
       setvurl(videoFileurl);
       const response = await axios.post("/api/course/addvideoexistingcourse", { title: videoTopic, description: videoDescription, instructor: data._id, thambnail: thumbnailurl, videourl: videoFileurl, isFree: false, courseid: course._id });
-      console.log("video success", response.data);
-      console.log("video url >>>", response.data.video._id);
+   
 
-      // setVideos((e) => [...e, response.data.video._id])
       if (response) {
         setvloading(false)
         setVideoTopic('')
@@ -225,7 +222,12 @@ export default function CourseEditorModalTabs({ course }) {
       }
 
     } catch (error) {
-      console.log("Login failed", error.message)
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+       
+      })
     }
   }
 
@@ -237,7 +239,7 @@ export default function CourseEditorModalTabs({ course }) {
 
       const response = await axios.post("/api/course/coursevideo", { courseId: course?._id });
 
-      console.log('videodata', response.data.videos);
+    
       setinitialVideos(response.data.videos);
       setVideos(response.data.videos)
     };

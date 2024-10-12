@@ -11,9 +11,6 @@ export  async function POST(request) {
   const reqBody = await request.json();
   const { courseId, userId } = reqBody;
 
-
-  //const { user, course } = req.body;
-
   
 
   const purchase = await Purches.findOne({ courseId, userId })

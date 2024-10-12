@@ -37,5 +37,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/instructor/:path*', '/student/:path*'],
+  matcher: ['/admin/:path*', '/instructor/:path*', '/student/:path*' ,'/checkout.stripe.com/:path*','/course/:path*'],
 };

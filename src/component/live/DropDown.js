@@ -8,6 +8,7 @@ import TestMic from "@/helpers/icons/DropDown/TestMic"
 import TestMicOff from '@/helpers/icons/DropDown/TestMicOff';
 import PauseButton from '@/helpers/icons/DropDown/PauseButton';
 import { useMeetingAppContext } from '@/helpers/context/MeetingAppContextDef';
+import { useToast } from "@/hooks/use-toast"
 
 export default function DropDown({
   mics,
@@ -18,6 +19,8 @@ export default function DropDown({
   didDeviceChange,
   setDidDeviceChange
 }) {
+
+  const { toast } = useToast()
 
   const {
     setSelectedMic,
@@ -141,7 +144,11 @@ export default function DropDown({
         stopRecording();
       }, 7000)
     } catch (err) {
-      console.log("Error in MediaRecorder:", err)
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
     }
   };
 

@@ -15,7 +15,6 @@ const Home = () => {
       <Badges />
       <Cards />
       <Courses />
-      {/* <Testimonials /> */}
       <Footer />
     </>
   )

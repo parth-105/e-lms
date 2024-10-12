@@ -1,9 +1,5 @@
 const Card = ({ imgUrl, text, bcolor,color, imgRadius, quotes }) => {
-  // Adding buffer text so that Tailwind add classes during build time, Tailwind is not capable of picking classes from string concatenation
-  // You can pass values as 'bg-red-900' but that will consume more space as well as time
-
-  // let bufferText =
-  //   'text-emerald-900 border-emerald-900 bg-emerald-200 text-rose-900 border-rose-900 bg-rose-200 text-fuchsia-900 border-fuchsia-900 bg-fuchsia-200 text-zinc-900 border-zinc-900 bg-zinc-200'
+ 
 
   return (
     <figure

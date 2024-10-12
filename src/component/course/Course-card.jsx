@@ -5,17 +5,18 @@ import { useRouter } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
 import useLocalStorage from '@/helpers/useLocalStorage.js';
 import {
-  List,
+  
   ListItem,
   ListItemPrefix,
   Avatar,
-  Card,
+
   Typography,
 } from "@material-tailwind/react";
 import { MdDelete } from "react-icons/md";
 import { useState } from 'react';
 import ConfirmationModal from '@/component/ui/delete/ConfirmationModal';
 import CourseEditorModalTabs from '../ui/editcourse/CourseEditorModal';
+import { useToast } from "@/hooks/use-toast"
 
 
 
@@ -25,6 +26,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, insdetail, onDelete ,course}) => {
 
   const route = useRouter();
+  const { toast } = useToast()
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,16 +38,15 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
     setIsDeleting(true);
     try {
       const response = await axios.post('/api/course/deletecourse', { id: courseId });
-      console.log('ok', response.data.Success);
+     
       if (response.data.Success) {
-        // alert('Video deleted successfully');
+      
         onDelete(courseId);
         // Optionally, refresh the page or update the state to remove the deleted video from the UI
       } else {
         alert('Failed to delete the video');
       }
     } catch (error) {
-      console.error('Error deleting video:', error);
       alert('An error occurred while deleting the video');
     } finally {
       setIsDeleting(false);
@@ -53,9 +54,7 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
     }
   };
 
-  // when user id store
-  // const userId = Cookies.get('userId');
-  // console.log("+++++++++++++++",userId);
+
 
 
 
@@ -70,17 +69,14 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
       const res = await axios.post("/api/course/checkpurchase", { userId: data._id, courseId: courseId });
 
 
-      console.log(res.data.purchased);
+    
 
       if (res.data.purchased === false) {
-        console.log("this is stripe1");
+     
 
         const check = async () => {
           const stripe = await stripePromise;
-          console.log("this is stripe2");
-
-          console.log(price);
-
+        
           const response = await fetch("/api/checkout", {
             method: 'POST',
             headers: {
@@ -96,17 +92,20 @@ const CourseCard = ({ title, thumbnail, price, courseId, instructor, userId, ins
             sessionId: session.sessionId,
           });
 
-          //update database 
-          // if(session){
-          //   console.log('update',session)
-          //   const update = await axios.post('/api/update',{user:"66bf6d68f1cc39527b8403f4",course:courseId,purchased:true})
-          // }
+          
 
           if (result.error) {
-            console.error(result.error.message);
+           
+            toast({
+              variant: "destructive",
+              title: "Uh oh! Something went wrong.",
+              description: "There was a problem with your request.",
+             
+            })
+            
           } else {
             const update = await axios.post('/api/update', { user: data._id, course: courseId, purchased: true })
-            console.log('payment')
+           
           }
         };
         check()

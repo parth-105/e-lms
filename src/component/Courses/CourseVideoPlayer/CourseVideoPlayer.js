@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import MuxPlayer from '@mux/mux-player-react'
-import { Button } from "@/components/ui/button"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Play, Pause } from 'lucide-react'
+
 import ReactPlayer from 'react-player';
 
 
@@ -22,11 +21,11 @@ export default function CourseVideoPlayer({ courseId }) {
         if (courseId) {
             const fetchVideos = async () => {
 
-                console.log('cid', courseId)
+               
 
                 const response = await axios.post("/api/course/coursevideo", { courseId: courseId });
 
-                console.log('videodata', response.data.videos);
+                
 
 
                 setVideos(response.data.videos);

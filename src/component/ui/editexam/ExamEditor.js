@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -19,16 +19,14 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Pencil, Trash2, Upload } from "lucide-react"
-import axios from "axios"
-import { uploadFileAndGetUrl } from "@/helpers/firebaseUtils"
-import useLocalStorage from "@/helpers/useLocalStorage.js"
+
 
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import Exam from "@/model/quiz/exam-model"
+
 import AddEditQuestion from "@/component/quiz/addeditquestion"
 
 

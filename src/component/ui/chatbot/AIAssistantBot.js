@@ -22,24 +22,14 @@ const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
 export default function AIAssistantBot() {
     const [isOpen, setIsOpen] = useState(false)
-    // const [messages, setMessages] = useState  ([
-    //     { content: "Hello! How can I assist you today?", isUser: false }
-    // ])
-    // const [input, setInput] = useState('')
-    const [isPulsing, setIsPulsing] = useState(true)
+
 
     const [messages, setMessages] = useState([]);
     const [prompt, setPrompt] = useState('');
     const [loading, setLoading] = useState(false); // New state for loading
     const chatBoxRef = useRef(null);
 
-    // useEffect(() => {
-    //     const pulseInterval = setInterval(() => {
-    //         setIsPulsing(prev => !prev)
-    //     }, 2000)
-
-    //     return () => clearInterval(pulseInterval)
-    // }, [])
+ 
 
     useEffect(() => {
         if (chatBoxRef.current) {

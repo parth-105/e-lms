@@ -10,20 +10,14 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchCourses = useCallback(async () => {
-    setLoading(true);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/course/explore`);
-    const data = await res.json();
-    setCourses(data);
-    setLoading(false);
-  }, []);
+ 
 
-  useEffect(() => {
-    fetchCourses();
-    return () => {
-      setCourses([]);
-    };
-  }, [fetchCourses]);
+  // useEffect(() => {
+  //   fetchCourses();
+  //   return () => {
+  //     setCourses([]);
+  //   };
+  // }, [fetchCourses]);
 
   return (
     <>
@@ -37,7 +31,7 @@ const Courses = () => {
           desc1="Build career-relevant skills"
           desc2="with courses from top industry experts"
         />
-        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-8">
+        {/* <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-8">
           {courses.map(({ imgUrl, name, category, _id }, index) => (
             <CoursesCard
               key={`${name}${index}`}
@@ -47,7 +41,7 @@ const Courses = () => {
               courseId={_id}
             />
           ))}
-        </div>
+        </div> */}
         <Link
           href="/course"
           className="flex flex-row items-center justify-center mt-4 border-2 rounded bg-[#E5E7EB] cursor-pointer"

@@ -14,7 +14,7 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { title, price , instructor,subject, thambnail, videos} = reqBody
 
-        console.log("checking", reqBody)
+       
 
 
         const newCource = new Cource({
@@ -29,13 +29,6 @@ export async function POST(request) {
 
         const cource = await newCource.save()
 
-    
-
-        console.log("videos", cource);
-        console.log("newvideos", newCource);
-
-
-
 
         return NextResponse.json({
             message: "video creted successfully",
@@ -44,7 +37,7 @@ export async function POST(request) {
         })
 
     } catch (error) {
-        console.log("ree",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
 
     }

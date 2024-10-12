@@ -1,7 +1,7 @@
 
-// import { DefaultSidebar } from '@/component/ui/SidebarWithLogo'
+
 import AIAssistantBot from '@/component/ui/chatbot/AIAssistantBot'
-import SidebarWithLogo from '@/component/ui/SidebarWithLogo'
+
 import VideoList from '@/component/ui/video/Getallvideos'
 import React from 'react'
  

@@ -15,7 +15,7 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { courseid ,  title, description, instructor, thambnail, videourl ,comment ,isFree,subject} = reqBody
 
-        console.log("checking", reqBody)
+       
 
 
         const newVideo = new Video({
@@ -31,11 +31,7 @@ export async function POST(request) {
 
         const video = await newVideo.save()
 
-        // const video = new Video(request.body);
-        // await video.save();
-
-        console.log("videos", video);
-        console.log("newvideos", newVideo);
+    
 
 
         await Instructor.findByIdAndUpdate(
@@ -57,7 +53,7 @@ export async function POST(request) {
         })
 
     } catch (error) {
-        console.log("ree",error.message)
+       
         return NextResponse.json({ error: error.message }, { status: 500 })
 
     }

@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
-import CourseCard from '@/component/course/Course-card';
-import DotSpinner from '@/component/ui/loader/DotSpinner';
+
 import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
 import CourseComponent from '@/component/ui/course-card/CourseComponent';
 
@@ -17,7 +16,7 @@ const Courses = () => {
       try {
         const res = await fetch('/api/course/courses');
         const data = await res.json();
-        console.log('mcd', data)
+       
         setCourses(data);
        setLoading(false)
       } catch (error) {

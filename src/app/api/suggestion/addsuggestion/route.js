@@ -13,7 +13,7 @@ export async function POST(request){
         const reqBody = await request.json()
         const {topic, subject, student,Instructor,author,photoURL} = reqBody
 
-        console.log("checking", reqBody)
+      
     
     
             const newsuggestion = new Suggestion({
@@ -27,7 +27,7 @@ export async function POST(request){
             })
     
             const suggestions = await newsuggestion.save()
-            console.log("suggestions",suggestions);
+           
 
 
 
@@ -38,7 +38,7 @@ export async function POST(request){
             })
 
     } catch (error) {
-        console.log('error:',error.message)
+     
         return NextResponse.json({error: error.message}, {status: 500})
 
     }

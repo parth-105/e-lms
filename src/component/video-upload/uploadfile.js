@@ -14,7 +14,7 @@ const MyComponent = () => {
   const handleUpload = async () => {
     if (selectedFile) {
       const url = await uploadFileAndGetUrl(selectedFile);
-      console.log('Download URL:', url);
+    
     }
   };
 

@@ -11,7 +11,7 @@ export async function POST(request) {
     try {
       await connect();
       const reqBody = await request.json()
-      console.log("reqbody",reqBody)
+      
         const videos = await Video.findById(reqBody.id)
         return NextResponse.json({
             message: "exam featch successfully",
@@ -19,7 +19,7 @@ export async function POST(request) {
             videos
         })
       } catch (error) {
-        console.log("error",error.message)
+  
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

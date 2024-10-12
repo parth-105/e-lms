@@ -1,18 +1,7 @@
 "use client"
-import { Col, Form, message, Row, Select, Table } from "antd";
+import { Col, Form, message, Row, Table } from "antd";
 import React, { useEffect } from "react";
-import {
-  addExam,
-  deleteQuestionById,
-  editExamById,
-  getExamById,
-} from "@/helpers/apicalls/exams";
-import axios from "axios";
-//import PageTitle from "../../../components/PageTitle";
-//import { useNavigate, useParams } from "react-router-dom";
 
-//import { useDispatch } from "react-redux";
-//import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
 import { Tabs } from "antd";
 import AddEditQuestion from "@/component/quiz/addeditquestion";
 const { TabPane } = Tabs;
@@ -42,12 +31,12 @@ function page() {
 
       if (params.id  && editquestion ) {
         response = await axios.post("/api/exam/edit-exam-by-id",{...values,examId: params.id});
-        console.log("data",response)
+    
         if (response?.data?.success) {
           message.success(response.data.message);
           router.push("/instructor/exams");
         } else {
-          console.log("error",response.data.message)
+          
           message.error(response.data.message);
         }
       } 
@@ -55,32 +44,29 @@ function page() {
     
     } catch (error) {
     
-     console.log("error",error?.data?.message)
-      message.error(error?.data?.message);
+     
+      message.error(error?.message);
     }
   };
 
   const getExamData = async () => {
     try {
-      //dispatch(ShowLoading());
+     
       const response = await axios.post(
         "/api/exam/get-exam-by-id",
         {examId: params.id}
       );
-      // const response = await getExamById({
-      //   examId: params.id,
-      // });
-    //  dispatch(HideLoading());
+    
       if (response.data.success) {
         setExamData(response.data.data);
       } else {
-        console.log("error",response.data.message)
+       
         message.error(response.data.message);
       }
     } catch (error) {
-      //dispatch(HideLoading());
+    
       message.error(error.message);
-      console.log("error",error.message)
+     
     }
   };
 
@@ -101,22 +87,17 @@ function page() {
         examId : params.id}
     );
 
-      // const response = await deleteQuestionById({
-      //   questionId,
-      //   examId : params.id
-      // });
-    //  dispatch(HideLoading());
+      
       if (response.data.success) {
-        console.log("error",response.data.message)
+       
         message.success(response.data.message);
         getExamData();
       } else {
-        console.log("error",response.data.message)
+        
         message.error(response.data.message);
       }
     } catch (error) {
-    //  dispatch(HideLoading());
-    console.log("error",error.message)
+    
       message.error(error.data.message);
     }
   };

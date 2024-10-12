@@ -1,18 +1,9 @@
 "use client"
-import { Col, Form, message, Row, Select, Table } from "antd";
+import { Col, Form, message, Row, Table } from "antd";
 import React, { useEffect } from "react";
-import {
-  addExam,
-  deleteQuestionById,
-  editExamById,
-  getExamById,
-} from "@/helpers/apicalls/exams";
-import axios from "axios";
-//import PageTitle from "../../../components/PageTitle";
-//import { useNavigate, useParams } from "react-router-dom";
 
-//import { useDispatch } from "react-redux";
-//import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
+import axios from "axios";
+
 import { Tabs } from "antd";
 import AddEditQuestion from "@/component/quiz/addeditquestion";
 const { TabPane } = Tabs;
@@ -31,7 +22,7 @@ function AddEditExam() {
     React.useState(false);
   const [selectedQuestion, setSelectedQuestion] = React.useState(null);
   const [data, setData] = useLocalStorage('e-learning-user', '');
- // const params = useParams();
+
  const params = useParams();
   const { id } = params;
 
@@ -42,27 +33,24 @@ function AddEditExam() {
 
       if (params.id) {
         response = await axios.post("/api/exam/edit-exam-by-id",{...values,examId: params.id});
-      //  response = await editExamById({
-        //   ...values,
-        //   examId: params.id,
-        // });
-        console.log("data",response)
+      
+       
       } else {
-        // response = await addExam(values);
+       
         response = await axios.post("/api/exam/add-exam", {...values,instructor:data._id});
-        console.log("data",response)
+      
       }
       if (response.data.success) {
         message.success(response.data.message);
         router.push("/instructor/exams");
       } else {
-        console.log("error",response.data.message)
-        message.error(response.data.message);
+       
+        message.error(response.message);
       }
     
     } catch (error) {
     
-    console.log("error",error.message)
+   
       message.error("validate error ");
     }
   };
@@ -81,13 +69,13 @@ function AddEditExam() {
       if (response.data.success) {
         setExamData(response.data.data);
       } else {
-        console.log("error",response.data.message)
-        message.error(response.data.message);
+      
+        message.error(response.message);
       }
     } catch (error) {
       //dispatch(HideLoading());
-      message.error(error.data.message);
-      console.log("error",error.data.message)
+      message.error(error.message);
+    
     }
   };
 
@@ -108,23 +96,17 @@ function AddEditExam() {
         examId : params.id}
     );
 
-      // const response = await deleteQuestionById({
-      //   questionId,
-      //   examId : params.id
-      // });
-    //  dispatch(HideLoading());
       if (response.data.success) {
-        console.log("error",response.data.message)
+       
         message.success(response.data.message);
         getExamData();
       } else {
-        console.log("error",response.data.message)
-        message.error(response.data.message);
+       
+        message.error(response.message);
       }
     } catch (error) {
-    //  dispatch(HideLoading());
-    console.log("error",error.message)
-      message.error(error.data.message);
+   
+      message.error(error.message);
     }
   };
 

@@ -12,11 +12,11 @@ connect()
 export async function POST(req) {
     try {
 
-   //   console.log(req.body.examId)
+ 
       const reqBody = await req.json()
       const { examId,body } = reqBody
 
-      console.log("cg", reqBody)
+      
       
        const eexam = await Exam.findByIdAndUpdate(examId, reqBody);
         return NextResponse.json({
@@ -25,7 +25,7 @@ export async function POST(req) {
             eexam
         })
       } catch (error) {
-        console.log("ree",error.message)
+       
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
 }

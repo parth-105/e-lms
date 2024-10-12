@@ -53,9 +53,9 @@ const Coursewiseassignmentlist = ({ Course }) => {
               > */}
 
               {assignment?.awnserfile.length === 0 ? (
-                <div className="bg-yellow-200 p-1">
-                  <p>pending</p>
-                </div>
+                <Badge className="bg-yellow-200 text-black ">
+                  pending
+                </Badge>
               ) : (
                 assignment?.awnserfile.some(ans => ans?.studentid === data._id) ? (
                   assignment?.awnserfile.map((ans) => (
@@ -80,7 +80,7 @@ const Coursewiseassignmentlist = ({ Course }) => {
 
 
               <div>
-                {assignment?.awnserfile.length === 0 ? (
+                {assignment?.awnserfile.length  === 0 &&  assignment?.awnserfile.studentid ===data._id  ? (
                  
                    
                     <Button variant="outline">

@@ -17,12 +17,13 @@ export async function POST(request) {
     const { email, password, isInstructor } = reqBody;
 
 
+
     if (isInstructor) {
       const instructor = await Instructor.findOne({ email })
       if (!instructor) {
         return NextResponse.json({ error: "instructor does not exist" }, { status: 400 })
       }
-      console.log("instructor exists");
+   
 
       const tokenData = {
         id: instructor._id,
@@ -35,9 +36,10 @@ export async function POST(request) {
       if (instructor.status === 'approved') {
         const isMatch = await bcryptjs.compare(password, instructor.password);
         if (isMatch) {
-          // const token = jwt.sign({ id: instructor._id }, process.env.JWT_SECRET);
-          // return new Response(JSON.stringify({ token }), { status: 200 });
+     
           const token = await jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: "1d" })
+
+       
 
           const response = NextResponse.json({
             message: " instructor Login successful",
@@ -65,18 +67,17 @@ export async function POST(request) {
       try {
         const user = await User.findOne({ email })
         if (!user) {
-          console.log('User does not exist',)
+        
           return NextResponse.json({ error: "User does not exist" })
         }
-        console.log("user exists");
-
+       
 
         //check if password is correct
         const validPassword = await bcryptjs.compare(password, user.password)
         if (!validPassword) {
           return NextResponse.json({ error: "Invalid password" }, { status: 400 })
         }
-        console.log(user);
+       
 
         //create token data
         const tokenData = {
@@ -102,25 +103,15 @@ export async function POST(request) {
         return response;
       }
       catch (err) {
-        console.Console.log("error", err.message)
+       
         return NextResponse.json({ error: err.message })
       }
     }
 
-    // const instructor = await Instructor.findOne({ email });
-    // if (instructor && instructor.status === 'approved') {
-    //   const isMatch = await bcryptjs.compare(password, instructor.password);
-    //   if (isMatch) {
-    //     const token = jwt.sign({ id: instructor._id }, process.env.JWT_SECRET);
-    //     return new Response(JSON.stringify({ token }), { status: 200 });
-    //   } else {
-    //     return new Response('Invalid credentials.', { status: 400 });
-    //   }
-    // } else {
-    //   return new Response('Instructor not approved or does not exist.', { status: 400 });
-    // }
+   
   }
   catch (error) {
+   
     return NextResponse.json({ error: error.message })
 
   }

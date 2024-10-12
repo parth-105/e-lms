@@ -40,7 +40,7 @@ export default function InstructorAssignmentForm() {
   })
 
   const handleChange = (event) => {
-    console.log('aaaaaaaaaaaaa', event)
+   
     setSelectedValue(event);
   };
 
@@ -49,9 +49,9 @@ export default function InstructorAssignmentForm() {
     const fetchCourses = async () => {
       try {
         const res = await axios.post('/api/course/get-course-by-id', { id: data._id });
-        console.log('cd', res.data.courses);
+       
 
-        // const cdata = await res.json();
+     
         setCourses(res.data.courses);
         setfeatchloding(false)
       } catch (error) {
@@ -61,7 +61,7 @@ export default function InstructorAssignmentForm() {
           title: "Internal server problem",
           description: "Please wait we will try to solve these problem.",
         });
-        console.log('Error fetching courses:', error);
+       
         setfeatchloding(false)
       }
       finally{
@@ -82,12 +82,11 @@ export default function InstructorAssignmentForm() {
 
       
 
-        console.log('answerUrl', assignment);
-        console.log('answer', questionurl);
+       
 
         const res = await axios.post('/api/assignment/uploadassignment', { title: assignment.title, description: assignment.description, questionfile: questionurl, couses: selectedValue, instructor: data._id });
 
-        console.log("Assignment submitted:", res);
+       
 
         if (res.data.success) {
           // setAnswerFile(null);

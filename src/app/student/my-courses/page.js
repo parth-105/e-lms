@@ -2,18 +2,20 @@
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import CourseCard from '@/component/course/Course-card';
+
 import useLocalStorage from '@/helpers/useLocalStorage.js';
-import CourseComponent from '@/component/ui/course-card/CourseComponent';
+
 import Studentcoursecard from '@/component/ui/course-card/Studentcoursecard';
+import { useToast } from "@/hooks/use-toast"
 
 
 
 
 
 const Courses = () => {
+  const { toast } = useToast()
   const [courses, setCourses] = useState([]);
-  const [coursedata,setCoursedata] = useState()
+ 
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [isClient, setIsClient] = useState(false);
 
@@ -25,12 +27,13 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const res = await axios.post('/api/course/studentcourse',{id:data._id});
-        console.log('cd',res.data.courses);
-        
-       // const cdata = await res.json();
         setCourses(res.data.courses);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
       }
     };
 

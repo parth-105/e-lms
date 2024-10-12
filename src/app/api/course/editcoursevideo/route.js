@@ -15,8 +15,7 @@ export async function POST(request) {
 
         const { id , videoDetails } = reqBody
         const { title, description , thambnail , videourl  } = videoDetails
-        console.log('vid', id)
-        console.log('vupdate', videoDetails)
+        
 
         const course = await Video.findByIdAndUpdate(id, { title, description , thambnail , videourl}, {
             new: true,
@@ -25,10 +24,10 @@ export async function POST(request) {
         if (!course) {
             return NextResponse.json({ message: 'course not found' });
         }
-        console.log('course', course)
+       
         return NextResponse.json({ message: 'course edit successfully', Success: true });
     } catch (error) {
-        console.error('Error in editing course:', error.message);
+        
         return NextResponse.json({ message: 'Internal server error' });
     }
 

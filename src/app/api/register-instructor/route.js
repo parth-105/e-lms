@@ -36,7 +36,7 @@ export async function POST(request) {
             })
 
             const savedUser = await newUser.save()
-            console.log("instuctor", savedUser);
+           
 
 
             return NextResponse.json({
@@ -70,9 +70,7 @@ export async function POST(request) {
             })
     
             const savedUser = await newUser.save()
-            console.log(savedUser);
-    
-            //send verification email
+           
     
           
     

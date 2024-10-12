@@ -2,16 +2,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-import CourseCard from '@/component/course/Course-card';
 import useLocalStorage from '@/helpers/useLocalStorage.js';
 import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
 import CourseComponent from '@/component/ui/course-card/CourseComponent';
+import { useToast } from "@/hooks/use-toast"
 
 
 
 
 
 const Courses = () => {
+  const { toast } = useToast()
   const [courses, setCourses] = useState([]);
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [loading, setLoading] = useState(false);
@@ -25,10 +26,17 @@ const Courses = () => {
       setLoading(true);
       try {
         const res = await axios.post('/api/course/get-course-by-id', { id: data._id });
-        console.log('icd',res.data.courses)
+       
         setCourses(res.data.courses);
       } catch (error) {
-        console.log('Error fetching courses:', error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+         
+        })
+        setLoading(false)
+      
       } finally {
         setLoading(false);
       }

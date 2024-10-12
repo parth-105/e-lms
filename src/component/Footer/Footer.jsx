@@ -8,16 +8,11 @@ const Footer = () => {
   const router = useRouter()
   
   const page = (item) => {
-    if (item === 'Contact Us') router.push('/contact')
-    else if (item === 'About') router.push('/about-us')
+    if (item === 'Contact Us') router.push('https://bluesky-gamma.vercel.app');
+    else if (item === 'About') router.push('https://bluesky-gamma.vercel.app');
   }
 
-  const socialUrls = {
-    // instaUrl: 'https://github.com/curiomind-e-learning',
-    // fbUrl: 'https://github.com/curiomind-e-learning',
-    // twitterUrl: 'https://github.com/curiomind-e-learning',
-    githubUrl: 'https://github.com/curiomind-e-learning',
-  }
+
 
   return (
     <div className="w-full bottom-0 flex items-center justify-center bg-gray-200 text-cornflowerBlue">
@@ -27,7 +22,7 @@ const Footer = () => {
             <div className="px-8 md:px-2 text-base lg:px-8">
               <Link href="/">
                 <div className="text-4xl text-cornflowerBlue" style={{ fontFamily: 'Pacifico' }}>
-                  Curiomind
+                  Bluesky
                 </div>
               </Link>
               <p className="text-cornflowerBlue">
@@ -59,7 +54,7 @@ const Footer = () => {
           </div>
           <hr className="border-cornflowerBlue leading-loose text-cornflowerBlue" />
           <p className="w-full text-center my-6 text-cornflowerBlue">
-            Copyright © 2024 Curiomind. All rights reserved.
+            Copyright © 2024 Bluesky. All rights reserved, to BlueSky.
           </p>
         </div>
       </div>

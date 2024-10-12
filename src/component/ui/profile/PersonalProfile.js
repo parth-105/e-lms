@@ -14,7 +14,7 @@ export default function PersonalProfile() {
       if(storedData){
         const parsedData = JSON.parse(storedData);
       setUserData(parsedData);
-     // console.log('ld',userData)
+  
       }
      
       }, []);
@@ -22,7 +22,7 @@ export default function PersonalProfile() {
       useEffect(() => {
         // This will run whenever userData changes
         if (userData) {
-          console.log('ld', userData);
+        
         }
       }, [userData]);
   return (
@@ -49,12 +49,12 @@ export default function PersonalProfile() {
                     <MDBRow className="pt-1">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6" className='font-semibold text-2xl'>Email</MDBTypography>
-                        <MDBCardText className="text-muted">{userData?.email}</MDBCardText>
+                        <MDBCardText className=" text-black">{userData?.email}</MDBCardText>
                       </MDBCol>
-                      <MDBCol size="6" className="mb-3">
+                      {/* <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6" className='font-semibold text-2xl'>Phone</MDBTypography>
                         <MDBCardText className="text-muted">123 456 789</MDBCardText>
-                      </MDBCol>
+                      </MDBCol> */}
                     </MDBRow>
 
                     {/* <MDBTypography tag="h6">Information</MDBTypography>

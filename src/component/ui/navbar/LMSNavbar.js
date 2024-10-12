@@ -36,7 +36,7 @@ export default function LMSNavbar() {
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             setUserData(parsedData);
-            // console.log('ld',userData)
+            
         }
 
     }, []);
@@ -77,7 +77,7 @@ export default function LMSNavbar() {
             <div className="flex h-16 items-center px-4 md:px-6">
                 <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                     <SheetTrigger asChild>
-                        <Button variant="outline" size="icon" className="mr-2 md:hidden">
+                        <Button variant="outline"  className="ml-40 md:hidden">
                             <Menu className="h-6 w-6" />
                             <span className="sr-only">Toggle Menu</span>
                         </Button>

@@ -12,54 +12,57 @@ const Createsuggestion = () => {
     const [topic, setTopic] = useState('');
     const [subject, setSubject] = useState('');
     const [data, setData] = useLocalStorage('e-learning-user', '');
-    const [loading ,setloading]=useState(false)
-   // const student = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
+    const [loading, setloading] = useState(false)
+    // const student = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
     const router = useRouter();
 
     const subjects = [
-       
+
         "Javascript",
         "React",
         "Node",
-       "MongoDB",
+        "MongoDB",
         "GK",
-       "ML",
+        "ML",
         "ebusiness",
     ];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle form submission
+
         try {
             setloading(true)
             if (!topic || !subject) {
                 toast({
-                  title: "Validation Error",
-                  description: "Please fill in all required fields.",
+                    title: "Validation Error",
+                    description: "Please fill in all required fields.",
                 });
                 setloading(false)
                 return;
-              }
+            }
             const response = await axios.post("/api/suggestion/addsuggestion", {
                 topic,
                 subject,
-                author:data.name,
-                student:data._id,
-                photoURL:data.photoURL
-            
+                author: data.name,
+                student: data._id,
+                photoURL: data.photoURL
+
             });
-            console.log(response);
-            if(data.isInstructor)
-            {
-             router.push('/instructor')
-            }else{
-            router.push('/student');
+
+            if (data.isInstructor) {
+                router.push('/instructor')
+            } else {
+                router.push('/student');
             }
             setloading(false)
         } catch (error) {
-            console.log(error);
+            toast({
+                title: "Validation Error",
+                description: "Please fill in all required fields.",
+            });
+            setloading(false)
         }
-        finally{
+        finally {
             setloading(false)
         }
     };

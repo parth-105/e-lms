@@ -2,19 +2,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
+import { useToast } from "@/hooks/use-toast"
 
 const page = ({params}) => {
+  const { toast } = useToast()
   const [currentUrl, setCurrentUrl] = useState();
   const [videos, setVideos] = useState({});
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await axios.post('/api/videos/getvideosbyid',{id:params.videoid}); // Make a GET request
-        console.log("video responce", response.data)
+       
         setVideos(response.data.videos); 
         setCurrentUrl(response.data.videos.videourl)// Update state with fetched videos
       } catch (error) {
-        console.error('Error fetching videos:', error);
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
+     
       }
     };
 

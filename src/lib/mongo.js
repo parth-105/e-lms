@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 export async function connect() {
     try {
-          mongoose.connect('mongodb+srv://parth-lms:rsQ3NYNcrxb542n7@cluster0.4roqkjc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-     //   mongoose.connect('mongodb://localhost:27017/lms-e-lerning');
+          mongoose.connect(`${process.env.mongo_atlas_uri}`);
+
         const connection = mongoose.connection;
 
         connection.on('connected', () => {

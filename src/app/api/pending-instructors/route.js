@@ -16,6 +16,6 @@ export async function GET(req) {
                 pendingInstructors
             })
       } catch (error) {
-        res.status(500).json({ message: 'Error fetching pending instructors' });
+        return NextResponse.json({ error: error.message }, { status: 500 });
       }
 }

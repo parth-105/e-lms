@@ -1,4 +1,5 @@
 "use client"
+import { useToast } from "@/hooks/use-toast"
 import React, { useEffect, useRef, useState } from "react";
 import { MeetingDetailsScreen } from "@/component/live/MeetingDetailsScreen";
 import { createMeeting, getToken, validateMeeting } from "@/helpers/apicalls/api";
@@ -32,7 +33,14 @@ export function JoiningScreen({
   customAudioStream,
   setCustomAudioStream,
   setCustomVideoStream,
-}) {
+}) 
+
+
+
+{
+
+  const { toast } = useToast()
+
   const {
     selectedWebcam,
     selectedMic,
@@ -114,7 +122,12 @@ export function JoiningScreen({
           if (videoPlayerRef.current.pause && !isPlaying) {
             videoPlayerRef.current
               .play()
-              .catch((error) => console.log("error", error));
+              .catch((error) =>  toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+               
+              }));
           }
         }
       } else {
@@ -281,7 +294,12 @@ export function JoiningScreen({
         }
       }
     } catch (ex) {
-      console.log("Error in requestPermission", ex);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        
+      })
     }
   }
   function onDeviceChanged() {
@@ -319,7 +337,12 @@ export function JoiningScreen({
     } catch (error) {
       // For firefox, it will request audio and video simultaneously.
       await requestAudioVideoPermission();
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+       
+      })
     }
   };
 
@@ -336,7 +359,12 @@ export function JoiningScreen({
         });
       }
     } catch (err) {
-      console.log("Error in getting camera devices", err);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+       
+      })
     }
   };
 
@@ -346,7 +374,7 @@ export function JoiningScreen({
     try {
       if (permissonAvaialble.current?.isMicrophonePermissionAllowed) {
         let mics = await getMicrophones();
-        console.log(mics)
+       
         let speakers = await getPlaybackDevices();
         const hasMic = mics.length > 0;
         if (hasMic) {
@@ -362,7 +390,11 @@ export function JoiningScreen({
         });
       }
     } catch (err) {
-      console.log("Error in getting audio devices", err); 
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.", 
+      })
     }
   };
 

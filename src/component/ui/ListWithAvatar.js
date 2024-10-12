@@ -10,10 +10,11 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DotSpinner from "@/component/ui/loader/DotSpinner";
+import { useToast } from "@/hooks/use-toast"
 
 export function ListWithAvatar() {
 
-
+  const { toast } = useToast()
   const [suggestions, setsuggestions] = useState([]);
   const [loading, setloading] = useState(false)
   const [search, setSearch] = useState("");
@@ -31,12 +32,16 @@ export function ListWithAvatar() {
       setloading(true)
       try {
         const res = await axios.post('/api/suggestion/get-all-suggestion');
-        //  const data = await res.json();
-        console.log('mcd', res.data.data)
+     
         setsuggestions(res.data.data);
         setloading(false)
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+          
+        })
       }
     };
 

@@ -11,10 +11,10 @@ export async function GET(req) {
         const session_id = searchParams.get('session_id');
 
         const session = await stripe.checkout.sessions.retrieve(session_id);
-        console.log('sdata', session)
+       
         return NextResponse.json(session);
     } catch (err) {
-        console.log('error:', err.message)
+      
         return NextResponse.json({ message: err.message });
     }
 

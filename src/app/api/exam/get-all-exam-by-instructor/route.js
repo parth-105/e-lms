@@ -14,7 +14,6 @@ export async function POST(request) {
         const reqBody = await request.json()
          const { instructor} = reqBody
 
-        console.log("checking", reqBody)
         const exams = await Exam.find({ instructor:instructor });
         return NextResponse.json({
             message: "exam get successfully",
@@ -22,7 +21,7 @@ export async function POST(request) {
             data:exams
         })
       } catch (error) {
-        console.log("ree",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
       }
     }

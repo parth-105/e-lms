@@ -55,11 +55,11 @@ export default function LMSsidebar({ children }) {
         // This code will only run on the client side
         const storedData = localStorage.getItem('e-learning-user');
 
-        //  setld(storedData);
+      
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             setUserData(parsedData);
-            // console.log('ld',userData)
+          
         }
 
     }, []);
@@ -67,7 +67,7 @@ export default function LMSsidebar({ children }) {
     useEffect(() => {
         // This will run whenever userData changes
         if (userData) {
-            console.log('ld', userData);
+    
         }
     }, [userData]);
 

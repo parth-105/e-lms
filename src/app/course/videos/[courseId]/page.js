@@ -1,16 +1,16 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+
 import axios from 'axios';
-import VideoCard from '@/component/course/Video-card';
+
 import ReactPlayer from 'react-player';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 function videos({ params }) {
 
   const [Videos, setVideos] = useState([]);
-  // const [currentUrl, setCurrentUrl] = useState('');
+  
   const [currentUrl, setCurrentUrl] = useState();
   const [currentvideodata, setCurrentvideodata] = useState();
   const courseId = params.courseId;
@@ -18,20 +18,16 @@ function videos({ params }) {
     if (courseId) {
       const fetchVideos = async () => {
 
-        console.log('cid', courseId)
+      
 
         const response = await axios.post("/api/course/coursevideo", { courseId: courseId });
 
-        console.log('videodata', response.data.videos);
-        //  console.log('url', response.data.videos[0].videourl);
-
-
-        // console.log("HHHHHHHHHHHHHHHHHHHHHHHH", response.data.videos);
+       
 
         setVideos(response.data.videos);
         setCurrentUrl(response?.data?.videos?.[0]?.videourl);
         setCurrentvideodata(response?.data?.videos?.[0])
-        //  console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLL",Videos);
+       
 
       };
 

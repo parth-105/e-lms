@@ -1,11 +1,7 @@
 "use client"
 import { message, Table } from "antd";
 import React, { useEffect } from "react";
-//import { useDispatch } from "react-redux";
-//import { useNavigate } from "react-router-dom";
-import { deleteExamById, getAllExams } from "@/helpers/apicalls/exams";
-//import PageTitle from "../../../components/PageTitle";
-//import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
+
 import { useRouter } from 'next/navigation';
 import axios from "axios";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
@@ -18,38 +14,33 @@ function Exams() {
  
   const [exams, setExams] = React.useState([]);
   const [data, setData] = useLocalStorage('e-learning-user', '');
- // const dispatch = useDispatch();
+
 
   const getExamsData = async () => {
     try {
-    //  dispatch(ShowLoading());
+    
     const response = await axios.post("/api/exam/get-all-exam-by-instructor",{instructor:data._id});   
-   // const response = await axios.post("/api/exam/get-all-exam");
-    //  const response = await getAllExams();
-      //dispatch(HideLoading());
+ 
       if (response.data.success) {
         setExams(response.data.data);
       } else {
         message.error(response.data.message);
       }
     } catch (error) {
-    //  dispatch(HideLoading());
+   
       message.error(error.data.message);
     }
   };
 
   const deleteExam = async (examId) => {
     try {
-     // dispatch(ShowLoading());
+    
      const response = await axios.delete(
       "/api/exam/delete-exam-by-id",{
         data: { examId }
       }
     );
-      // const response = await deleteExamById({
-      //   examId,
-      // });
-    //  dispatch(HideLoading());
+ 
       if (response.data.success) {
         message.success(response.data.message);
         getExamsData();
@@ -57,7 +48,7 @@ function Exams() {
         message.error(response.data.message);
       }
     } catch (error) {
-    //  dispatch(HideLoading());
+   
       message.error(error.message);
     }
   };

@@ -15,7 +15,7 @@ export default function ExamCard({exam})
     const router = useRouter();
 
     return (
-        <Card className="w-60 max-w-md mx-auto text-wrap ">
+        <Card className="w-72 h-72 max-w-md mx-auto text-wrap ">
             <CardHeader>
                 <CardTitle className=" text-wrap text-2xl font-bold">{exam?.name}</CardTitle>
                 <Badge variant="secondary" className="text-sm font-medium">

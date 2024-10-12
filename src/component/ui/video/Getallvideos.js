@@ -1,14 +1,13 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
-import { Videocard } from './Videocard';
-import DotSpinner from '@/component/ui/loader/DotSpinner';
-import VideoCard from '../LmsVideoCard/LmsVideoCard';
-import CourseSkeleton, { SkeletonCard } from '../CourseSkeleton/CourseSkeleton';
+import CourseSkeleton from '../CourseSkeleton/CourseSkeleton';
 import VideoCardlms from '@/component/ui/video-card/VideoCardlms'
+import { useToast } from "@/hooks/use-toast"
 
 
 const VideoList = () => {
+  const { toast } = useToast()
   const [videos, setVideos] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -33,11 +32,19 @@ const VideoList = () => {
       setLoading(true)
       try {
         const response = await axios.get('/api/videos/getvideos'); // Make a GET request
-        console.log("video responce", response.data.videos)
+      
         setVideos(response.data.videos);
           setLoading(false)// Update state with fetched videos
       } catch (error) {
-        console.error('Error fetching videos:', error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+          
+        })
+        setLoading(false)
+      }finally{
+        setLoading(false)
       }
     };
 

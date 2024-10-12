@@ -42,12 +42,19 @@ export default function StudentAssignmentView({ assignmentid }) {
       try {
         const res = await axios.post('/api/assignment/assignment-by-id', { id: assignmentid });
 
-        console.log('mcd', res.data)
+      
         setassignment(res.data.assignment);
         setloading(false);
 
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: "Please fill in all required fields.",
+        });
+        setloading(false)
+      }finally{
+        setloading(false)
       }
     };
 
@@ -73,12 +80,10 @@ export default function StudentAssignmentView({ assignmentid }) {
           return;
         }
 
-        console.log('answerUrl', awnserurl);
-        console.log('answer', answer);
+   
 
         const res = await axios.post('/api/assignment/uploadassignmentawnser', { id: assignmentid, answer: { ...answer, awnserfileurl: awnserurl }, student: data._id });
 
-        console.log("Assignment submitted:", res);
 
         if (res.data.success) {
           setAnswerFile(null);

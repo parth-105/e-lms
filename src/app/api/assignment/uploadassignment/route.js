@@ -15,7 +15,7 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { title,description,questionfile,awnserfile,couses,instructor} = reqBody
 
-        console.log("", reqBody)
+      
 
         
 
@@ -34,7 +34,7 @@ export async function POST(request) {
         Course.assignment.push(assignment._id);
         await Course.save();
 
-        console.log("assignment", assignment);
+      
       
 
 
@@ -46,7 +46,7 @@ export async function POST(request) {
         })
 
     } catch (error) {
-        console.log("ree",error.message)
+      
         return NextResponse.json({ error: error.message }, { status: 500 })
 
     }

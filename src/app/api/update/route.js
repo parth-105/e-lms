@@ -11,7 +11,7 @@ export async function POST(request) {
   const reqBody = await request.json();
   const { courseId, userId, isPurchased } = reqBody;
 
-  console.log('req', reqBody);
+
 
   const newPurchase = new purches({ courseId, userId, isPurchased });
   await newPurchase.save();

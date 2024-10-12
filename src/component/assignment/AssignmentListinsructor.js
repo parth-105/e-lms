@@ -1,9 +1,9 @@
 "use client"
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
-import { CalendarIcon, FileTextIcon } from 'lucide-react'
+import {  FileTextIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import useLocalStorage from '@/helpers/useLocalStorage.js'
@@ -11,19 +11,19 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
+ 
   DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
+
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import Coursewiseassignmentlist from './Coursewiseassignmentlist'
+
 import Answercard from './Answercard'
 
 
 export default function AssignmentListinsructor() {
 
-
+  const { toast } = useToast()
   const [purchasecourseassignment, setpurchasecourseassignment] = useState([]);
   const [data, setData] = useLocalStorage('e-learning-user', '');
   const [loading, setloading] = useState(false)
@@ -34,12 +34,17 @@ export default function AssignmentListinsructor() {
       setloading(true)
       try {
         const res = await axios.post('/api/assignment/listofassignmentinstructor', { userId: data._id });
-        //  const data = await res.json();
-        console.log('mcd', res.data)
+      
         setpurchasecourseassignment(res.data.insassignment);
         setloading(false)
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+         
+        })
+       
       }
     };
 

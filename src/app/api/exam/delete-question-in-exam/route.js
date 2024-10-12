@@ -14,7 +14,7 @@ export async function POST(req) {
    
     try {
         const reqBody = await req.json()
-        // delete question in Questions collection
+       
         await Question.findByIdAndDelete(reqBody.questionId);
 
         // delete question in exam
@@ -28,7 +28,7 @@ export async function POST(req) {
             success: true,
         })
      } catch (error) {
-        console.log("error",error.message)
+        
         return NextResponse.json({ error: error.message }, { status: 500 })
      }
     

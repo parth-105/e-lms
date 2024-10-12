@@ -19,7 +19,7 @@ export default function Answercard({ awnserfile, assignmentId }) {
 
   const [loading, setloading] = useState(false)
   const [data, setData] = useLocalStorage('e-learning-user', '');
-  console.log("ass", awnserfile)
+ 
 
 
   const markAsCompleted = (assignmentId, studentId) => {
@@ -29,7 +29,7 @@ export default function Answercard({ awnserfile, assignmentId }) {
       title: "Assignment was done",
       description: "Assignment was mark as done.",
   });
-    console.log('done')
+   
     router.push('/instructor/assignments/list-submited-assignment')
     setloading(false)
   };
