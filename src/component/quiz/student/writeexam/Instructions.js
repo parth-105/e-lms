@@ -19,8 +19,8 @@ function Instructions({ examData, setView, startTimer }) {
         <li>Once submitted, you cannot change your answers.</li>
         <li>Do not refresh the page.</li>
         <li>
-          You can use the <span className="font-bold">"Previous"</span> and{" "}
-          <span className="font-bold">"Next"</span> buttons to navigate between
+          You can use the <span className="font-bold"> Previous </span> and 
+          <span className="font-bold"> Next </span> buttons to navigate between
           questions.
         </li>
         <li>
