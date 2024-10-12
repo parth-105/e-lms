@@ -119,9 +119,9 @@ function AddEditExam() {
       title: "Options",
       dataIndex: "options",
       render: (text, record) => {
-        return Object.keys(record.options).map((key) => {
+        return Object.keys(record.options).map((key, index) => {
           return (
-            <div>
+            <div key={index}>
               {key} : {record.options[key]}
             </div>
           );
