@@ -12,7 +12,9 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <LMSsidebar children={children} />
+           <LMSsidebar>
+        {children}
+      </LMSsidebar>
         </>
     )
 }
