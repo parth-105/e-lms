@@ -29,8 +29,8 @@ export async function POST(req) {
           },
         ],
         mode: 'payment',
-        success_url: `https://e-lms-sigma.vercel.app/success/${courseId}`,
-        cancel_url: `https://e-lms-sigma.vercel.app/course`,
+        success_url: `https://skillstream.vercel.app/success/${courseId}`,
+        cancel_url: `https://skillstream.vercel.app/course`,
       });
      
 
