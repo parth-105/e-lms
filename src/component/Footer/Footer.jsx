@@ -28,9 +28,7 @@ const Footer = () => {
               <p className="text-cornflowerBlue">
                 An Excellence center for education
               </p>
-              <p className="text-cornflowerBlue">
-                Founder -     PARTH KALATHIYA / PARTH KORAT
-              </p>
+             
             </div>
             <div className="flex flex-col md:pr-8 px-8">
               <div className="flex flex-row space-x-8 items-center justify-between">

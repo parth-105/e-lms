@@ -1,12 +1,15 @@
-import React from 'react'
-import Liveapp from '@/component/live/Liveapp'
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-const page = () => {
+// Dynamically import the Liveapp component with SSR disabled
+const Liveapp = dynamic(() => import('@/component/live/Liveapp'), { ssr: false });
+
+const Page = () => {
   return (
     <div>
-      <Liveapp/>
+      <Liveapp />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;

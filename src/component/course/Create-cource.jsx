@@ -2,7 +2,7 @@
 'use client'
 
 import { useState } from "react";
-import { useToast } from "@/components/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast"
 
 import { uploadFileAndGetUrl } from '@/helpers/firebaseUtils';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import useLocalStorage from "@/helpers/useLocalStorage.js";
 
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast"
+
 
 
 import { Upload } from 'lucide-react'

@@ -115,6 +115,7 @@ export default function Studentcoursecard({
                 check()
             } else {
                 route.push(`/course/videos/${courseId}`);
+                //ghghg
             }
         }
     };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
 import { useToast } from "@/hooks/use-toast"
 
-const page = ({params}) => {
+const Page = ({params}) => {
   const { toast } = useToast()
   const [currentUrl, setCurrentUrl] = useState();
   const [videos, setVideos] = useState({});
@@ -44,4 +44,4 @@ const page = ({params}) => {
   )
 }
 
-export default page
+export default Page

@@ -62,7 +62,7 @@ export default function CourseComponent({
 
     const handleCourseClick = async (courseId) => {
 
-        //route.push(`/course/videos/${courseId}`);courseId, userId
+        //route.push(`/course/Videos/${courseId}`);courseId, userId
 
         if (data._id === instructor || userId || data.isAdmin) {
             route.push(`/course/videos/${courseId}`);
@@ -111,6 +111,7 @@ export default function CourseComponent({
                 check()
             } else {
                 route.push(`/course/videos/${courseId}`);
+                //fgfg
             }
         }
     };

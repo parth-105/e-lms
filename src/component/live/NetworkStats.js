@@ -70,7 +70,7 @@ const NetworkStats = ({ }) => {
           <>
             <div className="group inline-flex items-center gap-3 text-xs text-red-250 p-2 ">
               <WifiOff />
-              You're offline! Check your connection
+              You are offline Check your connection
             </div>
             <div className=" flex items-center justify-center p-2" onClick={handleOnClick}>
               <RefreshIcon />
@@ -81,7 +81,7 @@ const NetworkStats = ({ }) => {
         {error === "timeout" &&
           <>
             <div className="group inline-flex items-center gap-3 text-xs text-red-250 p-2 ">
-              Something went wrong! Couldn't load data
+              Something went wrong Could not load data
             </div>
             <div className=" flex items-center justify-center p-2" onClick={handleOnClick}>
               <RefreshIcon />

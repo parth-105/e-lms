@@ -8,6 +8,15 @@ import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, X } from "lucide-react"
 import useLocalStorage from "@/helpers/useLocalStorage.js"
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
 const subjects = [
     "Mathematics",
     "Science",
