@@ -266,7 +266,7 @@ export default function LMSsidebar({ children }) {
                                         >
                                             <Avatar>
                                                 <AvatarImage src={userData?.photoURL} alt="profilepic" />
-                                                <AvatarFallback>{userData?.name.charAt(0)}</AvatarFallback>
+                                                <AvatarFallback>{userData?.name?.charAt(0)}</AvatarFallback>
                                             </Avatar>
                                         </Button>
                                     </DropdownMenuTrigger>
