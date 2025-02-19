@@ -29,16 +29,20 @@
 
 /// new code 
 
-
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/lib/mongo";
 import Video from "@/model/video-model";
 
-// Ensure the database connection is initialized
+// Ensure the connection is established
 connect();
+
+// Force the runtime to use Node.js and disable static caching.
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   try {
+    // Fetch videos that are free and populate the instructor field.
     const videos = await Video.find({ isFree: true })
       .populate("instructor", { strictPopulate: false })
       .exec();
@@ -51,7 +55,7 @@ export async function GET(request) {
       },
       {
         headers: {
-          
+          // This header instructs clients/CDNs to not cache this response.
           "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
         },
       }

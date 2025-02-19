@@ -131,7 +131,9 @@ const VideoList = () => {
   const fetchVideos = async () => {
     setLoading(true);
     try {
+      
       const response = await axios.get(`/api/videos/getvideos?_=${Date.now()}`);
+
       setVideos(response.data.videos);
     } catch (error) {
       toast({
@@ -205,12 +207,12 @@ const VideoList = () => {
       )}
       
       {/* Optional: Add a button to manually refresh the list */}
-      <button
+      {/* <button
         onClick={fetchVideos}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
       >
         Refresh Videos
-      </button>
+      </button> */}
     </div>
   );
 };
