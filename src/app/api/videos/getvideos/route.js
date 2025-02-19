@@ -51,7 +51,7 @@ export async function GET(request) {
       },
       {
         headers: {
-          // Disable caching so the client always gets the latest data
+          
           "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
         },
       }
