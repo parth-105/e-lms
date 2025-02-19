@@ -73,8 +73,8 @@ const Navbar = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-end mb-4 px-4">
-            <Menu as="div" className="relative text-blackOlive">
+          <div className="flex justify-center mb-4 px-4">
+{/*             <Menu as="div" className="relative text-blackOlive">
               <Menu.Button className="flex p-4">
                 <HiUserCircle size="3rem" className="text-primary" />
               </Menu.Button>
@@ -143,10 +143,10 @@ const Navbar = () => {
                   </Menu.Item>
                 </Menu.Items>
               </Transition>
-            </Menu>
+            </Menu> */}
 
             <Link href="/login" legacyBehavior>
-              <div className="rounded-full py-3 px-6 bg-cornflowerBlue text-white shadow-sm hover:shadow-md">
+              <div className="rounded-full py-3 px-7 bg-blue-700 text-white shadow-sm hover:shadow-md">
                 Login
               </div>
             </Link>
