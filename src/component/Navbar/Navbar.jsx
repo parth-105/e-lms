@@ -73,7 +73,7 @@ const Navbar = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-end mb-4 px-4">
+          <div className="flex justify-center mb-4 px-4">
 {/*             <Menu as="div" className="relative text-blackOlive">
               <Menu.Button className="flex p-4">
                 <HiUserCircle size="3rem" className="text-primary" />
