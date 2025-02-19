@@ -146,7 +146,7 @@ const Navbar = () => {
             </Menu> */}
 
             <Link href="/login" legacyBehavior>
-              <div className="rounded-full py-3 px-7 bg-blue-700 text-black shadow-sm hover:shadow-md">
+              <div className="rounded-full py-3 px-7 bg-blue-700 text-white shadow-sm hover:shadow-md">
                 Login
               </div>
             </Link>
