@@ -16,6 +16,8 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { name, email, password, isInstructor ,photoURL } = reqBody
 
+        // console.log('reqbody',reqBody)
+
         if (isInstructor) {
             const instructor = await Instructor.findOne({ email })
 
@@ -83,6 +85,7 @@ export async function POST(request) {
         }
     }
     catch (error) {
+        // console.log('err',error.message)
         return NextResponse.json({ error: error.message })
 
     }

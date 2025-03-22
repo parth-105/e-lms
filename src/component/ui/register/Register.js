@@ -94,13 +94,16 @@ const MyComponent = () => {
         try {
             setLoading(true);
             const pic = await uploadFileAndGetUrl(profilePic);
-            console.log("log user1", formData)
+            // console.log('pic',pic)
+            // console.log("log user1", formData)
             const response = await axios.post("/api/register-instructor", { ...formData, photoURL: pic });
 
-            console.log("log user", formData)
-            console.log("Signup success", response.data);
+            // console.log("log user", formData)
+            // console.log("Signup success", response.data);
             if (response.data.pending) {
-                router.push("/pendingpage");
+                const id = response.data.savedUser._id
+               // router.push("/instructor-document-upload");
+               router.push(`/instructor-document-upload?id=${id}`)
             }
             else {
                 toast({
@@ -112,7 +115,7 @@ const MyComponent = () => {
             }
 
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
             toast({
                 title: "Something went wrong",
                 description: "Plese keep passions",
