@@ -9,7 +9,7 @@ import { X, FileText, Upload, AlertCircle } from "lucide-react"
 
 import { uploadFileAndGetUrl } from '@/helpers/firebaseUtils';
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useToast } from "@/hooks/use-toast";
 
@@ -153,6 +153,13 @@ export default function InstructorDocumentUpload() {
     }
     return true
   }
+
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Client side only");
+    }
+  }, []);
 
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
@@ -454,6 +461,12 @@ function mergeRefs(...refs) {
   const { ref: rhfRef = null, ...restField } = registerField || {};
 
   const dropzoneInputProps = getInputProps();
+
+    useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Client side only");
+    }
+  }, []);
 
   return (
     <div className="space-y-2">

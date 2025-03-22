@@ -1,12 +1,10 @@
-import React from 'react'
-import InstructorDocumentUpload from '@/component/ui/instructor-document/instructordocumentupload'
+import dynamic from "next/dynamic";
 
-const page = () => {
-  return (
-    <div>
-      <InstructorDocumentUpload/>
-    </div>
-  )
+const InstructorDocumentUpload = dynamic(
+  () => import("@/component/ui/instructor-document/instructordocumentupload"),
+  { ssr: false }
+);
+
+export default function Page() {
+  return <InstructorDocumentUpload />;
 }
-
-export default page
