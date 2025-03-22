@@ -553,6 +553,7 @@ export function JoiningScreen({
                     }}
                     _handleOnCreateMeeting={async () => {
                       const token = await getToken();
+                      console.log('jstoken',token)
                       const { meetingId, err } = await createMeeting({ token });
 
                       if (meetingId) {

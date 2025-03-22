@@ -14,6 +14,7 @@ export const getToken = async () => {
       method: "GET",
     });
     const { token } = await res.json();
+    console.log('token',token)
     return token;
   } else {
     console.error("Error: ", Error("Please add a token or Auth Server URL"));
