@@ -540,9 +540,9 @@ function mergeRefs(...refs) {
               </div>
               <Button
                 type="button"
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
+                //variant="ghost"
+                //size="icon"
+                //className="h-6 w-6"
                 onClick={() => onRemove(index)}
               >
                 <X className="h-4 w-4" />

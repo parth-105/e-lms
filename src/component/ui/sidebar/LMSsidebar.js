@@ -22,9 +22,14 @@ import useLocalStorage from '@/helpers/useLocalStorage.js';
 import LMSNavbar from '../navbar/LMSNavbar'
 import axios from 'axios'
 
+import { useRouter } from 'next/navigation'
+
+
 
 export default function LMSsidebar({ children }) {
     // Concatenate page title (if exists) to site title
+
+    const router = useRouter()
 
 
     // Mobile sidebar visibility state
@@ -35,6 +40,12 @@ export default function LMSsidebar({ children }) {
 
     const [data, setData] = useLocalStorage('e-learning-user', '');
     const [userData, setUserData] = useState(null);
+
+    const handleRouteChange = () => {
+        if (window.innerWidth < 768) {
+            setIsSidebarOpen(false) // Close sidebar after route change in mobile view
+        }
+    }
 
 
     const deleteLocalStorageItem = (key) => {
@@ -80,12 +91,12 @@ export default function LMSsidebar({ children }) {
                         <div className="p-4 flex items-center justify-between">
                             <Book className="h-6 w-6" />
                             <h2 className="text-2xl font-bold text-primary">LMS App</h2>
-                            <GoSidebarExpand variant="ghost" s onClick={() => setIsSidebarOpen(false)} className="md:hidden">
+                            <X variant="ghost" s onClick={() => setIsSidebarOpen(false)} className="md:hidden">
                                 {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg> */}
                                 close
-                            </GoSidebarExpand>
+                            </X>
                         </div>
-                        <nav className="flex-1 p-4">
+                        <nav className="flex-1 p-4"  onClick={handleRouteChange} >
                             <ul className="space-y-2">
                                 {userData?.isInstructor ? <li>
                                     <Link href="/instructor" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
@@ -103,7 +114,7 @@ export default function LMSsidebar({ children }) {
 
 
                                 {userData?.isAdmin ?
-                                    <Link href="/admin" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
+                                    <Link href="/admin"  className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
                                         <Clock className="w-5 h-5" />
                                         <span>Pending request</span>
                                     </Link>
