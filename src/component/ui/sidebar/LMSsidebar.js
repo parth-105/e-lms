@@ -90,7 +90,7 @@ export default function LMSsidebar({ children }) {
                     <ScrollArea className="flex-grow">
                         <div className="p-4 flex items-center justify-between">
                             <Book className="h-6 w-6" />
-                            <h2 className="text-2xl font-bold text-primary">LMS App</h2>
+                            <h2 className="text-2xl font-bold text-primary">Skill Stream</h2>
                             <X variant="ghost" s onClick={() => setIsSidebarOpen(false)} className="md:hidden">
                                 {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg> */}
                                 close
