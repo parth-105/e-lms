@@ -70,7 +70,7 @@ const MyComponent = () => {
           
             const response = await axios.post("/api/login", user);
           
-        
+                
 
             if (response.data.pending) {
                 router.push("/pendingpage");

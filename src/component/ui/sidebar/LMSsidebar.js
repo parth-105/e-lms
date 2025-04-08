@@ -8,8 +8,8 @@ import { GoSidebarCollapse } from "react-icons/go";
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { X, FileVideo2, Book, LogOut, Clock } from 'lucide-react'
-import { BookOpen, Home, LayoutDashboard, User, FileQuestion, BarChart, Video, ClipboardList, Send, PlusCircle, FolderPlus, MessageSquarePlus, VideoPlus, ListTodo } from 'lucide-react'
+import { X, FileVideo2, Book, LogOut, Clock  } from 'lucide-react'
+import { BookOpen, Home,BarChart2, LayoutDashboard, User, FileQuestion, BarChart, Video, ClipboardList, Send, PlusCircle, FolderPlus, MessageSquarePlus, VideoPlus, ListTodo } from 'lucide-react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -66,11 +66,11 @@ export default function LMSsidebar({ children }) {
         // This code will only run on the client side
         const storedData = localStorage.getItem('e-learning-user');
 
-      
+
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             setUserData(parsedData);
-          
+
         }
 
     }, []);
@@ -78,7 +78,7 @@ export default function LMSsidebar({ children }) {
     useEffect(() => {
         // This will run whenever userData changes
         if (userData) {
-    
+
         }
     }, [userData]);
 
@@ -96,7 +96,7 @@ export default function LMSsidebar({ children }) {
                                 close
                             </X>
                         </div>
-                        <nav className="flex-1 p-4"  onClick={handleRouteChange} >
+                        <nav className="flex-1 p-4" onClick={handleRouteChange} >
                             <ul className="space-y-2">
                                 {userData?.isInstructor ? <li>
                                     <Link href="/instructor" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
@@ -113,10 +113,18 @@ export default function LMSsidebar({ children }) {
                                 </li> : null}
 
 
-                                {userData?.isAdmin ?
-                                    <Link href="/admin"  className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
+                                {/* {userData?.isAdmin ?
+                                    <Link href="/admin" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
                                         <Clock className="w-5 h-5" />
                                         <span>Pending request</span>
+                                    </Link>
+                                    : null} */}
+
+
+                                {userData?.isAdmin ?
+                                    <Link href="/admin/dashboard" className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 rounded-md p-2">
+                                        <BarChart2 className="w-5 h-5" />
+                                        <span>Dashbord</span>
                                     </Link>
                                     : null}
 
