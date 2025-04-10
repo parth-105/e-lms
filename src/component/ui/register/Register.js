@@ -102,8 +102,8 @@ const MyComponent = () => {
             // console.log("Signup success", response.data);
             if (response.data.pending) {
                 const id = response.data.savedUser._id
-               // router.push("/instructor-document-upload");
-               router.push(`/instructor-document-upload?id=${id}`)
+                // router.push("/instructor-document-upload");
+                router.push(`/instructor-document-upload?id=${id}`)
             }
             else {
                 toast({
@@ -356,28 +356,33 @@ const MyComponent = () => {
                                         Student
                                     </span>
                                 </div>
-                            
-                            {/* <Label
+
+                                {/* <Label
                                     htmlFor="role-switch"
                                   //  className={`text-sm ${!isInstructor ? 'font-bold' : 'text-muted-foreground'}`}
                                 >
                                     Student
                                 </Label> */}
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div className="px-4 pb-2 pt-4">
-                        <button
-                            onClick={onSignup}
-                            className={`bg-blue-600 text-white hover:bg-blue-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 `}
-                            type="button"
-                        //disabled={isInstructor} // Disable button if no radio button is selected
-                        >
-                            {loading ? "Loading" : "Signup"}
-                        </button>
-                    </div>
-                    {/* <div className="px-4 pb-2 pt-4">
+                        <div className="px-4 pb-2 pt-4">
+                            <button
+                                onClick={onSignup}
+                                className={`bg-blue-600 text-white hover:bg-blue-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 `}
+                                type="button"
+                            //disabled={isInstructor} // Disable button if no radio button is selected
+                            >
+                                {loading ? "Loading" : "Signup"}
+                            </button>
+                        </div>
+                        <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                            Already registered!
+                            <Link href="/login"
+                                className="text-blue-700 hover:underline dark:text-blue-500"> LOgin</Link>
+                        </div>
+                        {/* <div className="px-4 pb-2 pt-4">
                             <button
                                 onClick={onSignup}
                                 className=" bg-blue-600 text-white hover:bg-blue-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
@@ -392,9 +397,9 @@ const MyComponent = () => {
                                 className="text-blue-700 hover:underline dark:text-blue-500">Login</Link>
                         </div> */}
 
+                    </div>
                 </div>
             </div>
-        </div>
 
         </form >
     );
