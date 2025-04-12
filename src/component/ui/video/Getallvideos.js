@@ -219,17 +219,20 @@
 
 // export default VideoList;
 
+
+
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import CourseSkeleton from '../CourseSkeleton/CourseSkeleton';
 import VideoCardlms from '@/component/ui/video-card/VideoCardlms';
 import { useToast } from "@/hooks/use-toast";
 import { Search, Filter } from "lucide-react"
-// import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
-import { Col, message, Row, Select, Input } from "antd";
+import { Select, Input } from "antd";
 import DotSpinner from '../loader/DotSpinner';
+
+const { Option } = Select;
 
 const VideoList = () => {
   const { toast } = useToast();
@@ -242,7 +245,8 @@ const VideoList = () => {
 
   const loadMoreRef = useRef(null);
 
-  const fetchVideos = async () => {
+  // ✅ useCallback to avoid missing dependency warning
+  const fetchVideos = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`/api/videos/getvideos?_=${Date.now()}`);
@@ -256,11 +260,11 @@ const VideoList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [fetchVideos]); // ✅ No warning now
 
   const filteredCourses = videos.filter((video) => {
     const matchesSubject = selectedSubject ? video.subject === selectedSubject : true;
@@ -275,7 +279,7 @@ const VideoList = () => {
         if (entry.isIntersecting && !loadingMore && visibleCount < filteredCourses.length) {
           setLoadingMore(true);
           setTimeout(() => {
-            setVisibleCount((prev) => prev + 6); // ⬅️ Load 6 more
+            setVisibleCount((prev) => prev + 6);
             setLoadingMore(false);
           }, 800);
         }
@@ -291,9 +295,9 @@ const VideoList = () => {
     };
   }, [filteredCourses, visibleCount, loadingMore]);
 
-  const handleSubjectChange = (e) => {
-    setSelectedSubject(e.target.value);
-    setVisibleCount(6); // Reset on filter change
+  const handleSubjectChange = (value) => {
+    setSelectedSubject(value);
+    setVisibleCount(6); // Reset pagination
   };
 
   return (
@@ -308,7 +312,7 @@ const VideoList = () => {
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
-                setVisibleCount(6); // Reset on search
+                setVisibleCount(6);
               }}
             />
           </div>
@@ -322,7 +326,7 @@ const VideoList = () => {
                 id="subject"
                 value={selectedSubject}
                 onChange={handleSubjectChange}
-                className="w-[180px] h-10 rounded-md border border-input bg-background "
+                className="w-[180px] h-10 rounded-md border border-input bg-background"
               >
                 <Option value="">All Subjects</Option>
                 <Option value="Javascript">Javascript</Option>
@@ -333,22 +337,6 @@ const VideoList = () => {
                 <Option value="ML">Machine Learning</Option>
                 <Option value="ebusiness">E-business</Option>
               </Select>
-              <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-muted-foreground"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -373,8 +361,8 @@ const VideoList = () => {
 
       {loadingMore && (
         <div className="flex justify-center py-3">
-        <DotSpinner />
-      </div>
+          <DotSpinner />
+        </div>
       )}
 
       <div ref={loadMoreRef} className="mt-8 h-10"></div>
