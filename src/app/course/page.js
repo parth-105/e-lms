@@ -16,7 +16,7 @@
 //       try {
 //         const res = await fetch('/api/course/courses');
 //         const data = await res.json();
-       
+
 //         setCourses(data);
 //        setLoading(false)
 //       } catch (error) {
@@ -44,7 +44,7 @@
 
 //   const filteredCourses = selectedSubject
 //     ? courses.filter((course) => course.subject === selectedSubject) : courses.filter((course) => course.title.trim().toLowerCase().includes(search.trim().toLowerCase()))
- 
+
 
 //   return (
 //     <div className="container mx-auto p-4">
@@ -69,7 +69,7 @@
 //             className="border border-gray-300 p-2 rounded"
 //           >
 //             <option value="">All Subjects</option>
-           
+
 //                       <option value="Javascript">Javascript</option>
 //                       <option value="React">React</option>
 //                       <option value="Node">Node</option>
@@ -83,7 +83,7 @@
 //       </div>
 
 //       {loading ? <div className='w-full h-full cursor-pointer' > <CourseSkeleton/> </div> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8  ">
-    
+
 //     {  filteredCourses.length > 0 ? (
 //           filteredCourses.map((course) => (
 //             <CourseComponent
@@ -353,14 +353,22 @@ const Courses = () => {
                 onChange={handleSubjectChange}
                 className="w-[180px] h-10 rounded-md border border-input bg-background"
               >
-                <Option value="">All Subjects</Option>
+                {/* <Option value="">All Subjects</Option>
                 <Option value="Javascript">Javascript</Option>
                 <Option value="React">React</Option>
                 <Option value="Node">Node</Option>
                 <Option value="MongoDB">MongoDB</Option>
                 <Option value="GK">GK</Option>
                 <Option value="ML">Machine Learning</Option>
-                <Option value="ebusiness">E-business</Option>
+                <Option value="ebusiness">E-business</Option> */}
+                <Select.Option value="">All Subjects</Select.Option>
+                <Select.Option value="Javascript">Javascript</Select.Option>
+                <Select.Option value="React">React</Select.Option>
+                <Select.Option value="Node">Node</Select.Option>
+                <Select.Option value="MongoDB">MongoDB</Select.Option>
+                <Select.Option value="GK">GK</Select.Option>
+                <Select.Option value="ML">Machine Learning</Select.Option>
+                <Select.Option value="ebusiness">E-business</Select.Option>
               </Select>
               <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                 <svg
@@ -407,9 +415,9 @@ const Courses = () => {
       )}
 
       {loadingMore && (
-         <div className="flex justify-center py-3">
-         <DotSpinner />
-       </div>
+        <div className="flex justify-center py-3">
+          <DotSpinner />
+        </div>
       )}
 
       <div ref={loadMoreRef} className="mt-8 h-10"></div>

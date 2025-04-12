@@ -144,14 +144,22 @@ function Home() {
             onChange={(value) => setSelectedCategory(value)}
             className="w-full border-input bg-background"
           >
-            <Option value="">All Subjects</Option>
+            {/* <Option value="">All Subjects</Option>
             <Option value="Javascript">Javascript</Option>
             <Option value="React">React</Option>
             <Option value="Node">Node</Option>
             <Option value="MongoDB">MongoDB</Option>
             <Option value="GK">GK</Option>
             <Option value="ML">Machine Learning</Option>
-            <Option value="ebusiness">E-business</Option>
+            <Option value="ebusiness">E-business</Option> */}
+            <Select.Option value="">All Subjects</Select.Option>
+            <Select.Option value="Javascript">Javascript</Select.Option>
+            <Select.Option value="React">React</Select.Option>
+            <Select.Option value="Node">Node</Select.Option>
+            <Select.Option value="MongoDB">MongoDB</Select.Option>
+            <Select.Option value="GK">GK</Select.Option>
+            <Select.Option value="ML">Machine Learning</Select.Option>
+            <Select.Option value="ebusiness">E-business</Select.Option>
           </Select>
 
         </div>
@@ -170,8 +178,8 @@ function Home() {
         {/* Loading indicator */}
         {loadingMore && (
           <div className="flex justify-center py-3">
-          <DotSpinner />
-        </div>
+            <DotSpinner />
+          </div>
         )}
 
         {/* Intersection observer target - positioned at bottom */}
