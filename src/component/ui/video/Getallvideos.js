@@ -232,7 +232,7 @@ import { Card } from "@/components/ui/card"
 import { Select, Input } from "antd";
 import DotSpinner from '../loader/DotSpinner';
 
-const { Option } = Select;
+ const { Option } = Select;
 
 const VideoList = () => {
   const { toast } = useToast();
@@ -322,7 +322,7 @@ const VideoList = () => {
               <Filter size={18} />
             </div>
             <div className="relative">
-              <Select
+              {/* <Select
                 id="subject"
                 value={selectedSubject}
                 onChange={handleSubjectChange}
@@ -336,7 +336,23 @@ const VideoList = () => {
                 <Option value="GK">GK</Option>
                 <Option value="ML">Machine Learning</Option>
                 <Option value="ebusiness">E-business</Option>
+              </Select> */}
+              <Select
+                id="subject"
+                value={selectedSubject}
+                onChange={handleSubjectChange}
+                className="w-[180px] h-10 rounded-md border border-input bg-background"
+              >
+                <Select.Option value="">All Subjects</Select.Option>
+                <Select.Option value="Javascript">Javascript</Select.Option>
+                <Select.Option value="React">React</Select.Option>
+                <Select.Option value="Node">Node</Select.Option>
+                <Select.Option value="MongoDB">MongoDB</Select.Option>
+                <Select.Option value="GK">GK</Select.Option>
+                <Select.Option value="ML">Machine Learning</Select.Option>
+                <Select.Option value="ebusiness">E-business</Select.Option>
               </Select>
+
             </div>
           </div>
         </div>
