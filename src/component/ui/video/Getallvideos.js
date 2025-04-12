@@ -221,18 +221,187 @@
 
 
 
+// "use client";
+// import React, { useState, useEffect, useRef, useCallback } from 'react';
+// import axios from 'axios';
+// import CourseSkeleton from '../CourseSkeleton/CourseSkeleton';
+// import VideoCardlms from '@/component/ui/video-card/VideoCardlms';
+// import { useToast } from "@/hooks/use-toast";
+// import { Search, Filter } from "lucide-react"
+// import { Card } from "@/components/ui/card"
+// import { Select, Input } from "antd";
+// import DotSpinner from '../loader/DotSpinner';
+
+//  const { Option } = Select;
+
+// const VideoList = () => {
+//   const { toast } = useToast();
+//   const [videos, setVideos] = useState([]);
+//   const [search, setSearch] = useState("");
+//   const [selectedSubject, setSelectedSubject] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const [visibleCount, setVisibleCount] = useState(6);
+//   const [loadingMore, setLoadingMore] = useState(false);
+
+//   const loadMoreRef = useRef(null);
+
+//   // ✅ useCallback to avoid missing dependency warning
+//   const fetchVideos = useCallback(async () => {
+//     setLoading(true);
+//     try {
+//       const response = await axios.get(`/api/videos/getvideos?_=${Date.now()}`);
+//       setVideos(response.data.videos);
+//     } catch (error) {
+//       toast({
+//         variant: "destructive",
+//         title: "Uh oh! Something went wrong.",
+//         description: "There was a problem with your request.",
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, [toast]);
+
+//   useEffect(() => {
+//     fetchVideos();
+//   }, [fetchVideos]); // ✅ No warning now
+
+//   const filteredCourses = videos.filter((video) => {
+//     const matchesSubject = selectedSubject ? video.subject === selectedSubject : true;
+//     const matchesSearch = video.title.toLowerCase().includes(search.toLowerCase());
+//     return matchesSubject && matchesSearch;
+//   });
+
+//   useEffect(() => {
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         const entry = entries[0];
+//         if (entry.isIntersecting && !loadingMore && visibleCount < filteredCourses.length) {
+//           setLoadingMore(true);
+//           setTimeout(() => {
+//             setVisibleCount((prev) => prev + 6);
+//             setLoadingMore(false);
+//           }, 800);
+//         }
+//       },
+//       { threshold: 1 }
+//     );
+
+//     const current = loadMoreRef.current;
+//     if (current) observer.observe(current);
+
+//     return () => {
+//       if (current) observer.unobserve(current);
+//     };
+//   }, [filteredCourses, visibleCount, loadingMore]);
+
+//   const handleSubjectChange = (value) => {
+//     setSelectedSubject(value);
+//     setVisibleCount(6); // Reset pagination
+//   };
+
+//   return (
+//     <div className='container mx-auto p-4'>
+//       <Card className="p-4 shadow-md bg-background border-none">
+//         <div className="space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
+//           <div className="relative flex items-center w-full">
+//             <Input
+//               type="text"
+//               placeholder="     Search..."
+//               className="pl-28 pr-4 py-2 w-full border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+//               value={search}
+//               onChange={(e) => {
+//                 setSearch(e.target.value);
+//                 setVisibleCount(6);
+//               }}
+//             />
+//           </div>
+
+//           <div className="flex items-center gap-2">
+//             <div className="flex items-center text-muted-foreground">
+//               <Filter size={18} />
+//             </div>
+//             <div className="relative">
+//               {/* <Select
+//                 id="subject"
+//                 value={selectedSubject}
+//                 onChange={handleSubjectChange}
+//                 className="w-[180px] h-10 rounded-md border border-input bg-background"
+//               >
+//                 <Option value="">All Subjects</Option>
+//                 <Option value="Javascript">Javascript</Option>
+//                 <Option value="React">React</Option>
+//                 <Option value="Node">Node</Option>
+//                 <Option value="MongoDB">MongoDB</Option>
+//                 <Option value="GK">GK</Option>
+//                 <Option value="ML">Machine Learning</Option>
+//                 <Option value="ebusiness">E-business</Option>
+//               </Select> */}
+//               <Select
+//                 id="subject"
+//                 value={selectedSubject}
+//                 onChange={handleSubjectChange}
+//                 className="w-[180px] h-10 rounded-md border border-input bg-background"
+//               >
+//                 <Select.Option value="">All Subjects</Select.Option>
+//                 <Select.Option value="Javascript">Javascript</Select.Option>
+//                 <Select.Option value="React">React</Select.Option>
+//                 <Select.Option value="Node">Node</Select.Option>
+//                 <Select.Option value="MongoDB">MongoDB</Select.Option>
+//                 <Select.Option value="GK">GK</Select.Option>
+//                 <Select.Option value="ML">Machine Learning</Select.Option>
+//                 <Select.Option value="ebusiness">E-business</Select.Option>
+//               </Select>
+
+//             </div>
+//           </div>
+//         </div>
+//       </Card>
+
+//       <br />
+//       {loading ? (
+//         <div className='w-full h-full cursor-pointer'>
+//           <CourseSkeleton />
+//         </div>
+//       ) : filteredCourses.length > 0 ? (
+//         <div className='flex flex-wrap justify-center'>
+//           {filteredCourses.slice(0, visibleCount).map((video) => (
+//             <div key={video._id} className='m-4'>
+//               <VideoCardlms video={video} />
+//             </div>
+//           ))}
+//         </div>
+//       ) : (
+//         <p>{search ? "Video Not Found" : "No Video On The Platform"}</p>
+//       )}
+
+//       {loadingMore && (
+//         <div className="flex justify-center py-3">
+//           <DotSpinner />
+//         </div>
+//       )}
+
+//       <div ref={loadMoreRef} className="mt-8 h-10"></div>
+//     </div>
+//   );
+// };
+
+// export default VideoList;
+
+
+
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import CourseSkeleton from '../CourseSkeleton/CourseSkeleton';
 import VideoCardlms from '@/component/ui/video-card/VideoCardlms';
 import { useToast } from "@/hooks/use-toast";
-import { Search, Filter } from "lucide-react"
+import { Filter } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Select, Input } from "antd";
 import DotSpinner from '../loader/DotSpinner';
 
- const { Option } = Select;
+const { Option } = Select;
 
 const VideoList = () => {
   const { toast } = useToast();
@@ -245,7 +414,6 @@ const VideoList = () => {
 
   const loadMoreRef = useRef(null);
 
-  // ✅ useCallback to avoid missing dependency warning
   const fetchVideos = useCallback(async () => {
     setLoading(true);
     try {
@@ -264,7 +432,7 @@ const VideoList = () => {
 
   useEffect(() => {
     fetchVideos();
-  }, [fetchVideos]); // ✅ No warning now
+  }, [fetchVideos]);
 
   const filteredCourses = videos.filter((video) => {
     const matchesSubject = selectedSubject ? video.subject === selectedSubject : true;
@@ -284,7 +452,7 @@ const VideoList = () => {
           }, 800);
         }
       },
-      { threshold: 1 }
+      { threshold: 0.1 } // 👈 Adjusted for better mobile support
     );
 
     const current = loadMoreRef.current;
@@ -322,7 +490,7 @@ const VideoList = () => {
               <Filter size={18} />
             </div>
             <div className="relative">
-              {/* <Select
+              <Select
                 id="subject"
                 value={selectedSubject}
                 onChange={handleSubjectChange}
@@ -336,23 +504,7 @@ const VideoList = () => {
                 <Option value="GK">GK</Option>
                 <Option value="ML">Machine Learning</Option>
                 <Option value="ebusiness">E-business</Option>
-              </Select> */}
-              <Select
-                id="subject"
-                value={selectedSubject}
-                onChange={handleSubjectChange}
-                className="w-[180px] h-10 rounded-md border border-input bg-background"
-              >
-                <Select.Option value="">All Subjects</Select.Option>
-                <Select.Option value="Javascript">Javascript</Select.Option>
-                <Select.Option value="React">React</Select.Option>
-                <Select.Option value="Node">Node</Select.Option>
-                <Select.Option value="MongoDB">MongoDB</Select.Option>
-                <Select.Option value="GK">GK</Select.Option>
-                <Select.Option value="ML">Machine Learning</Select.Option>
-                <Select.Option value="ebusiness">E-business</Select.Option>
               </Select>
-
             </div>
           </div>
         </div>
@@ -381,7 +533,7 @@ const VideoList = () => {
         </div>
       )}
 
-      <div ref={loadMoreRef} className="mt-8 h-10"></div>
+      <div ref={loadMoreRef} className="mt-12 h-20" /> {/* 👈 Taller sentinel for better mobile visibility */}
     </div>
   );
 };
