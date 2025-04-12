@@ -72,7 +72,7 @@ export function MeetingDetailsScreen({
           {/* <p className="text-xs text-white mt-1 text-center">
             Your name will help everyone identify you in the meeting.
           </p> */}
-          <button
+          {/* <button
             disabled={participantName.length < 3}
             className={`w-full ${participantName.length < 3 ? "bg-gray-650" : "bg-purple-350"
               }  text-white px-2 py-3 rounded-xl mt-5`}
@@ -87,16 +87,33 @@ export function MeetingDetailsScreen({
             }}
           >
             {iscreateMeetingClicked ? "Start a meeting" : "Join  meeting"}
+          </button> */}
+          <button
+            disabled={participantName.length < 3}
+            className={`w-full ${participantName.length < 3 ? "bg-gray-650" : "w-full bg-black text-white px-2 py-3 rounded-xl mt-5"} text-white px-2 mb-4 py-3 gap-4 rounded-xl mt-5`}
+            onClick={(e) => {
+              if (iscreateMeetingClicked) {
+                onClickStartMeeting();
+              } else {
+                if (meetingId.match("\\w{4}\\-\\w{4}\\-\\w{4}")) {
+                  onClickJoin(meetingId);
+                } else setMeetingIdError(true);
+              }
+            }}
+          >
+            {iscreateMeetingClicked ? "Start a meeting" : "Join meeting"}
           </button>
+
         </>
       )}
 
-   
-        <div className="w-full md:mt-0 mt-4 flex flex-col">
-          <div className="flex items-center justify-center flex-col w-full ">
-        { data.isInstructor ?
+
+      <div className="w-full md:mt-0  mt-12 flex flex-col">
+      <div className="flex items-center justify-center flex-col w-full gap-y-4">
+
+          {data.isInstructor ?
             <button
-              className="w-full bg-black text-white px-2 py-3 rounded-xl"
+              className="w-full  bg-black text-white px-2 py-3 rounded-xl"
               onClick={async (e) => {
                 const { meetingId, err } = await _handleOnCreateMeeting();
 
@@ -119,10 +136,20 @@ export function MeetingDetailsScreen({
                   );
                 }
               }}
-            >      
-                Create a meeting
-            </button> :null
-}
+            >
+              Create a meeting
+            </button> : null
+          }
+          {/* <button
+              className="w-full bg-black text-white px-2 py-3 rounded-xl mt-5"
+              onClick={(e) => {
+                setIsJoinMeetingClicked(true);
+              }}
+            >
+              Join a meeting
+            </button> */}
+
+          {!isJoinMeetingClicked && (
             <button
               className="w-full bg-black text-white px-2 py-3 rounded-xl mt-5"
               onClick={(e) => {
@@ -131,9 +158,10 @@ export function MeetingDetailsScreen({
             >
               Join a meeting
             </button>
-          </div>
+          )}
         </div>
-     
+      </div>
+
     </div>
   );
 }
