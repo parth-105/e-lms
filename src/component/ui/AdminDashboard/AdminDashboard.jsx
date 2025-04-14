@@ -79,7 +79,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const response = await fetch('/api/admin/dashboard');
+                const response = await fetch(`/api/admin/dashboard?_=${Date.now()}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchCoursesData = async () => {
             try {
-                const response = await fetch('/api/admin/courses');
+                const response = await fetch(`/api/admin/courses?_=${Date.now()}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchInstructorsData = async () => {
             try {
-                const response = await fetch('/api/admin/instructors');
+                const response = await fetch(`/api/admin/instructors?_=${Date.now()}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchStudentsData = async () => {
             try {
-                const response = await fetch('/api/admin/students');
+                const response = await fetch(`/api/admin/students?_=${Date.now()}`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -171,7 +171,7 @@ export default function AdminDashboard() {
     // Function to revoke instructor permission
     const revokeInstructorPermission = async () => {
         try {
-            const response = await fetch('/api/admin/instructors', {
+            const response = await fetch(`/api/admin/instructors?_=${Date.now()}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
     // Function to restore instructor permission
     const restoreInstructorPermission = async (instructorId) => {
         try {
-            const response = await fetch('/api/admin/instructors', {
+            const response = await fetch(`/api/admin/instructors?_=${Date.now()}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -323,7 +323,7 @@ export default function AdminDashboard() {
                                                 <DollarSign className="h-4 w-4 text-muted-foreground" />
                                             </CardHeader>
                                             <CardContent>
-                                                <div className="text-2xl font-bold">${stats.totalSales.toLocaleString()}</div>
+                                                <div className="text-2xl font-bold">₹{stats.totalSales.toLocaleString()}</div>
                                                 <p className="text-xs text-muted-foreground">+{stats.revenueGrowth}% from last month</p>
                                             </CardContent>
                                         </Card>
@@ -609,7 +609,7 @@ export default function AdminDashboard() {
                                                             </TableCell>
                                                             <TableCell>{instructor.courses}</TableCell>
                                                             <TableCell>{instructor.students}</TableCell>
-                                                            <TableCell>${instructor.revenue.toLocaleString()}</TableCell>
+                                                            <TableCell>₹{instructor.revenue.toLocaleString()}</TableCell>
                                                             <TableCell>
                                                                 {instructor.isInstructor ? (
                                                                     <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
@@ -726,7 +726,7 @@ export default function AdminDashboard() {
                                                     <Tooltip formatter={(value) => value.toLocaleString()} />
                                                     <Legend />
                                                     <Bar dataKey="students" fill="#82ca9d" name="Students" />
-                                                    <Bar dataKey="revenue" fill="#8884d8" name="Revenue ($)" />
+                                                    <Bar dataKey="revenue" fill="#8884d8" name="Revenue (₹)" />
                                                 </BarChart>
                                             </ResponsiveContainer>
                                         </div>

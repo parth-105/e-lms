@@ -292,6 +292,10 @@ import User from "@/model/user-model";
 import Instructor from "@/model/instructor-model";
 import purches from "@/model/purches-model";
 
+
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function GET(request) {
   try {
     await connect();
@@ -372,6 +376,12 @@ export async function GET(request) {
         newCoursesThisMonth
       },
       revenueData: monthlyData
+    },
+    {
+      headers: {
+        // This header instructs clients/CDNs to not cache this response.
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
     });
 
   } catch (error) {

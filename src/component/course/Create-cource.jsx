@@ -62,21 +62,21 @@ export default function AddCourse() {
     e.preventDefault();
     if (!videoTopic || !videoDescription) {
       toast({
-        title: "Validation Error",
+        title: "Validation Error2",
         description: "Please fill in all required fields.",
       });
       return;
     }
     try {
       setvloading(true)
-      if (!thumbnail || !videoFile) {
-        toast({
-          title: "Validation Error",
-          description: "Please fill in all required fields.",
-        });
-        setvloading(false)
-        return;
-      }
+      // if (!thumbnail || !videoFile) {
+      //   toast({
+      //     title: "Validation Error3",
+      //     description: "Please fill in all required fields.",
+      //   });
+      //   setvloading(false)
+      //   return;
+      // }
       const thumbnailurl = await uploadFileAndGetUrl(thumbnail);
       const videoFileurl = await uploadFileAndGetUrl(videoFile);
 
@@ -113,7 +113,7 @@ export default function AddCourse() {
     try {
       if (!Cthumbnail) {
         toast({
-          title: "Validation Error",
+          title: "Validation Error1",
           description: "Please fill in all required fields.",
         });
         setLoading(false)

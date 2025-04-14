@@ -95,7 +95,7 @@ export default function InstructorDashboard() {
 
 
 
-        const response = await fetch('/api/instructor/dashboard', {
+        const response = await fetch(`/api/instructor/dashboard?_=${Date.now()}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -376,7 +376,7 @@ export default function InstructorDashboard() {
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip formatter={(value, name) => [name === 'revenue' ? `$${value}` : value, name === 'revenue' ? 'Revenue' : 'Students']} />
-                            <Bar dataKey="revenue" fill={COLORS.primary} name="Revenue ($)" />
+                            <Bar dataKey="revenue" fill={COLORS.primary} name="Revenue (₹)" />
                             <Bar dataKey="students" fill={COLORS.secondary} name="Students" />
                           </BarChart>
                         </ResponsiveContainer>
@@ -400,7 +400,7 @@ export default function InstructorDashboard() {
                               <p className="text-sm font-medium leading-none">{sale.student}</p>
                               <p className="text-sm text-muted-foreground">{sale.course}</p>
                             </div>
-                            <div className="ml-auto font-medium">${sale.amount.toFixed(2)}</div>
+                            <div className="ml-auto font-medium">₹{sale.amount.toFixed(2)}</div>
                           </div>
                         ))}
                       </div>
@@ -436,7 +436,7 @@ export default function InstructorDashboard() {
                             <TableCell>{sale.course}</TableCell>
                             <TableCell>{sale.student}</TableCell>
                             <TableCell>{new Date(sale.date).toLocaleDateString()}</TableCell>
-                            <TableCell className="text-right">${sale.amount.toFixed(2)}</TableCell>
+                            <TableCell className="text-right">₹{sale.amount.toFixed(2)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

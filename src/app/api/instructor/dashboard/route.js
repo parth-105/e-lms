@@ -7,6 +7,8 @@ import Cource from "@/model/cource-model";
 import purches from "@/model/purches-model";
 import Instructor from "@/model/instructor-model";
 
+
+
 export async function POST(request) {
   try {
     await connect();
@@ -97,6 +99,12 @@ export async function POST(request) {
       message: "Dashboard data fetched successfully",
       success: true,
       data: dashboardData
+    },
+    {
+      headers: {
+        // This header instructs clients/CDNs to not cache this response.
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
     });
   } catch (error) {
     console.error("Dashboard API error:", error);

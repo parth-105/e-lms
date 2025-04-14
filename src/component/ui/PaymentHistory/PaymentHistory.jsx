@@ -215,7 +215,7 @@ export default function PaymentHistory() {
                                                         {formatDate(payment?.purchaseDate)}
                                                     </div>
                                                 </TableCell>
-                                                <TableCell>${payment.amount.toFixed(2)}</TableCell>
+                                                <TableCell>₹{payment.amount.toFixed(2)}</TableCell>
                                                 <TableCell className="hidden md:table-cell">
                                                     <Badge
                                                         variant="outline"
@@ -250,7 +250,7 @@ export default function PaymentHistory() {
                         <span>Payment method: Credit Card</span>
                     </div>
                     <div className="font-medium text-lg mt-2 sm:mt-0">
-                        Total Spent: <span className="text-primary">${filteredTotalSpent?.toFixed(2)}</span>
+                        Total Spent: <span className="text-primary">₹{filteredTotalSpent?.toFixed(2)}</span>
                     </div>
                 </CardFooter>
             </Card>
