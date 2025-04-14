@@ -146,7 +146,7 @@ export function ListWithAvatar() {
             )}
           </>
         ) : (
-          <p>No courses available.</p>
+          <p>No suggestion available.</p>
         )}
       </List>
     </Card>
