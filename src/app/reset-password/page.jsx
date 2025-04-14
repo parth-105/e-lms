@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Suspense } from "react";
 
 const ResetPassword = () => {
     const router = useRouter();
@@ -70,4 +71,10 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default function Page() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPassword />
+        </Suspense>
+    );
+}

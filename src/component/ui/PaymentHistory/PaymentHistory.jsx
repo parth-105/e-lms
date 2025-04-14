@@ -38,7 +38,7 @@ export default function PaymentHistory() {
                     throw new Error(data.message || 'Failed to fetch payment history')
                 }
             } catch (err) {
-                console.error('Error fetching payment history:', err)
+                //console.error('Error fetching payment history:', err)
                 setError(err.message)
             } finally {
                 setLoading(false)
