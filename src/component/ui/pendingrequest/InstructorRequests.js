@@ -29,7 +29,7 @@ export default function InstructorRequests() {
 
   useEffect(() => {
     const fetchInstructors = async () => {
-      const response = await axios.get("/api/pending-instructors");
+      const response = await axios.get(`/api/pending-instructors?_=${Date.now()}`);
       setInstructors(response.data.pendingInstructors);
     };
     fetchInstructors();
