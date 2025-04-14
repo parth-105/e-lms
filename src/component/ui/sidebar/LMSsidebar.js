@@ -350,7 +350,8 @@ import {
     BookOpen, Home, BarChart2, LayoutDashboard,
     User, FileQuestion, BarChart, Video,
     ClipboardList, Send, PlusCircle, FolderPlus,
-    MessageSquarePlus, VideoPlus, ListTodo
+    MessageSquarePlus, VideoPlus, ListTodo,
+    History
 } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
@@ -469,7 +470,8 @@ export default function LMSsidebar({ children }) {
 
                             {/* Student-specific actions */}
                             {!userData?.isInstructor && (
-                                <>
+                                <>  
+                                     <li><Link href="/student/payment-history" className={linkClass('/student/payment-history')}><History className="w-5 h-5" /><span>payment-history</span></Link></li>
                                     <li><Link href="/student/all-exam" className={linkClass('/student/all-exam')}><LayoutDashboard className="w-5 h-5" /><span>All-Exam</span></Link></li>
                                     <li><Link href="/student/reports" className={linkClass('/student/reports')}><BarChart className="w-5 h-5" /><span>Quiz Report</span></Link></li>
                                     <li><Link href="/student/assignments/AssignmentList" className={linkClass('/student/assignments/AssignmentList')}><Send className="w-5 h-5" /><span>Submit Assignment</span></Link></li>
