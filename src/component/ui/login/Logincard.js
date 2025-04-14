@@ -129,7 +129,7 @@ const MyComponent = () => {
                 description: "Check your email for password reset instructions.",
             });
         } catch (error) {
-            console.log("error is == " , error.message);
+           
             
             toast({
                 title: "Reset Failed",
