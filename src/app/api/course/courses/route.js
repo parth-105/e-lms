@@ -32,8 +32,7 @@ connect();
 // Force Node.js runtime and dynamic behavior to avoid caching
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+
 export async function GET(request) {
   try {
     const courses = await Cource.find()

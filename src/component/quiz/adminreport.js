@@ -189,8 +189,7 @@
 
 // export default AdminReports;
 
-
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -239,9 +238,16 @@ function AdminReports() {
       const response = await axios.post("/api/report/get-all-reports", tempFilters);
 
       if (response.data.success) {
-        setReportsData(response.data.data);
+        // Remove duplicates: same exam._id + user._id
+        const uniqueData = response.data.data.filter((item, index, self) => (
+          index === self.findIndex((t) =>
+            t.exam?._id === item.exam?._id && t.user?._id === item.user?._id
+          )
+        ));
+
+        setReportsData(uniqueData);
       } else {
-        alert(response.data.message); // use toast/message in real project
+        alert(response.data.message); // replace with toast if you have
       }
     } catch (error) {
       alert(error.message);
@@ -307,70 +313,80 @@ function AdminReports() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paginatedResults.map((record, index) => (
-                <TableRow key={index}>
-                  <TableCell className="whitespace-nowrap font-medium">
-                    {record.exam?.name || "N/A"}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap font-medium">
-                    {record.user?.name || "N/A"}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap">
-                    {moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss")}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {record.exam?.totalMarks || "N/A"}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {record.exam?.passingMarks || "N/A"}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {record.result?.correctAnswers?.length ?? "N/A"}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        record.result?.correctAnswers?.length >= record.exam?.passingMarks
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {record.result?.verdict || "N/A"}
-                    </span>
+              {paginatedResults.length > 0 ? (
+                paginatedResults.map((record, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="whitespace-nowrap font-medium">
+                      {record.exam?.name || "N/A"}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap font-medium">
+                      {record.user?.name || "N/A"}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss")}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {record.exam?.totalMarks || "N/A"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {record.exam?.passingMarks || "N/A"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {record.result?.correctAnswers?.length ?? "N/A"}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                          record.result?.correctAnswers?.length >= record.exam?.passingMarks
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {record.result?.verdict || "N/A"}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center">
+                    No results found.
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
 
           {/* Pagination */}
-          <div className="w-full mt-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-2 py-4">
-              <Button
-                variant="outline"
-                size="sm"
-                className="cursor-pointer transition-transform hover:scale-105"
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-              >
-                <ChevronLeftIcon className="h-4 w-4 mr-2" />
-                Previous
-              </Button>
-              <span className="text-sm text-muted-foreground">
-                Page {currentPage} of {totalPages}
-              </span>
-              <Button
-                variant="outline"
-                className="cursor-pointer transition-transform hover:scale-105"
-                size="sm"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Next
-                <ChevronRightIcon className="h-4 w-4 ml-2" />
-              </Button>
+          {reportsData.length > 0 && (
+            <div className="w-full mt-6">
+              <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-2 py-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="cursor-pointer transition-transform hover:scale-105"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeftIcon className="h-4 w-4 mr-2" />
+                  Previous
+                </Button>
+                <span className="text-sm text-muted-foreground">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer transition-transform hover:scale-105"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                  <ChevronRightIcon className="h-4 w-4 ml-2" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>
@@ -378,4 +394,3 @@ function AdminReports() {
 }
 
 export default AdminReports;
-
