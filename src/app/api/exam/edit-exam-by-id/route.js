@@ -8,7 +8,8 @@ import Exam from "@/model/quiz/exam-model";
 
 connect()
 
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(req) {
     try {
 
@@ -23,6 +24,11 @@ export async function POST(req) {
             message: "exam edit successfully",
             success: true,
             eexam
+        },{
+          headers: {
+            // This header instructs clients/CDNs to not cache this response.
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
         })
       } catch (error) {
        

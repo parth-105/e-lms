@@ -9,7 +9,8 @@ import Question from "@/model/quiz/question-model";
 
 connect()
 
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(req) {
     try {
        
@@ -27,7 +28,12 @@ export async function POST(req) {
             success: true,
             eq,
 
-        })
+        },{
+            headers: {
+              // This header instructs clients/CDNs to not cache this response.
+              "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+            },
+          })
       }
        catch (error) {
         

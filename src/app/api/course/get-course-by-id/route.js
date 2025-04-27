@@ -5,7 +5,8 @@ import { connect } from "@/lib/mongo";
 import Cource from "@/model/cource-model";
 
 // connect()
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(request) {
     try {
       await connect();
@@ -16,6 +17,11 @@ export async function POST(request) {
             message: "courses featch successfully",
             success: true,
             courses
+        },{
+          headers: {
+            // This header instructs clients/CDNs to not cache this response.
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
         })
       } catch (error) {
        

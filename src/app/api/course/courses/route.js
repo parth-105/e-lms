@@ -32,7 +32,8 @@ connect();
 // Force Node.js runtime and dynamic behavior to avoid caching
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function GET(request) {
   try {
     const courses = await Cource.find()
@@ -41,6 +42,11 @@ export async function GET(request) {
 
     return NextResponse.json(courses, {
       headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+    },{
+      headers: {
+        // This header instructs clients/CDNs to not cache this response.
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
       },
     });

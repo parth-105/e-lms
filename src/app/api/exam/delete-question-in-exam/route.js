@@ -9,7 +9,8 @@ import Question from "@/model/quiz/question-model";
 
 connect()
 
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(req) {
    
     try {
@@ -26,6 +27,11 @@ export async function POST(req) {
         return NextResponse.json({
             message: "question delete successfully",
             success: true,
+        },{
+          headers: {
+            // This header instructs clients/CDNs to not cache this response.
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
         })
      } catch (error) {
         

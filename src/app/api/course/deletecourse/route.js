@@ -4,7 +4,8 @@ import { connect } from "@/lib/mongo";
 
 import Cource from "@/model/cource-model";
 
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(request) {
 
     await connect();
@@ -18,7 +19,12 @@ export async function POST(request) {
         if (!result) {
             return NextResponse.json({ message: 'course not found' });
         }
-        return NextResponse.json({ message: 'Video deleted successfully', Success: true });
+        return NextResponse.json({ message: 'Video deleted successfully', Success: true },{
+            headers: {
+              // This header instructs clients/CDNs to not cache this response.
+              "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+            },
+          });
     } catch (error) {
        
         return NextResponse.json({ message: 'Internal server error' });

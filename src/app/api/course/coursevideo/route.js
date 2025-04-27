@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 connect()
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
 
@@ -14,7 +16,12 @@ export async function POST(request) {
     
     const courses = await Cource.findById(courseId).populate('videos',{strictPopulate:false}).exec();
 
-    return NextResponse.json(courses);
+    return NextResponse.json(courses,{
+      headers: {
+        // This header instructs clients/CDNs to not cache this response.
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+    });
   } catch (error) {
     
     return NextResponse.json({ error: error.message }, { status: 500 })

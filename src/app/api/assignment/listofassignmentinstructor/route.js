@@ -8,6 +8,8 @@ import Assignment from "@/model/Assignment";
 
 connect()
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function POST(request){
     try {
 
@@ -23,7 +25,12 @@ export async function POST(request){
                 message: "instructor couserse get successfully",
                 success: true,
                 insassignment
-            })
+            },{
+                headers: {
+                  // This header instructs clients/CDNs to not cache this response.
+                  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+                },
+              })
 
     } catch (error) {
         return NextResponse.json({error: error.message}, {status: 500})

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import {connect} from "@/lib/mongo";
 import Exam from "@/model/quiz/exam-model";
-
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export async function DELETE(req) {
   try {
     await connect();
@@ -22,6 +23,11 @@ export async function DELETE(req) {
     return NextResponse.json({
       message: "Exam deleted successfully",
       success: true,
+    },{
+      headers: {
+        // This header instructs clients/CDNs to not cache this response.
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
     });
   } catch (error) {
     
