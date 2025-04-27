@@ -250,23 +250,23 @@
 
 // export default Courses;
 
-
-"use client"
-import { useState, useEffect, useRef } from 'react';
-import CourseSkeleton from '@/component/ui/CourseSkeleton/CourseSkeleton';
-import CourseComponent from '@/component/ui/course-card/CourseComponent';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import CourseSkeleton from "@/component/ui/CourseSkeleton/CourseSkeleton";
+import CourseComponent from "@/component/ui/course-card/CourseComponent";
 import { Search, Filter } from "lucide-react";
-// import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Col, message, Row, Select, Input } from "antd";
-import DotSpinner from '@/component/ui/loader/DotSpinner';
+import DotSpinner from "@/component/ui/loader/DotSpinner";
+
+const { Option } = Select; // ✅ Important: Destructure Option from Select
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState('');
-  const [search, setSearch] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(3); // ⬅️ Start with 3
+  const [visibleCount, setVisibleCount] = useState(3);
   const [loadingMore, setLoadingMore] = useState(false);
 
   const loadMoreRef = useRef(null);
@@ -275,11 +275,11 @@ const Courses = () => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/api/course/courses');
+        const res = await fetch("/api/course/courses");
         const data = await res.json();
         setCourses(data);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error("Error fetching courses:", error);
       }
       setLoading(false);
     };
@@ -300,7 +300,7 @@ const Courses = () => {
         if (entry.isIntersecting && !loadingMore && visibleCount < filteredCourses.length) {
           setLoadingMore(true);
           setTimeout(() => {
-            setVisibleCount((prev) => prev + 3); // ⬅️ Load 3 more each scroll
+            setVisibleCount((prev) => prev + 3);
             setLoadingMore(false);
           }, 800);
         }
@@ -316,9 +316,10 @@ const Courses = () => {
     };
   }, [filteredCourses, visibleCount, loadingMore]);
 
-  const handleSubjectChange = (e) => {
-    setSelectedSubject(e.target.value);
-    setVisibleCount(3); // ⬅️ Reset to 3 on filter change
+  // ✅ Corrected this handler
+  const handleSubjectChange = (value) => {
+    setSelectedSubject(value);
+    setVisibleCount(3);
   };
 
   const handleCourseDelete = (deletedCourseId) => {
@@ -332,12 +333,12 @@ const Courses = () => {
           <div className="relative flex-1">
             <Input
               type="text"
-              placeholder="      Search..."
+              placeholder="Search..."
               className="pl-10 border-input bg-background hover:bg-accent/10 transition-colors"
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
-                setVisibleCount(3); // ⬅️ Reset when searching
+                setVisibleCount(3);
               }}
             />
           </div>
@@ -352,40 +353,17 @@ const Courses = () => {
                 value={selectedSubject}
                 onChange={handleSubjectChange}
                 className="w-[180px] h-10 rounded-md border border-input bg-background"
+                dropdownStyle={{ zIndex: 9999 }} // optional: make sure dropdown is visible
               >
-                {/* <Option value="">All Subjects</Option>
+                <Option value="">All Subjects</Option>
                 <Option value="Javascript">Javascript</Option>
                 <Option value="React">React</Option>
                 <Option value="Node">Node</Option>
                 <Option value="MongoDB">MongoDB</Option>
                 <Option value="GK">GK</Option>
                 <Option value="ML">Machine Learning</Option>
-                <Option value="ebusiness">E-business</Option> */}
-                <Select.Option value="">All Subjects</Select.Option>
-                <Select.Option value="Javascript">Javascript</Select.Option>
-                <Select.Option value="React">React</Select.Option>
-                <Select.Option value="Node">Node</Select.Option>
-                <Select.Option value="MongoDB">MongoDB</Select.Option>
-                <Select.Option value="GK">GK</Select.Option>
-                <Select.Option value="ML">Machine Learning</Select.Option>
-                <Select.Option value="ebusiness">E-business</Select.Option>
+                <Option value="ebusiness">E-business</Option>
               </Select>
-              <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-muted-foreground"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -413,7 +391,6 @@ const Courses = () => {
                 onDelete={handleCourseDelete}
               />
             ))}
-
         </div>
       )}
 
