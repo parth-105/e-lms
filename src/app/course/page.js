@@ -399,18 +399,21 @@ const Courses = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {filteredCourses.slice(0, visibleCount).map((course) => (
-            <CourseComponent
-              key={course._id}
-              title={course.title}
-              thumbnail={course.thambnail}
-              price={course.price}
-              courseId={course._id}
-              insdetail={course.instructor}
-              course={course}
-              onDelete={handleCourseDelete}
-            />
-          ))}
+          {[...new Map(filteredCourses.map(item => [item.title, item])).values()]
+            .slice(0, visibleCount)
+            .map((course) => (
+              <CourseComponent
+                key={course._id}
+                title={course.title}
+                thumbnail={course.thambnail}
+                price={course.price}
+                courseId={course._id}
+                insdetail={course.instructor}
+                course={course}
+                onDelete={handleCourseDelete}
+              />
+            ))}
+
         </div>
       )}
 
